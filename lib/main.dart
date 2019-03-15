@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -27,40 +28,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
+  String _selectedCountry;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedCountry = "Nigeria";
+  }
 
   var monthToColorMap = {
-    'January':Color(0xff3fa7d6),
-    'February':Color(0xffee6352),
-    'March':Color(0xff4d4730),
-    'April':Color(0xff902d41),
-    'May':Color(0xfff79d84),
-    'June':Color(0xff331e36),
-    'July':Color(0xff41337a),
-    'August':Color(0xff050505),
-    'September':Color(0xff004fff),
-    'October':Color(0xff59cd90),
-    'November':Color(0xfffac05e),
-    'December':Color(0xffed6a5a),
+    'January': Color(0xff3fa7d6),
+    'February': Color(0xffee6352),
+    'March': Color(0xff4d4730),
+    'April': Color(0xff902d41),
+    'May': Color(0xfff79d84),
+    'June': Color(0xff331e36),
+    'July': Color(0xff41337a),
+    'August': Color(0xff050505),
+    'September': Color(0xff004fff),
+    'October': Color(0xff59cd90),
+    'November': Color(0xfffac05e),
+    'December': Color(0xffed6a5a),
   };
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
@@ -86,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Row(
                     children: <Widget>[
                       Expanded(
+                        flex: 1,
                         child: RotatedBox(
                             quarterTurns: 2,
                             child: Divider(
@@ -93,22 +89,27 @@ class _MyHomePageState extends State<MyHomePage> {
                               color: Colors.black38,
                             )),
                       ),
-                      RichText(
-                          text: TextSpan(
-                              text: "Holidays in ",
-                              style: TextStyle(
-                                  fontSize: 24.0,
-                                  color: Colors.black38,
-                                  fontWeight: FontWeight.w300),
-                              children: <TextSpan>[
-                            TextSpan(
-                              text: "Nigeria",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            )
-                          ])),
                       Expanded(
+                        flex: 3,
+                        child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                                text: "Holidays in \n",
+                                style: TextStyle(
+                                    fontSize: 24.0,
+                                    color: Colors.black38,
+                                    fontWeight: FontWeight.w300),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: _selectedCountry,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  )
+                                ])),
+                      ),
+                      Expanded(
+                        flex: 1,
                         child: Divider(
                           indent: 30,
                           color: Colors.black38,
@@ -125,18 +126,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      FloatingActionButton(
-                        child: Icon(
-                          Icons.flag,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {},
-                        shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                          color: Colors.black12,
-                        )),
-                        elevation: 2.0,
-                        backgroundColor: Colors.white,
+                      CountryCodePicker(
+                        onChanged: (countryCode){
+                          print(countryCode.toCountryCode());
+                          setState(() {
+                           _selectedCountry =countryCode.toCountryString(); 
+                          });
+                          
+                        },
                       ),
                       Text(
                         'Select Country',
@@ -158,37 +155,34 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisCount: 1,
                   padding: EdgeInsets.only(left: kFloatingActionButtonMargin),
                   childAspectRatio: 1.5,
-                  children: months.map((String month) {
+                  children: monthToColorMap.keys.map((String month) {
                     return Card(
-                            margin: EdgeInsets.only(right: 10),
-                            color: monthToColorMap[month],
-                            child: Column(
-                              children: <Widget>[
-                               Expanded(
-                                 flex: 2,
-                                 child: 
-                                 Align(
-                                   alignment: Alignment(-1.0, 0.5),
-                                   child: Padding(
-                                     padding: const EdgeInsets.only(left: 16.0),
-                                     child: Text(month,
-                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                   ))),
-                                 Divider(
-                                   indent: 16,
-                                   color: Colors.white54,
-
-                                 ),
-                                Expanded(
-                                  flex: 7,
-                                  child: Container(
-
-                                  ),
-                                )
-
-                              ],
-                            ),
-                          );
+                      margin: EdgeInsets.only(right: 10),
+                      color: monthToColorMap[month],
+                      child: Column(
+                        children: <Widget>[
+                          Expanded(
+                              flex: 2,
+                              child: Align(
+                                  alignment: Alignment(-1.0, 0.5),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 16.0),
+                                    child: Text(month,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold)),
+                                  ))),
+                          Divider(
+                            indent: 16,
+                            color: Colors.white54,
+                          ),
+                          Expanded(
+                            flex: 7,
+                            child: Container(),
+                          )
+                        ],
+                      ),
+                    );
                   }).toList(),
 
                   // itemBuilder: (BuildContext context, int index) {
