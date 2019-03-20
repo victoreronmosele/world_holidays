@@ -4,18 +4,20 @@ class CountryTitle extends StatelessWidget {
   const CountryTitle({
     Key key,
     @required String selectedCountry,
-  }) : _selectedCountry = selectedCountry, super(key: key);
+  })  : _selectedCountry = selectedCountry,
+        super(key: key);
 
   final String _selectedCountry;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: 4,
+      flex: 6,
       child: Container(
+        // color: Colors.blue,
         width: double.infinity,
         child: Align(
-          alignment: Alignment(0.0, 0.5),
+          alignment: Alignment(0.0, 0.0),
           child: Row(
             children: <Widget>[
               Expanded(

@@ -14,6 +14,9 @@ environment:
 
 dependencies:
   country_code_picker: ^1.1.2
+  progress_indicators: ^0.1.2
+  intl: ^0.15.7
+  flutter_local_notifications: 
   flutter:
     sdk: flutter
 
@@ -38,7 +41,6 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
