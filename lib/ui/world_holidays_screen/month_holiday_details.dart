@@ -265,9 +265,12 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                             ),
                                             onPressed: () {
                                               _scheduleNotification(
-                                                  DateTime.now().add(
-                                                      new Duration(
-                                                          seconds: 10)), holiday.name);
+                                                  // DateTime.now().add(
+                                                  //     new Duration(
+                                                  //         seconds: 10)),
+                                                        DateTime.parse(
+                                                    holiday.date.iso),  
+                                                           holiday.name);
                                             },
                                           ),
                                         ),

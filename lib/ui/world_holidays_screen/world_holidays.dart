@@ -68,8 +68,9 @@ class _WorldHolidaysState extends State<WorldHolidays> {
             children: <Widget>[
               Center(
                   child: Text(
+                    payload,
                  textAlign: TextAlign.center,
-                payload,
+                
                 style: Theme.of(context).textTheme.title,
               )),
               SizedBox(
