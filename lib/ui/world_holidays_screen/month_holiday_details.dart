@@ -70,7 +70,8 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
     super.dispose();
   }
 
-  Future _scheduleNotification(DateTime scheduledNotificationDateTime, String holidayName) async {
+  Future _scheduleNotification(
+      DateTime scheduledNotificationDateTime, String holidayName) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         'your channel id', 'your channel name', 'your channel description',
         sound: 'slow_spring_board',
@@ -257,25 +258,22 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                                   fontSize: 24,
                                                   color: Colors.black38,
                                                   fontWeight: FontWeight.w300)),
-                                          trailing: 
-                                          DateTime.now().isAfter(DateTime.parse(
-                                                    holiday.date.iso))?
-                                                           null
-                                                           :
-                                          IconButton(
-                                            icon: Icon(
-                                              Icons.alarm_on,
-                                              color: monthToColorMap.values
-                                                  .toList()[position],
-                                            ),
-                                            onPressed: 
-                                            () {
-                                              _scheduleNotification(
+                                          trailing: DateTime.now().isAfter(
+                                                  DateTime.parse(
+                                                      holiday.date.iso))
+                                              ? null
+                                              : IconButton(
+                                                  icon: Icon(
+                                                    Icons.alarm_on,
+                                                    color: Colors.black38,
+                                                  ),
+                                                  onPressed: () {
+                                                    _scheduleNotification(
                                                         DateTime.parse(
-                                                    holiday.date.iso),  
-                                                           holiday.name);
-                                            },
-                                          ),
+                                                            holiday.date.iso),
+                                                        holiday.name);
+                                                  },
+                                                ),
                                         ),
                                       );
                                     },
@@ -352,6 +350,18 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                 int monthIndex = monthToColorMap.keys.toList().indexOf(month);
                 return Hero(
                   tag: 'hero-tag' + month,
+                  flightShuttleBuilder: (
+                    BuildContext flightContext,
+                    Animation<double> animation,
+                    HeroFlightDirection flightDirection,
+                    BuildContext fromHeroContext,
+                    BuildContext toHeroContext,
+                  ) {
+                    return SingleChildScrollView(
+                      reverse: true,
+                      child: fromHeroContext.widget,
+                    );
+                  },
                   child: Material(
                     color: Colors.transparent,
                     child: Padding(

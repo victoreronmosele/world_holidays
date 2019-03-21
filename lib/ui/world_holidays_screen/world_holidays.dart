@@ -136,9 +136,7 @@ class _WorldHolidaysState extends State<WorldHolidays> {
           title: Padding(
             padding: const EdgeInsets.only(top: 2.0),
             child: Center(
-              
-              child: 
-              AnimatedSwitcher(
+              child: AnimatedSwitcher(
                   duration: Duration(
                     milliseconds: 300,
                   ),
@@ -427,6 +425,18 @@ class MonthCardsState extends State<MonthCards> {
 
                   return Hero(
                     tag: 'hero-tag' + month,
+                    flightShuttleBuilder: (
+                      BuildContext flightContext,
+                      Animation<double> animation,
+                      HeroFlightDirection flightDirection,
+                      BuildContext fromHeroContext,
+                      BuildContext toHeroContext,
+                    ) {
+                      return SingleChildScrollView(
+                        reverse: true,
+                        child: fromHeroContext.widget,
+                      );
+                    },
                     child: Material(
                       color: Colors.transparent,
                       child: Card(
@@ -439,16 +449,17 @@ class MonthCardsState extends State<MonthCards> {
                               print(monthIndex.toString());
                               print(month);
                               if (snapshot.hasData) {
-                              List<List<Holiday>> listOfHolidayLists =
-                                  monthToHolidayListMap.values.toList();
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MonthHolidayDetails(
-                                          monthIndex: monthIndex,
-                                          // month: month,
-                                          listOfHolidayList:
-                                              listOfHolidayLists)));
+                                List<List<Holiday>> listOfHolidayLists =
+                                    monthToHolidayListMap.values.toList();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            MonthHolidayDetails(
+                                                monthIndex: monthIndex,
+                                                // month: month,
+                                                listOfHolidayList:
+                                                    listOfHolidayLists)));
                               }
                             },
                             child: Column(
