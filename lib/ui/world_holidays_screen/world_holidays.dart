@@ -1,8 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:world_holidays/blocs/holiday_bloc.dart';
+import 'package:world_holidays/blocs/notification_bloc.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:world_holidays/models/holiday_data.dart';
+import 'package:world_holidays/ui/reminder_screen/reminder_list.dart';
 import '../../resources/months_color.dart';
 import 'bottom_navigation_bar.dart';
 import 'country_title.dart';
@@ -24,11 +28,13 @@ class _WorldHolidaysState extends State<WorldHolidays> {
   String _flagUri;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
+//TODO Rearrange code
 //TODO Implement notifications
+//TODO Track with shared preferences which holiday has been added to reminder list
 //TODO Move gridview to current month first
 //TODO Move grid view to last viewed on navigato pop
 //TODO Implememnt dark mode
-//TODO Implement reminder screen
+//TODO Style app
   @override
   void initState() {
     super.initState();
@@ -45,10 +51,14 @@ class _WorldHolidaysState extends State<WorldHolidays> {
 
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
+
+    notificationBloc.setFlutterLocalNotificationsPlugin(flutterLocalNotificationsPlugin);
   }
 
-  Future _showNotificationWithSound() async {
-    print("show notification with sound");
+  Future _scheduleNotification() async {
+    print("start notification");
+    var scheduledNotificationDateTime =
+        new DateTime.now().add(new Duration(seconds: 5));
   var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
       'your channel id', 'your channel name', 'your channel description',
       sound: 'slow_spring_board',
@@ -58,31 +68,99 @@ class _WorldHolidaysState extends State<WorldHolidays> {
       new IOSNotificationDetails(sound: "slow_spring_board.aiff");
   var platformChannelSpecifics = new NotificationDetails(
       androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-  await flutterLocalNotificationsPlugin.show(
+  // await flutterLocalNotificationsPlugin.schedule(
+await flutterLocalNotificationsPlugin.schedule(
     0,
-    'World Holidays',
+    'Reminder: April Fool\'s day',
     'Today is April Fool\'s day!',
+    // scheduledNotificationDateTime,
+    DateTime.fromMillisecondsSinceEpoch(1553131240000),
     platformChannelSpecifics,
     payload: 'April Fool\'s Day',
   );
 }
 
+// Future _scheduleNotification() async {
+//   print("start ");
+//     var scheduledNotificationDateTime =
+//         new DateTime.now().add(new Duration(seconds: 5));
+// var androidPlatformChannelSpecifics =
+//     new AndroidNotificationDetails('your other channel id',
+//         'your other channel name', 'your other channel description');
+// var iOSPlatformChannelSpecifics =
+//     new IOSNotificationDetails();
+// NotificationDetails platformChannelSpecifics = new NotificationDetails(
+//     androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+// await flutterLocalNotificationsPlugin.schedule(
+//     0,
+//     'scheduled title',
+//     'scheduled body',
+//     scheduledNotificationDateTime,
+//     platformChannelSpecifics);
+
+//     print("end ");
+//   }
+
   Future onSelectNotification(String payload) async {
+    
     showDialog(
       context: context,
       builder: (_) {
         return new AlertDialog(
-          title: Text("Today is $payload !"),
-          content: Text("This is a reminder that today is $payload"),
+          title: Icon(Icons.alarm_on, color: Colors.black54, size: 72.0, ),
+
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Center(child: Text(payload, 
+              style: Theme.of(context).textTheme.title,)),
+              
+              SizedBox(height: 20.0,),
+              Center(child: Text("This is a reminder that today is $payload",
+              textAlign: TextAlign.center
+              ,)),
+              SizedBox(height: 20.0,),
+              Container(
+                width: double.infinity,
+                child: FlatButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  textColor: Colors.white,
+                  color: monthToColorMap.values.toList()[1],
+                  child: Text("GOT IT",
+                  ), onPressed: () {
+                    Navigator.pop(context);
+                  },),
+              ),
+            ],
+          ),
         );
       },
     );
   }
 
+  int _currentIndex = 0;
+
+  switchTab(int index) {
+    
+    if (_currentIndex !=index) {
+      setState(() {
+       _currentIndex = index; 
+      });
+    }
+
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
+      child: 
+      Scaffold(
         resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -97,7 +175,7 @@ class _WorldHolidaysState extends State<WorldHolidays> {
             //  () {
               //This is one to refire the FutureBuilder
               // setState(() {});
-              _showNotificationWithSound,
+              _scheduleNotification,
             // },
           ),
           title: Center(
@@ -119,47 +197,103 @@ class _WorldHolidaysState extends State<WorldHolidays> {
             ),
           ],
         ),
-        body: Container(
-          // color: Colors.white,
-          child: Column(children: <Widget>[
-            CountryTitle(selectedCountry: _selectedCountry),
-            Expanded(
-              flex: 4,
-              child: Container(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      CountryCodePicker(
-                        onChanged: (countryCode) async {
-                          setState(() {
-                            _selectedCountry = countryCode.toCountryString();
-                            _countryCode = countryCode.toCountryCode();
+        body: 
+      
+        AnimatedSwitcher(
+          duration: Duration(milliseconds: 500,),
 
-                            _flagUri = countryCode.toFlagUri();
-                          });
-                        },
-                      ),
-                      Text(
-                        'Select Country',
-                        style: TextStyle(color: Colors.black38, fontSize: 12),
-                      ),
-                    ]),
+                  child: 
+                     _currentIndex == 1
+      ? 
+      ReminderList(key:ValueKey(0))
+      :
+                  Container(
+                    key: ValueKey(1),
+            // color: Colors.white,
+            child: Column(children: <Widget>[
+              CountryTitle(selectedCountry: _selectedCountry),
+              Expanded(
+                flex: 4,
+                child: Container(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        CountryCodePicker(
+                          onChanged: (countryCode) async {
+                            setState(() {
+                              _selectedCountry = countryCode.toCountryString();
+                              _countryCode = countryCode.toCountryCode();
+
+                              _flagUri = countryCode.toFlagUri();
+                            });
+                          },
+                        ),
+                        Text(
+                          'Select Country',
+                          style: TextStyle(color: Colors.black38, fontSize: 12),
+                        ),
+                      ]),
+                ),
+              ),
+              Expanded(
+                child: Container(),
+                flex: 1,
+              ),
+              MonthCards(
+                _countryCode,
+              ),
+              Expanded(
+                child: Container(),
+                flex: 1,
+              ),
+            ]),
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+            child: Material(
+              color: Colors.amber,
+              type: MaterialType.transparency,
+              child: InkWell(
+                
+                onTap: (){
+                  switchTab(0);
+                },
+                child: SizedBox(
+                  height: 60.0,
+                  child: Icon(Icons.home, size: 24.0),
+                ),
               ),
             ),
-            Expanded(
-              child: Container(),
-              flex: 1,
+          ),
+          Expanded(
+            child: Material(
+              type: MaterialType.transparency,
+              child: InkWell(
+                // onTap: switchTab(1),
+                onTap: (){
+                  switchTab(1);
+                },
+                child: SizedBox(
+                  height: 60.0,
+                  child:
+                      // Column(
+                      //   mainAxisSize: MainAxisSize.min,
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: <Widget>[
+                      Icon(Icons.alarm, size: 24.0),
+                ),
+              ),
             ),
-            MonthCards(
-              _countryCode,
-            ),
-            Expanded(
-              child: Container(),
-              flex: 1,
-            ),
-          ]),
-        ),
-        bottomNavigationBar: BottomNavigationBarWidget(),
+          ),
+        ],
+      ),
+      // color: Colors.blueGrey,
+    ),
       ),
     );
   }

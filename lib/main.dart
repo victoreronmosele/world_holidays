@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:world_holidays/ui/reminder_screen/reminder_list.dart';
 import 'ui/world_holidays_screen/month_holiday_details.dart';
 import 'ui/world_holidays_screen/world_holidays.dart';
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       ),
       home: WorldHolidays(),
       // home: MonthHolidayDetails(),
+      // home: ReminderList(),
     );
   }
 }

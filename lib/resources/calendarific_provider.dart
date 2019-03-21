@@ -8,7 +8,7 @@ class CalendarificProvider {
   
 
   Future<HolidayData> getHolidays(String countryCode) async {
-    print("getting holiday data with key: " + apiKey);
+    
     final response = await http.get(
         'https://calendarific.com/api/v2/holidays?country=${countryCode ?? "NG"}&year=2019&api_key=$apiKey');
 

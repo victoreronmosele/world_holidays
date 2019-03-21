@@ -17,6 +17,7 @@ dependencies:
   progress_indicators: ^0.1.2
   intl: ^0.15.7
   flutter_local_notifications: 
+  rxdart: ^0.18.0
   flutter:
     sdk: flutter
 
