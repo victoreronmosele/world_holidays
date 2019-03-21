@@ -68,9 +68,8 @@ class _WorldHolidaysState extends State<WorldHolidays> {
             children: <Widget>[
               Center(
                   child: Text(
-                    payload,
-                 textAlign: TextAlign.center,
-                
+                payload,
+                textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.title,
               )),
               SizedBox(
@@ -134,22 +133,55 @@ class _WorldHolidaysState extends State<WorldHolidays> {
             ),
             onPressed: () {},
           ),
-          title: Center(
-            child: Text("2019", style: Theme.of(context).textTheme.title
-                // TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                ),
+          title: Padding(
+            padding: const EdgeInsets.only(top: 2.0),
+            child: Center(
+              
+              child: 
+              AnimatedSwitcher(
+                  duration: Duration(
+                    milliseconds: 300,
+                  ),
+                  child: _currentIndex == 1
+                      ? Text("Reminder",
+                          style: Theme.of(context).textTheme.title,
+                          key: ValueKey(2))
+                      : Text("2019",
+                          style: Theme.of(context).textTheme.title,
+                          key: ValueKey(3))
+                  // TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                  ),
+            ),
           ),
           centerTitle: true,
           actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.refresh,
-                color: Colors.black38,
+            AnimatedSwitcher(
+              duration: Duration(
+                milliseconds: 300,
               ),
-              onPressed: () {
-                //This empty setState is used to refire the FutureBuilder
-                setState(() {});
-              },
+              child: _currentIndex == 1
+                  ? IconButton(
+                      key: ValueKey(4),
+                      icon: Icon(
+                        Icons.clear_all,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        //This empty setState is used to refire the FutureBuilder
+                        setState(() {});
+                      },
+                    )
+                  : IconButton(
+                      key: ValueKey(5),
+                      icon: Icon(
+                        Icons.refresh,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        //This empty setState is used to refire the FutureBuilder
+                        setState(() {});
+                      },
+                    ),
             ),
           ],
         ),
@@ -184,7 +216,7 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                               Text(
                                 'Select Country',
                                 style: TextStyle(
-                                    color: Colors.black38, fontSize: 12),
+                                    color: Colors.black45, fontSize: 12),
                               ),
                             ]),
                       ),
@@ -406,19 +438,18 @@ class MonthCardsState extends State<MonthCards> {
                             onTap: () async {
                               print(monthIndex.toString());
                               print(month);
-                              if (snapshot.hasData) {
-                                List<List<Holiday>> listOfHolidayLists =
-                                    monthToHolidayListMap.values.toList();
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            MonthHolidayDetails(
-                                                monthIndex: monthIndex,
-                                                // month: month,
-                                                listOfHolidayList:
-                                                    listOfHolidayLists)));
-                              }
+                              // if (snapshot.hasData) {
+                              List<List<Holiday>> listOfHolidayLists =
+                                  monthToHolidayListMap.values.toList();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MonthHolidayDetails(
+                                          monthIndex: monthIndex,
+                                          // month: month,
+                                          listOfHolidayList:
+                                              listOfHolidayLists)));
+                              // }
                             },
                             child: Column(
                               children: <Widget>[
