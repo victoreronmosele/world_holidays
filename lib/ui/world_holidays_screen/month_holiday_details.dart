@@ -257,17 +257,20 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                                   fontSize: 24,
                                                   color: Colors.black38,
                                                   fontWeight: FontWeight.w300)),
-                                          trailing: IconButton(
+                                          trailing: 
+                                          DateTime.now().isAfter(DateTime.parse(
+                                                    holiday.date.iso))?
+                                                           null
+                                                           :
+                                          IconButton(
                                             icon: Icon(
                                               Icons.alarm_on,
                                               color: monthToColorMap.values
                                                   .toList()[position],
                                             ),
-                                            onPressed: () {
+                                            onPressed: 
+                                            () {
                                               _scheduleNotification(
-                                                  // DateTime.now().add(
-                                                  //     new Duration(
-                                                  //         seconds: 10)),
                                                         DateTime.parse(
                                                     holiday.date.iso),  
                                                            holiday.name);

@@ -438,7 +438,7 @@ class MonthCardsState extends State<MonthCards> {
                             onTap: () async {
                               print(monthIndex.toString());
                               print(month);
-                              // if (snapshot.hasData) {
+                              if (snapshot.hasData) {
                               List<List<Holiday>> listOfHolidayLists =
                                   monthToHolidayListMap.values.toList();
                               Navigator.push(
@@ -449,7 +449,7 @@ class MonthCardsState extends State<MonthCards> {
                                           // month: month,
                                           listOfHolidayList:
                                               listOfHolidayLists)));
-                              // }
+                              }
                             },
                             child: Column(
                               children: <Widget>[
