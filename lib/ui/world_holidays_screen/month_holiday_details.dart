@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:world_holidays/resources/custom_expansion_panel.dart';
 import 'package:world_holidays/models/holiday_data.dart';
 import '../../resources/months_color.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
 
 class MonthHolidayDetails extends StatefulWidget {
@@ -60,7 +60,8 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
 
     animationController.forward();
 
-    flutterLocalNotificationsPlugin = notificationBloc.getFlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin =
+        notificationBloc.getFlutterLocalNotificationsPlugin();
   }
 
   @override
@@ -69,31 +70,26 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
     super.dispose();
   }
 
-  Future _scheduleNotification() async {
-    print("start notification");
-    var scheduledNotificationDateTime =
-        new DateTime.now().add(new Duration(seconds: 5));
-  var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-      'your channel id', 'your channel name', 'your channel description',
-      sound: 'slow_spring_board',
-      importance: Importance.Max,
-      priority: Priority.High);
-  var iOSPlatformChannelSpecifics =
-      new IOSNotificationDetails(sound: "slow_spring_board.aiff");
-  var platformChannelSpecifics = new NotificationDetails(
-      androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-  // await flutterLocalNotificationsPlugin.schedule(
-await flutterLocalNotificationsPlugin.schedule(
-    0,
-    'Reminder: April Fool\'s day',
-    'Today is April Fool\'s day!',
-    // scheduledNotificationDateTime,
-    DateTime.fromMillisecondsSinceEpoch(1553136415000),
-    platformChannelSpecifics,
-    payload: 'April Fool\'s Day',
-  );
-}
-  
+  Future _scheduleNotification(DateTime scheduledNotificationDateTime, String holidayName) async {
+    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
+        sound: 'slow_spring_board',
+        importance: Importance.Max,
+        priority: Priority.High);
+    var iOSPlatformChannelSpecifics =
+        new IOSNotificationDetails(sound: "slow_spring_board.aiff");
+    var platformChannelSpecifics = new NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    // await flutterLocalNotificationsPlugin.schedule(
+    await flutterLocalNotificationsPlugin.schedule(
+      0,
+      'Reminder: $holidayName',
+      'Today is $holidayName.',
+      scheduledNotificationDateTime,
+      platformChannelSpecifics,
+      payload: holidayName,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +104,7 @@ await flutterLocalNotificationsPlugin.schedule(
               Icons.settings,
               color: Colors.black,
             ),
-            onPressed: _scheduleNotification,
+            onPressed: () {},
           ),
           actions: <Widget>[
             IconButton(
@@ -228,7 +224,8 @@ await flutterLocalNotificationsPlugin.schedule(
 
                                 children: currentMonthHolidayList
                                     .map((Holiday holiday) {
-                                  int holidayIndex = currentMonthHolidayList.indexOf(holiday);
+                                  int holidayIndex =
+                                      currentMonthHolidayList.indexOf(holiday);
 
                                   return CustomExpansionPanel(
                                     headerBuilder: (BuildContext context,
@@ -236,11 +233,11 @@ await flutterLocalNotificationsPlugin.schedule(
                                       return Container(
                                         // color: Colors.blue,
                                         child: ListTile(
-                                          
                                           // dense: true,
                                           title: Text(
                                             holiday.name,
-                                            style: TextStyle(fontWeight: FontWeight.w600),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600),
                                           ),
                                           subtitle: Text(
                                             // DateFormat
@@ -266,9 +263,12 @@ await flutterLocalNotificationsPlugin.schedule(
                                               color: monthToColorMap.values
                                                   .toList()[position],
                                             ),
-                                            onPressed: null
-                                              // _showNotificationWithSound
-                                            ,
+                                            onPressed: () {
+                                              _scheduleNotification(
+                                                  DateTime.now().add(
+                                                      new Duration(
+                                                          seconds: 10)), holiday.name);
+                                            },
                                           ),
                                         ),
                                       );
@@ -277,7 +277,7 @@ await flutterLocalNotificationsPlugin.schedule(
                                       // color: Colors.green,
                                       child: Align(
                                         alignment: Alignment.topCenter,
-                                                                              child: ListTile(
+                                        child: ListTile(
                                           // dense: true,
                                           leading: Text(""),
                                           title: Text(
