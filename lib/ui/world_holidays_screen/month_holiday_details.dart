@@ -357,9 +357,11 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                     BuildContext fromHeroContext,
                     BuildContext toHeroContext,
                   ) {
-                    return SingleChildScrollView(
-                      reverse: true,
-                      child: fromHeroContext.widget,
+                     return Flex(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Expanded(child: fromHeroContext.widget),
+                      ], direction: Axis.horizontal,
                     );
                   },
                   child: Material(
