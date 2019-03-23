@@ -6,6 +6,8 @@ import '../../resources/months_color.dart';
 import 'package:intl/intl.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
 
+import '../settings_screen/settings_screen.dart';
+
 class MonthHolidayDetails extends StatefulWidget {
   final int monthIndex;
   // final String month;
@@ -96,22 +98,23 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
           elevation: 0.0,
           leading: IconButton(
             icon: Icon(
               Icons.settings,
-              color: Colors.black,
             ),
-            onPressed: () {},
+            onPressed: ()=> Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            SettingsScreen()
+                                                    ))
           ),
           actions: <Widget>[
             IconButton(
               icon: Icon(
                 Icons.close,
-                color: Colors.black,
               ),
               onPressed: () {
                 Navigator.pop(context, currentMonthIndex);
@@ -164,10 +167,9 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                       child: Text(
                         monthToColorMap.keys.toList()[position],
                         textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
+                        style: Theme.of(context).textTheme.headline.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -179,10 +181,7 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                       Text(
                         "${currentMonthHolidayList.length == 0 ? "No" : currentMonthHolidayList.length} ${currentMonthHolidayList.length == 1 ? "holiday" : "holidays"}",
                         textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black38),
+                        style: Theme.of(context).textTheme.subhead,
                       ),
                       Spacer(
                         flex: 2,
@@ -190,7 +189,7 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                       Divider(
                         indent: dividerIndentAnimation.value,
                         height: 2,
-                        color: Colors.black38,
+                        color: Theme.of(context).dividerColor,
                       ),
                       Spacer(
                         flex: 2,
@@ -207,8 +206,13 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
 
                 child: currentMonthHolidayList.isEmpty
                     ? Center(
-                        child: Text("No holidays this month",
-                            style: TextStyle(color: Colors.black)))
+                        child: Text(
+                        "No holidays this month",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline
+                            .copyWith(fontSize: 16),
+                      ))
                     : SingleChildScrollView(
                         child: Container(
                           child: SafeArea(
@@ -231,54 +235,63 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                   return CustomExpansionPanel(
                                     headerBuilder: (BuildContext context,
                                         bool isExpanded) {
-                                      return Container(
-                                        // color: Colors.blue,
-                                        child: ListTile(
-                                          // dense: true,
-                                          title: Text(
-                                            holiday.name,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          subtitle: Text(
-                                            // DateFormat
-                                            DateFormat.EEEE()
-                                                .format(DateTime.parse(
-                                                    holiday.date.iso))
-                                                .toString(),
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w300,
-                                              color: Colors.black38,
-                                            ),
-                                          ),
-                                          leading: Text(
-                                              holiday.date.datetime.day
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  fontSize: 24,
-                                                  color: Colors.black38,
-                                                  fontWeight: FontWeight.w300)),
-                                          trailing: DateTime.now().isAfter(
-                                                  DateTime.parse(
-                                                      holiday.date.iso))
-                                              ? null
-                                              : IconButton(
-                                                  icon: Icon(
-                                                    Icons.alarm_on,
-                                                    color: Colors.black38,
+                                      return ListTile(
+                                        // dense: true,
+                                        title: Text(
+                                          holiday.name,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline
+                                              .copyWith(
+                                                  fontSize: 16,
                                                   ),
-                                                  onPressed: () {
-                                                    _scheduleNotification(
-                                                        DateTime.parse(
-                                                            holiday.date.iso),
-                                                        holiday.name);
-                                                  },
-                                                ),
                                         ),
+
+                                        subtitle: Text(
+                                          // DateFormat
+                                          DateFormat.EEEE()
+                                              .format(DateTime.parse(
+                                                  holiday.date.iso))
+                                              .toString(),
+                                            style: Theme.of(context)
+                                              .textTheme
+                                              // .subhead
+                                              .subtitle
+                                              .copyWith(
+                                            fontWeight: FontWeight.w300,
+                                                  ),
+                                          // style: TextStyle(
+                                          
+                                          // ),
+                                        ),
+                                        leading: Text(
+                                            holiday.date.datetime.day
+                                                .toString(),
+                                            style: Theme.of(context)
+                                              .textTheme
+                                              .display1
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w300
+                                                  ),),
+                                        trailing: DateTime.now().isAfter(
+                                                DateTime.parse(
+                                                    holiday.date.iso))
+                                            ? null
+                                            : IconButton(
+                                                icon: Icon(
+                                                  Icons.alarm_on,
+                                                  
+                                                ),
+                                                onPressed: () {
+                                                  _scheduleNotification(
+                                                      DateTime.parse(
+                                                          holiday.date.iso),
+                                                      holiday.name);
+                                                },
+                                              ),
                                       );
                                     },
                                     body: Container(
-                                      // color: Colors.green,
                                       child: Align(
                                         alignment: Alignment.topCenter,
                                         child: ListTile(
@@ -287,7 +300,15 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                           title: Text(
                                             holiday.description ??
                                                 "No description available",
-                                            style: TextStyle(fontSize: 14),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline
+                                              .copyWith(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w300
+                                                  ),
+                                        
+
                                           ),
                                         ),
                                       ),
@@ -357,11 +378,12 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                     BuildContext fromHeroContext,
                     BuildContext toHeroContext,
                   ) {
-                     return Flex(
+                    return Flex(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
                         Expanded(child: fromHeroContext.widget),
-                      ], direction: Axis.horizontal,
+                      ],
+                      direction: Axis.horizontal,
                     );
                   },
                   child: Material(

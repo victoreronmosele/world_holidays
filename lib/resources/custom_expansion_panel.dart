@@ -19,11 +19,9 @@ class _SaltedKey<S, V> extends LocalKey {
 
   @override
   bool operator ==(dynamic other) {
-    if (other.runtimeType != runtimeType)
-      return false;
+    if (other.runtimeType != runtimeType) return false;
     final _SaltedKey<S, V> typedOther = other;
-    return salt == typedOther.salt
-        && value == typedOther.value;
+    return salt == typedOther.salt && value == typedOther.value;
   }
 
   @override
@@ -46,7 +44,8 @@ typedef ExpansionPanelCallback = void Function(int panelIndex, bool isExpanded);
 
 /// Signature for the callback that's called when the header of the
 /// [CustomExpansionPanel] needs to rebuild.
-typedef ExpansionPanelHeaderBuilder = Widget Function(BuildContext context, bool isExpanded);
+typedef ExpansionPanelHeaderBuilder = Widget Function(
+    BuildContext context, bool isExpanded);
 
 /// A material expansion panel. It has a header and a body and can be either
 /// expanded or collapsed. The body of the panel is only visible when it is
@@ -63,13 +62,13 @@ class CustomExpansionPanel {
   /// Creates an expansion panel to be used as a child for [CustomExpansionPanelList].
   ///
   /// The [headerBuilder], [body], and [isExpanded] arguments must not be null.
-  CustomExpansionPanel({
-    @required this.headerBuilder,
-    @required this.body,
-    this.isExpanded = false
-  }) : assert(headerBuilder != null),
-       assert(body != null),
-       assert(isExpanded != null);
+  CustomExpansionPanel(
+      {@required this.headerBuilder,
+      @required this.body,
+      this.isExpanded = false})
+      : assert(headerBuilder != null),
+        assert(body != null),
+        assert(isExpanded != null);
 
   /// The widget builder that builds the expansion panels' header.
   final ExpansionPanelHeaderBuilder headerBuilder;
@@ -83,14 +82,12 @@ class CustomExpansionPanel {
   ///
   /// Defaults to false.
   final bool isExpanded;
-
 }
 
 /// An expansion panel that allows for radio-like functionality.
 ///
 /// A unique identifier [value] must be assigned to each panel.
 class ExpansionPanelRadio extends CustomExpansionPanel {
-
   /// An expansion panel that allows for radio functionality.
   ///
   /// A unique [value] must be passed into the constructor. The
@@ -99,8 +96,8 @@ class ExpansionPanelRadio extends CustomExpansionPanel {
     @required this.value,
     @required ExpansionPanelHeaderBuilder headerBuilder,
     @required Widget body,
-  }) : assert(value != null),
-       super(body: body, headerBuilder: headerBuilder);
+  })  : assert(value != null),
+        super(body: body, headerBuilder: headerBuilder);
 
   /// The value that uniquely identifies a radio panel so that the currently
   /// selected radio panel can be identified.
@@ -124,11 +121,11 @@ class CustomExpansionPanelList extends StatefulWidget {
     this.children = const <CustomExpansionPanel>[],
     this.expansionCallback,
     this.animationDuration = kThemeAnimationDuration,
-  }) : assert(children != null),
-       assert(animationDuration != null),
-       _allowOnlyOnePanelOpen = false,
-       initialOpenPanelValue = null,
-       super(key: key);
+  })  : assert(children != null),
+        assert(animationDuration != null),
+        _allowOnlyOnePanelOpen = false,
+        initialOpenPanelValue = null,
+        super(key: key);
 
   /// Creates a radio expansion panel list widget.
   ///
@@ -143,11 +140,11 @@ class CustomExpansionPanelList extends StatefulWidget {
     this.expansionCallback,
     this.animationDuration = kThemeAnimationDuration,
     this.initialOpenPanelValue,
-  }) : children = children, // ignore: prefer_initializing_formals
-       assert(children != null),
-       assert(animationDuration != null),
-       _allowOnlyOnePanelOpen = true,
-       super(key: key);
+  })  : children = children, // ignore: prefer_initializing_formals
+        assert(children != null),
+        assert(animationDuration != null),
+        _allowOnlyOnePanelOpen = true,
+        super(key: key);
 
   /// The children of the expansion panel list. They are laid out in a similar
   /// fashion to [ListBody].
@@ -203,7 +200,7 @@ class _CustomExpansionPanelListState extends State<CustomExpansionPanelList> {
             newChild.value == widget.initialOpenPanelValue)
           _currentOpenPanel = newChild;
       }
-    } else if(oldWidget._allowOnlyOnePanelOpen) {
+    } else if (oldWidget._allowOnlyOnePanelOpen) {
       _currentOpenPanel = null;
     }
   }
@@ -231,7 +228,9 @@ class _CustomExpansionPanelListState extends State<CustomExpansionPanelList> {
     if (widget._allowOnlyOnePanelOpen) {
       final ExpansionPanelRadio pressedChild = widget.children[index];
 
-      for (int childIndex = 0; childIndex < widget.children.length; childIndex += 1) {
+      for (int childIndex = 0;
+          childIndex < widget.children.length;
+          childIndex += 1) {
         final ExpansionPanelRadio child = widget.children[childIndex];
         if (widget.expansionCallback != null &&
             childIndex != index &&
@@ -240,46 +239,54 @@ class _CustomExpansionPanelListState extends State<CustomExpansionPanelList> {
       }
       _currentOpenPanel = isExpanded ? null : pressedChild;
     }
-    setState((){});
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<CustomMergeableMaterialItem> items = <CustomMergeableMaterialItem>[];
+    final List<CustomMergeableMaterialItem> items =
+        <CustomMergeableMaterialItem>[];
     const EdgeInsets kExpandedEdgeInsets = EdgeInsets.symmetric(
-      vertical: _kPanelHeaderExpandedHeight - _kPanelHeaderCollapsedHeight
-    );
+        vertical: _kPanelHeaderExpandedHeight - _kPanelHeaderCollapsedHeight);
 
     for (int index = 0; index < widget.children.length; index += 1) {
       if (_isChildExpanded(index) && index != 0 && !_isChildExpanded(index - 1))
-        items.add(CustomMaterialGap(key: _SaltedKey<BuildContext, int>(context, index * 2 - 1)));
+        items.add(CustomMaterialGap(
+            key: _SaltedKey<BuildContext, int>(context, index * 2 - 1)));
 
       final CustomExpansionPanel child = widget.children[index];
-      final Row header = Row(
-        children: <Widget>[
-          Expanded(
-            child: AnimatedContainer(
-              duration: widget.animationDuration,
-              curve: Curves.fastOutSlowIn,
-              margin: _isChildExpanded(index) ? kExpandedEdgeInsets : EdgeInsets.zero,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(minHeight: _kPanelHeaderCollapsedHeight),
-                child: child.headerBuilder(
-                  context,
-                  _isChildExpanded(index),
+      final Container header = Container(
+        color: Theme.of(context).canvasColor,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: AnimatedContainer(
+                duration: widget.animationDuration,
+                curve: Curves.fastOutSlowIn,
+                margin: _isChildExpanded(index)
+                    ? kExpandedEdgeInsets
+                    : EdgeInsets.zero,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                      minHeight: _kPanelHeaderCollapsedHeight),
+                  child: child.headerBuilder(
+                    context,
+                    _isChildExpanded(index),
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsetsDirectional.only(end: 8.0),
-            child: ExpandIcon(
-              isExpanded: _isChildExpanded(index),
-              padding: const EdgeInsets.all(16.0),
-              onPressed: (bool isExpanded) => _handlePressed(isExpanded, index),
+            Container(
+              margin: const EdgeInsetsDirectional.only(end: 8.0),
+              child: ExpandIcon(
+                isExpanded: _isChildExpanded(index),
+                padding: const EdgeInsets.all(16.0),
+                onPressed: (bool isExpanded) =>
+                    _handlePressed(isExpanded, index),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
 
       items.add(
@@ -290,11 +297,16 @@ class _CustomExpansionPanelListState extends State<CustomExpansionPanelList> {
               MergeSemantics(child: header),
               AnimatedCrossFade(
                 firstChild: Container(height: 0.0),
-                secondChild: child.body,
-                firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
-                secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
+                secondChild: Container(
+                    color: Theme.of(context).canvasColor, child: child.body),
+                firstCurve:
+                    const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
+                secondCurve:
+                    const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
                 sizeCurve: Curves.fastOutSlowIn,
-                crossFadeState: _isChildExpanded(index) ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                crossFadeState: _isChildExpanded(index)
+                    ? CrossFadeState.showSecond
+                    : CrossFadeState.showFirst,
                 duration: widget.animationDuration,
               ),
             ],
@@ -303,7 +315,8 @@ class _CustomExpansionPanelListState extends State<CustomExpansionPanelList> {
       );
 
       if (_isChildExpanded(index) && index != widget.children.length - 1)
-        items.add(CustomMaterialGap(key: _SaltedKey<BuildContext, int>(context, index * 2 + 1)));
+        items.add(CustomMaterialGap(
+            key: _SaltedKey<BuildContext, int>(context, index * 2 + 1)));
     }
 
     return CustomMergeableMaterial(

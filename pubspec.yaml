@@ -17,7 +17,11 @@ dependencies:
   progress_indicators: ^0.1.2
   intl: ^0.15.7
   flutter_local_notifications: 
+  dynamic_theme: ^1.0.1
+  sqflite: 
   rxdart: ^0.18.0
+  flutter_cupertino_settings: ^0.1.0
+  font_awesome_flutter: ^8.4.0
   flutter:
     sdk: flutter
 

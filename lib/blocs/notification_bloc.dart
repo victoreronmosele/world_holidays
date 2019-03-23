@@ -16,3 +16,4 @@ class NotificationBloc {
 }
 
 final notificationBloc = NotificationBloc();
+

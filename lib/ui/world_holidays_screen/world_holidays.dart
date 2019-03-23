@@ -7,8 +7,10 @@ import 'package:progress_indicators/progress_indicators.dart';
 import 'package:world_holidays/models/holiday_data.dart';
 import 'package:world_holidays/ui/reminder_screen/reminder_list.dart';
 import '../../resources/months_color.dart';
+import '../settings_screen/settings_screen.dart';
 import 'country_title.dart';
 import 'month_holiday_details.dart';
+import 'package:dynamic_theme/dynamic_theme.dart';
 
 class WorldHolidays extends StatefulWidget {
   WorldHolidays({
@@ -26,9 +28,7 @@ class _WorldHolidaysState extends State<WorldHolidays> {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 //TODO Rearrange code
-//TODO Implement notifications
 //TODO Track with shared preferences which holiday has been added to reminder list
-//TODO Implememnt dark mode
 //TODO Style app
   @override
   void initState() {
@@ -110,6 +110,7 @@ class _WorldHolidaysState extends State<WorldHolidays> {
   int _currentIndex = 0;
 
   switchTab(int index) {
+    print("switch tab!");
     if (_currentIndex != index) {
       setState(() {
         _currentIndex = index;
@@ -119,19 +120,31 @@ class _WorldHolidaysState extends State<WorldHolidays> {
 
   @override
   Widget build(BuildContext context) {
+    var animatedSwitcher = AnimatedSwitcher(
+      duration: Duration(
+        milliseconds: 300,
+      ),
+      child: _currentIndex == 1
+          ? buildClearRemindersButton()
+          : buildRefreshButton(),
+    );
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
           elevation: 0.0,
           leading: IconButton(
             icon: Icon(
               Icons.settings,
-              color: Colors.black,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            SettingsScreen()
+                                                    ));
+            },
           ),
           title: Padding(
             padding: const EdgeInsets.only(top: 2.0),
@@ -142,10 +155,10 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                   ),
                   child: _currentIndex == 1
                       ? Text("Reminder",
-                          style: Theme.of(context).textTheme.title,
+                          // style: Theme.of(context).textTheme.headline,
                           key: ValueKey(2))
                       : Text("2019",
-                          style: Theme.of(context).textTheme.title,
+                          // style: Theme.of(context).textTheme.title,
                           key: ValueKey(3))
                   // TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                   ),
@@ -153,34 +166,7 @@ class _WorldHolidaysState extends State<WorldHolidays> {
           ),
           centerTitle: true,
           actions: <Widget>[
-            AnimatedSwitcher(
-              duration: Duration(
-                milliseconds: 300,
-              ),
-              child: _currentIndex == 1
-                  ? IconButton(
-                      key: ValueKey(4),
-                      icon: Icon(
-                        Icons.clear_all,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        //This empty setState is used to refire the FutureBuilder
-                        setState(() {});
-                      },
-                    )
-                  : IconButton(
-                      key: ValueKey(5),
-                      icon: Icon(
-                        Icons.refresh,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        //This empty setState is used to refire the FutureBuilder
-                        setState(() {});
-                      },
-                    ),
-            ),
+            animatedSwitcher,
           ],
         ),
         body: AnimatedSwitcher(
@@ -188,7 +174,7 @@ class _WorldHolidaysState extends State<WorldHolidays> {
             milliseconds: 500,
           ),
           child: _currentIndex == 1
-              ? ReminderList(key: ValueKey(0))
+              ? ReminderList(key: ValueKey(0), switchTab: switchTab)
               : Container(
                   key: ValueKey(1),
                   // color: Colors.white,
@@ -213,8 +199,7 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                               ),
                               Text(
                                 'Select Country',
-                                style: TextStyle(
-                                    color: Colors.black45, fontSize: 12),
+                                style: Theme.of(context).textTheme.caption,
                               ),
                             ]),
                       ),
@@ -240,7 +225,6 @@ class _WorldHolidaysState extends State<WorldHolidays> {
             children: <Widget>[
               Expanded(
                 child: Material(
-                  color: Colors.amber,
                   type: MaterialType.transparency,
                   child: InkWell(
                     onTap: () {
@@ -248,7 +232,11 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                     },
                     child: SizedBox(
                       height: 60.0,
-                      child: Icon(Icons.home, size: 24.0),
+                      child: Icon(
+                        Icons.home,
+                        size: 24.0,
+                        color: Theme.of(context).primaryIconTheme.color,
+                      ),
                     ),
                   ),
                 ),
@@ -263,12 +251,11 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                     },
                     child: SizedBox(
                       height: 60.0,
-                      child:
-                          // Column(
-                          //   mainAxisSize: MainAxisSize.min,
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: <Widget>[
-                          Icon(Icons.alarm, size: 24.0),
+                      child: Icon(
+                        Icons.alarm,
+                        size: 24.0,
+                        color: Theme.of(context).primaryIconTheme.color,
+                      ),
                     ),
                   ),
                 ),
@@ -278,6 +265,70 @@ class _WorldHolidaysState extends State<WorldHolidays> {
           // color: Colors.blueGrey,
         ),
       ),
+    );
+  }
+
+
+  showClearRemindersConfirmation() async {
+    await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Clear all reminders?",
+            style: Theme.of(context).textTheme.headline.copyWith(
+              fontSize: 20.0
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                "NOT NOW",
+                 style: Theme.of(context).textTheme.button,
+              ),
+              onPressed: () {
+                print("cancel tapped");
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                "CLEAR ALL",
+                style: Theme.of(context).textTheme.button,
+              
+              ),
+              onPressed: () {
+                print("cancel tapped");
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  IconButton buildClearRemindersButton() {
+    return IconButton(
+      key: ValueKey(4),
+      icon: Icon(
+        Icons.clear_all,
+      ),
+      onPressed: () {
+        showClearRemindersConfirmation();
+      },
+    );
+  }
+
+  IconButton buildRefreshButton() {
+    return IconButton(
+      key: ValueKey(5),
+      icon: Icon(
+        Icons.refresh,
+      ),
+      onPressed: () {
+        //This empty setState is used to refire the FutureBuilder
+        setState(() {});
+      },
     );
   }
 }

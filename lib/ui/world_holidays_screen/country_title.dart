@@ -26,7 +26,7 @@ class CountryTitle extends StatelessWidget {
                     quarterTurns: 2,
                     child: Divider(
                       indent: 30,
-                      color: Colors.black38,
+                      color: Theme.of(context).dividerColor,
                     )),
               ),
               Expanded(
@@ -35,16 +35,15 @@ class CountryTitle extends StatelessWidget {
                     textAlign: TextAlign.center,
                     text: TextSpan(
                         text: "Holidays in \n",
-                        style: TextStyle(
-                            fontSize: 24.0,
-                            color: Colors.black38,
-                            fontWeight: FontWeight.w300),
+                        style: Theme.of(context).textTheme.display1.copyWith(
+                              fontWeight: FontWeight.w300
+                            ),
                         children: <TextSpan>[
                           TextSpan(
                             text: _selectedCountry,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
+                            style: Theme.of(context).textTheme.headline.copyWith(
+                              fontWeight: FontWeight.bold
+                            ),
                           )
                         ])),
               ),
@@ -52,7 +51,7 @@ class CountryTitle extends StatelessWidget {
                 flex: 1,
                 child: Divider(
                   indent: 30,
-                  color: Colors.black38,
+                  color: Theme.of(context).dividerColor,
                 ),
               ),
             ],
