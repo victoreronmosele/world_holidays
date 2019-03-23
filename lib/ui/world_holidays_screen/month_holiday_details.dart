@@ -283,10 +283,10 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                                   
                                                 ),
                                                 onPressed: () {
-                                                  _scheduleNotification(
-                                                      DateTime.parse(
-                                                          holiday.date.iso),
-                                                      holiday.name);
+                                                  // _scheduleNotification(
+                                                  //     DateTime.parse(
+                                                  //         holiday.date.iso),
+                                                  //     holiday.name);
                                                 },
                                               ),
                                       );

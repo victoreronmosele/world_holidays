@@ -138,12 +138,8 @@ class _WorldHolidaysState extends State<WorldHolidays> {
               Icons.settings,
             ),
             onPressed: () {
-              Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SettingsScreen()
-                                                    ));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SettingsScreen()));
             },
           ),
           title: Padding(
@@ -268,25 +264,23 @@ class _WorldHolidaysState extends State<WorldHolidays> {
     );
   }
 
-
   showClearRemindersConfirmation() async {
     await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Clear all reminders?",
-            style: Theme.of(context).textTheme.headline.copyWith(
-              fontSize: 20.0
-            ),
+          title: Text(
+            "Clear all reminders?",
+            style:
+                Theme.of(context).textTheme.headline.copyWith(fontSize: 20.0),
           ),
           actions: <Widget>[
             FlatButton(
               child: Text(
                 "NOT NOW",
-                 style: Theme.of(context).textTheme.button,
+                style: Theme.of(context).textTheme.button,
               ),
               onPressed: () {
-                print("cancel tapped");
                 Navigator.of(context).pop();
               },
             ),
@@ -294,10 +288,9 @@ class _WorldHolidaysState extends State<WorldHolidays> {
               child: Text(
                 "CLEAR ALL",
                 style: Theme.of(context).textTheme.button,
-              
               ),
               onPressed: () {
-                print("cancel tapped");
+                _cancelAllNotifications();
                 Navigator.of(context).pop();
               },
             ),
@@ -305,6 +298,11 @@ class _WorldHolidaysState extends State<WorldHolidays> {
         );
       },
     );
+  }
+
+  Future _cancelAllNotifications() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
+    print("all notifications cancelled");
   }
 
   IconButton buildClearRemindersButton() {
