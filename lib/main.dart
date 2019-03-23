@@ -19,33 +19,21 @@ class MyApp extends StatelessWidget {
       primaryColor: Colors.grey[50],
       textTheme: theme.textTheme.copyWith(
         headline: theme.textTheme.headline.copyWith(
-            color: Colors.black, 
+          color: Colors.black,
         ),
-        display1:  theme.textTheme.headline.copyWith(
-            color: Colors.black38, 
+        display1: theme.textTheme.headline.copyWith(
+          color: Colors.black38,
         ),
         //This is just title with another color
-         display2:  theme.textTheme.title.copyWith(
-            color: Colors.black54, 
+        display2: theme.textTheme.title.copyWith(
+          color: Colors.black54,
         ),
-        caption: theme.textTheme.caption.copyWith(
-          color: Colors.black38
-        ),
-        button:  theme.textTheme.button.copyWith(
-          color: Colors.black
-        ),
-        subhead:  theme.textTheme.subhead.copyWith(
-          color: Colors.black38
-        ),
-        subtitle:  theme.textTheme.subtitle.copyWith(
-          color: Colors.black38
-        ),
+        caption: theme.textTheme.caption.copyWith(color: Colors.black38),
+        button: theme.textTheme.button.copyWith(color: Colors.black),
+        subhead: theme.textTheme.subhead.copyWith(color: Colors.black38),
+        subtitle: theme.textTheme.subtitle.copyWith(color: Colors.black38),
       ),
-      iconTheme: theme.iconTheme.copyWith(
-        color: Colors.indigoAccent
-      ),
-      
-      
+      iconTheme: theme.iconTheme.copyWith(color: Colors.indigoAccent),
     );
 
     ThemeData darkThemeData = ThemeData(
@@ -54,63 +42,46 @@ class MyApp extends StatelessWidget {
       // primarySwatch: Colors.grey[850],
       textTheme: theme.textTheme.copyWith(
         headline: theme.textTheme.headline.copyWith(
-            color: Colors.white, 
+          color: Colors.white,
         ),
-       display1:  theme.textTheme.headline.copyWith(
-            color: Colors.white30, 
+        display1: theme.textTheme.headline.copyWith(
+          color: Colors.white30,
         ),
         //This is just title with another color
-        display2:  theme.textTheme.title.copyWith(
-            color: Colors.white54, 
+        display2: theme.textTheme.title.copyWith(
+          color: Colors.white54,
         ),
 
-      caption: theme.textTheme.caption.copyWith(
-          color: Colors.white30
-        ),
-      button:  theme.textTheme.button.copyWith(
-          color: Colors.white
-        ),
-         subhead:  theme.textTheme.subhead.copyWith(
-          color: Colors.white30
-        ),
-        subtitle:  theme.textTheme.subtitle.copyWith(
-          color: Colors.white30
-        ),
+        caption: theme.textTheme.caption.copyWith(color: Colors.white30),
+        button: theme.textTheme.button.copyWith(color: Colors.white),
+        subhead: theme.textTheme.subhead.copyWith(color: Colors.white30),
+        subtitle: theme.textTheme.subtitle.copyWith(color: Colors.white30),
       ),
-      iconTheme: theme.iconTheme.copyWith(
-        color: Colors.white30
-      ),
-      
-
+      iconTheme: theme.iconTheme.copyWith(color: Colors.white30),
     );
 
-    return 
-    DynamicTheme(
-      defaultBrightness: Brightness.light,
-      data: (brightness) => 
-      brightness == Brightness.dark ?  darkThemeData :
-      lightThemeData,
-      themedWidgetBuilder: (context, theme) =>
-    MaterialApp(
-      title: 'World Holidays',
-      debugShowCheckedModeBanner: false,
-      //TODO Get font
+    return DynamicTheme(
+      defaultBrightness: Brightness.dark,
+      data: (brightness) =>
+          brightness == Brightness.dark ? darkThemeData : lightThemeData,
+      themedWidgetBuilder: (context, theme) => MaterialApp(
+            title: 'World Holidays',
+            debugShowCheckedModeBanner: false,
+            //TODO Get font
 
-      // checkerboardRasterCacheImages: true,
-      // checkerboardOffscreenLayers: true,
-      // debugShowMaterialGrid: true,
-      // showSemanticsDebugger: true,
-      // showPerformanceOverlay: true,
+            // checkerboardRasterCacheImages: true,
+            // checkerboardOffscreenLayers: true,
+            // debugShowMaterialGrid: true,
+            // showSemanticsDebugger: true,
+            // showPerformanceOverlay: true,
 
-      // theme: lightThemeData,
-      theme: theme,
-      home: 
-      WorldHolidays(),
-      // home: MonthHolidayDetails(),
-      // home: ReminderList(),
-      // SettingsScreen(),
-    ),
+            // theme: lightThemeData,
+            theme: theme,
+            home: WorldHolidays(),
+            // home: MonthHolidayDetails(),
+            // home: ReminderList(),
+            // SettingsScreen(),
+          ),
     );
-    
   }
-  }
+}
