@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:world_holidays/resources/custom_expansion_panel.dart';
-import 'package:world_holidays/models/holiday_data.dart';
-import '../../resources/months_color.dart';
 import 'package:intl/intl.dart';
+import 'package:progress_indicators/progress_indicators.dart';
+import 'package:world_holidays/blocs/holiday_reminder_bloc.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
+import 'package:world_holidays/models/holiday_data.dart';
+import 'package:world_holidays/models/holiday_reminder.dart';
+import 'package:world_holidays/resources/custom_expansion_panel.dart';
 
+import '../../resources/months_color.dart';
 import '../settings_screen/settings_screen.dart';
 
 class MonthHolidayDetails extends StatefulWidget {
   final int monthIndex;
   // final String month;
   final List<List<Holiday>> listOfHolidayList;
+  final String countryName;
 
   MonthHolidayDetails(
       {Key key,
+      @required this.countryName,
       @required this.monthIndex,
       // @required this.month,
       @required this.listOfHolidayList})
@@ -101,16 +106,11 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
         appBar: AppBar(
           elevation: 0.0,
           leading: IconButton(
-            icon: Icon(
-              Icons.settings,
-            ),
-            onPressed: ()=> Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SettingsScreen()
-                                                    ))
-          ),
+              icon: Icon(
+                Icons.settings,
+              ),
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SettingsScreen()))),
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -168,8 +168,8 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                         monthToColorMap.keys.toList()[position],
                         textAlign: TextAlign.left,
                         style: Theme.of(context).textTheme.headline.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                   ),
@@ -243,8 +243,8 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                               .textTheme
                                               .headline
                                               .copyWith(
-                                                  fontSize: 16,
-                                                  ),
+                                                fontSize: 16,
+                                              ),
                                         ),
 
                                         subtitle: Text(
@@ -253,42 +253,33 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                               .format(DateTime.parse(
                                                   holiday.date.iso))
                                               .toString(),
-                                            style: Theme.of(context)
+                                          style: Theme.of(context)
                                               .textTheme
                                               // .subhead
                                               .subtitle
                                               .copyWith(
-                                            fontWeight: FontWeight.w300,
-                                                  ),
+                                                fontWeight: FontWeight.w300,
+                                              ),
                                           // style: TextStyle(
-                                          
+
                                           // ),
                                         ),
                                         leading: Text(
-                                            holiday.date.datetime.day
-                                                .toString(),
-                                            style: Theme.of(context)
+                                          holiday.date.datetime.day.toString(),
+                                          style: Theme.of(context)
                                               .textTheme
                                               .display1
                                               .copyWith(
-                                                  fontWeight: FontWeight.w300
-                                                  ),),
-                                        trailing: DateTime.now().isAfter(
-                                                DateTime.parse(
-                                                    holiday.date.iso))
-                                            ? null
-                                            : IconButton(
-                                                icon: Icon(
-                                                  Icons.alarm_on,
-                                                  
-                                                ),
-                                                onPressed: () {
-                                                  // _scheduleNotification(
-                                                  //     DateTime.parse(
-                                                  //         holiday.date.iso),
-                                                  //     holiday.name);
-                                                },
-                                              ),
+                                                  fontWeight: FontWeight.w300),
+                                        ),
+                                        trailing:
+                                            //This shows the reminder icon only for future dates
+                                            DateTime.now().isAfter(
+                                                    DateTime.parse(
+                                                        holiday.date.iso))
+                                                ? null
+                                                : buildReminderButton(
+                                                    holiday, currentMonthIndex),
                                       );
                                     },
                                     body: Container(
@@ -300,15 +291,13 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                           title: Text(
                                             holiday.description ??
                                                 "No description available",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline
-                                              .copyWith(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w300
-                                                  ),
-                                        
-
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline
+                                                .copyWith(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w300),
                                           ),
                                         ),
                                       ),
@@ -407,5 +396,84 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
         resizeToAvoidBottomPadding: false,
       ),
     );
+  }
+
+  Widget buildReminderButton(Holiday holiday, int currentMonthIndex) {
+    String holidayId = holiday.name + widget.countryName;
+    return
+        // holidayReminderBloc.isHolidayInReminderList(holidayId)
+        // ?
+
+        FutureBuilder<bool>(
+            future: holidayReminderBloc.isHolidayInReminderList(holidayId),
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.hasData) {
+                bool isHolidayInReminderList = snapshot.data;
+
+                print(isHolidayInReminderList);
+
+                return AnimatedSwitcher(
+                    duration: Duration(
+                      milliseconds: 500,
+                    ),
+                    child: isHolidayInReminderList
+                        ? IconButton(
+                            key: ValueKey(0),
+                            icon: Icon(
+                              Icons.alarm_on,
+                              color: monthToColorMap.values
+                                  .toList()[currentMonthIndex],
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                holidayReminderBloc
+                                    .deleteHolidayReminder(holidayId);
+                              });
+
+                              //TODO remove the holiday from notifications
+                              // _scheduleNotification(
+                              //     DateTime.parse(
+                              //         holiday.date.iso),
+                              //     holiday.name);
+                            },
+                          )
+                        : IconButton(
+                            key: ValueKey(1),
+                            icon: Icon(
+                              Icons.alarm_off,
+                            ),
+                            onPressed: () {
+                              HolidayReminder holidayReminder = HolidayReminder(
+                                id: holidayId,
+                                name: holiday.name,
+                                description: holiday.description ??
+                                    "No description available",
+                                holidayDate: holiday.date.iso,
+                                country: widget.countryName,
+                              );
+
+                              setState(() {
+                                holidayReminderBloc
+                                    .addNewHoliday(holidayReminder);
+                              });
+
+                              // _scheduleNotification(
+                              //     DateTime.parse(
+                              //         holiday.date.iso),
+                              //     holiday.name);
+                            }));
+              } else {
+                print("no ddata");
+                return IconButton(
+                    icon: Icon(
+                      Icons.alarm_off,
+                    ),
+                    onPressed: null);
+                // JumpingDotsProgressIndicator(
+                //   color: monthToColorMap.values.toList()[currentMonthIndex],
+                //   fontSize: 2.0,
+                // );
+              }
+            });
   }
 }

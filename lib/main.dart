@@ -61,7 +61,8 @@ class MyApp extends StatelessWidget {
     );
 
     return DynamicTheme(
-      defaultBrightness: Brightness.dark,
+       
+      defaultBrightness: Theme.of(context).brightness,
       data: (brightness) =>
           brightness == Brightness.dark ? darkThemeData : lightThemeData,
       themedWidgetBuilder: (context, theme) => MaterialApp(

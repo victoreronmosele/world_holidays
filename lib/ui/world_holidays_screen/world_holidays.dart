@@ -10,7 +10,7 @@ import '../../resources/months_color.dart';
 import '../settings_screen/settings_screen.dart';
 import 'country_title.dart';
 import 'month_holiday_details.dart';
-import 'package:dynamic_theme/dynamic_theme.dart';
+import '../../blocs/holiday_reminder_bloc.dart';
 
 class WorldHolidays extends StatefulWidget {
   WorldHolidays({
@@ -30,6 +30,7 @@ class _WorldHolidaysState extends State<WorldHolidays> {
 //TODO Rearrange code
 //TODO Track with shared preferences which holiday has been added to reminder list
 //TODO Style app
+//TODO Show active bottom app bar
   @override
   void initState() {
     super.initState();
@@ -205,7 +206,8 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                       flex: 1,
                     ),
                     MonthCards(
-                      _countryCode,
+                      countryCode: _countryCode,
+                      countryName: _selectedCountry,
                     ),
                     Expanded(
                       child: Container(),
@@ -300,8 +302,16 @@ class _WorldHolidaysState extends State<WorldHolidays> {
     );
   }
 
+  
+
   Future _cancelAllNotifications() async {
-    await flutterLocalNotificationsPlugin.cancelAll();
+    await flutterLocalNotificationsPlugin.cancelAll().then((onValue){
+      setState(() {
+        holidayReminderBloc.deleteAllHolidayReminders();  
+      });
+      
+    });
+
     print("all notifications cancelled");
   }
 
@@ -333,9 +343,11 @@ class _WorldHolidaysState extends State<WorldHolidays> {
 
 class MonthCards extends StatefulWidget {
   final String countryCode;
+  final String countryName;
 
-  const MonthCards(
-    this.countryCode, {
+  const MonthCards({
+    this.countryCode,
+    this.countryName,
     Key key,
   }) : super(key: key);
 
@@ -507,10 +519,12 @@ class MonthCardsState extends State<MonthCards> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             MonthHolidayDetails(
-                                                monthIndex: monthIndex,
-                                                // month: month,
-                                                listOfHolidayList:
-                                                    listOfHolidayLists)));
+                                              monthIndex: monthIndex,
+                                              // month: month,
+                                              listOfHolidayList:
+                                                  listOfHolidayLists,
+                                              countryName: widget.countryName,
+                                            )));
                               }
                             },
                             child: Column(
