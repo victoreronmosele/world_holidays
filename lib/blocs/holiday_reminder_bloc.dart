@@ -24,9 +24,8 @@ class HolidayReminderBloc {
     Map<String, List<HolidayReminder>> monthIndexToHolidayReminderListMap =
         Map();
 
-    if (holidayReminderList.value == null) {
-      monthIndexToHolidayReminderListMapSubject.sink
-          .add(monthIndexToHolidayReminderListMap);
+    if (holidayReminderList.value == null || holidayReminderList.value.isEmpty) {
+      monthIndexToHolidayReminderListMapSubject.sink.add(monthIndexToHolidayReminderListMap);  
       return monthIndexToHolidayReminderListMapSubject;
     }
 
@@ -59,8 +58,17 @@ class HolidayReminderBloc {
       _repository.addNewHolidayReminder(holidayReminder);
 
   deleteHolidayReminder(String id) => _repository.deleteHolidayReminder(id);
+   
 
-  deleteAllHolidayReminders() => _repository.deleteAllHolidayReminders();
+  
+  deleteAllHolidayReminders() { 
+    _repository.deleteAllHolidayReminders();
+    holidayReminderList.sink.add([]);
+    monthIndexToHolidayReminderListMapSubject.sink.add({});
+    print(monthIndexToHolidayReminderListMapSubject.value.length);
+    
+    
+    }
 
   Future<bool> isHolidayInReminderList(String id) =>
       _repository.isHolidayInReminderList(id);

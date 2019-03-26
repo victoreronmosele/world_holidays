@@ -29,7 +29,6 @@ class ReminderListState extends State<ReminderList>
 
   @override
   void initState() {
-    // TODO: implement initState didwidgetupdate
     super.initState();
     animationController =
         AnimationController(duration: Duration(milliseconds: 900), vsync: this);
@@ -45,9 +44,6 @@ class ReminderListState extends State<ReminderList>
 
     animationController.forward();
   }
-
-
-  
 
   @override
   void dispose() {
