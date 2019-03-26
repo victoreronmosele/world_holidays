@@ -63,16 +63,15 @@ class ReminderListState extends State<ReminderList>
     double reminderMonthTitleHeight =
         screenHeightWithoutAppBarAndBottomNavBar * 2 / 15;
 
-    return StreamBuilder<List<HolidayReminder>>(
+    return StreamBuilder<Map<String, List<HolidayReminder>>>(
       stream: holidayReminderBloc.holidayReminderListValue,
       builder: (BuildContext context,
-          AsyncSnapshot<List<HolidayReminder>> snapshot) {
+          AsyncSnapshot<Map<String, List<HolidayReminder>>> snapshot) {
         if (snapshot.hasData) {
-          List<HolidayReminder> holidayReminderList = snapshot.data;
+          Map<String, List<HolidayReminder>>
+              monthIndexToHolidayReminderListMap = snapshot.data;
 
-      
-
-          if (holidayReminderList.isEmpty) {
+          if (monthIndexToHolidayReminderListMap.isEmpty) {
             return Container(
               child: Center(
                 child: Column(
@@ -107,24 +106,6 @@ class ReminderListState extends State<ReminderList>
               ),
             );
           } else {
-            Map<String, List<HolidayReminder>>
-                monthIndexToHolidayReminderListMap = Map();
-
-            monthToColorMap.keys.forEach((String month) {
-              List<HolidayReminder> holidayReminderListInMonth = [];
-
-              holidayReminderList.forEach((HolidayReminder holidayReminder) {
-                if (holidayReminder.monthString == month) {
-                  holidayReminderListInMonth.add(holidayReminder);
-                }
-              });
-
-              if (holidayReminderListInMonth.isNotEmpty) {
-                monthIndexToHolidayReminderListMap
-                    .addAll({month: holidayReminderListInMonth});
-              }
-            });
-
             return SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -132,8 +113,9 @@ class ReminderListState extends State<ReminderList>
                 children: monthIndexToHolidayReminderListMap.keys
                     .toList()
                     .map((String month) {
-
-                      var monthIndexTemp = monthIndexToHolidayReminderListMap.keys.toList().indexOf(month);
+                  var monthIndexTemp = monthIndexToHolidayReminderListMap.keys
+                      .toList()
+                      .indexOf(month);
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
@@ -186,7 +168,10 @@ class ReminderListState extends State<ReminderList>
                       CustomExpansionPanelList(
                         key: PageStorageKey<String>(month),
                         expansionCallback: (int index, bool isExpanded) {
-                          print("index " + index.toString() + " " + isExpanded.toString());
+                          print("index " +
+                              index.toString() +
+                              " " +
+                              isExpanded.toString());
                           setState(() {
                             monthIndexToHolidayReminderListMap[month][index]
                                     .isExpanded =
@@ -194,19 +179,20 @@ class ReminderListState extends State<ReminderList>
                                         [index]
                                     .isExpanded;
                             isExpanded = !isExpanded;
-                            monthIndexToHolidayReminderListMap[month]
-                                        [index].name = "fire";
+                            monthIndexToHolidayReminderListMap[month][index]
+                                .name = "fire";
                           });
                           print("post index " +
                               monthIndexToHolidayReminderListMap[month][index]
-                                  .toString() + " " +
+                                  .toString() +
+                              " " +
                               monthIndexToHolidayReminderListMap[month][index]
                                   .isExpanded
                                   .toString());
                         },
                         children: monthIndexToHolidayReminderListMap[month]
                             .map((HolidayReminder holidayReminder) {
-                              print(holidayReminder.isExpanded.toString());
+                          print(holidayReminder.isExpanded.toString());
                           return CustomExpansionPanel(
                             // key:
                             headerBuilder:
