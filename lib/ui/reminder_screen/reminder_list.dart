@@ -46,6 +46,9 @@ class ReminderListState extends State<ReminderList>
     animationController.forward();
   }
 
+
+  
+
   @override
   void dispose() {
     animationController.dispose();
@@ -67,7 +70,7 @@ class ReminderListState extends State<ReminderList>
       stream: holidayReminderBloc.holidayReminderListValue,
       builder: (BuildContext context,
           AsyncSnapshot<Map<String, List<HolidayReminder>>> snapshot) {
-        if (snapshot.hasData) {
+        if (!snapshot.hasData) {
           Map<String, List<HolidayReminder>>
               monthIndexToHolidayReminderListMap = snapshot.data;
 
@@ -168,31 +171,20 @@ class ReminderListState extends State<ReminderList>
                       CustomExpansionPanelList(
                         key: PageStorageKey<String>(month),
                         expansionCallback: (int index, bool isExpanded) {
-                          print("index " +
-                              index.toString() +
-                              " " +
-                              isExpanded.toString());
-                          setState(() {
-                            monthIndexToHolidayReminderListMap[month][index]
-                                    .isExpanded =
-                                !monthIndexToHolidayReminderListMap[month]
-                                        [index]
-                                    .isExpanded;
-                            isExpanded = !isExpanded;
-                            monthIndexToHolidayReminderListMap[month][index]
-                                .name = "fire";
-                          });
-                          print("post index " +
-                              monthIndexToHolidayReminderListMap[month][index]
-                                  .toString() +
-                              " " +
-                              monthIndexToHolidayReminderListMap[month][index]
-                                  .isExpanded
-                                  .toString());
+                          monthIndexToHolidayReminderListMap[month][index]
+                                  .isExpanded =
+                              !monthIndexToHolidayReminderListMap[month][index]
+                                  .isExpanded;
+
+                          holidayReminderBloc
+                              .monthIndexToHolidayReminderListMapSubject.sink
+                              .add(monthIndexToHolidayReminderListMap);
                         },
                         children: monthIndexToHolidayReminderListMap[month]
                             .map((HolidayReminder holidayReminder) {
-                          print(holidayReminder.isExpanded.toString());
+                          int monthIndex =
+                              monthIndexToHolidayReminderListMap[month]
+                                  .indexOf(holidayReminder);
                           return CustomExpansionPanel(
                             // key:
                             headerBuilder:
@@ -220,7 +212,10 @@ class ReminderListState extends State<ReminderList>
                                       ),
                                 ),
                                 leading: Text(
-                                  holidayReminder.date,
+                                  holidayReminderBloc
+                                      .monthIndexToHolidayReminderListMapSubject
+                                      .value[month][monthIndex]
+                                      .date,
                                   style: Theme.of(context)
                                       .textTheme
                                       .display1

@@ -19,7 +19,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     switchBrightness() {
-      print("switching");
       DynamicTheme.of(context).setBrightness(
           Theme.of(context).brightness == Brightness.dark
               ? Brightness.light
@@ -78,13 +77,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
             currentSelection: _index,
           ),
-          CSHeader(""),
+          // CSHeader(""),
           // CSControl('Loading...', CupertinoActivityIndicator()),
-          CSButton(CSButtonType.DEFAULT, "Licenses", () {
-            print("It works!");
-          }),
-          CSHeader(""),
-          CSButton(CSButtonType.DESTRUCTIVE, "Delete all data", () {}),
+          // CSButton(CSButtonType.DEFAULT, "Licenses", () {
+            // print("It works!");
+          // }),
+          // CSHeader(""),
+          // CSButton(CSButtonType.DESTRUCTIVE, "Delete all data", () {}),
         ],
       ),
     );

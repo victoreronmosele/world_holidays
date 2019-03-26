@@ -49,6 +49,8 @@ class HolidayReminderBloc {
     return monthIndexToHolidayReminderListMapSubject;
   }
 
+  
+
   getHolidayReminderList() async {
     holidayReminderList.sink.add(await _repository.getAllHolidayReminders());
   }

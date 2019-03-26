@@ -126,13 +126,11 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
             // Container(child:
             PageView.builder(
           onPageChanged: (pageId) {
-            print(pageId.toString());
             setState(() {
               currentMonthIndex = pageId;
               currentMonthHolidayList = listOfHolidayLists[currentMonthIndex];
             });
 
-            print("current =>" + currentMonthIndex.toString());
           },
           physics: BouncingScrollPhysics(),
           controller: _pageController,
@@ -410,8 +408,6 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
               if (snapshot.hasData) {
                 bool isHolidayInReminderList = snapshot.data;
 
-                print(isHolidayInReminderList);
-
                 return AnimatedSwitcher(
                     duration: Duration(
                       milliseconds: 500,
@@ -469,7 +465,6 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                               //     holiday.name);
                             }));
               } else {
-                print("no ddata");
                 return IconButton(
                     icon: Icon(
                       Icons.alarm_off,

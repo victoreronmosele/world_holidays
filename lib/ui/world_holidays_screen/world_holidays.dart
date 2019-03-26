@@ -34,7 +34,6 @@ class _WorldHolidaysState extends State<WorldHolidays> {
   @override
   void initState() {
     super.initState();
-    print("init");
     _selectedCountry = "Nigeria";
     _flagUri = 'ng.png';
 
@@ -53,7 +52,6 @@ class _WorldHolidaysState extends State<WorldHolidays> {
   }
 
   Future onSelectNotification(String payload) async {
-    print(payload);
     showDialog(
       context: context,
       builder: (_) {
@@ -111,7 +109,7 @@ class _WorldHolidaysState extends State<WorldHolidays> {
   int _currentIndex = 0;
 
   switchTab(int index) {
-    print("switch tab!");
+  
     if (_currentIndex != index) {
       setState(() {
         _currentIndex = index;
@@ -316,7 +314,6 @@ class _WorldHolidaysState extends State<WorldHolidays> {
       
     });
 
-    print("all notifications cancelled");
   }
 
   IconButton buildClearRemindersButton() {
@@ -513,8 +510,6 @@ class MonthCardsState extends State<MonthCards> {
                           color: monthToColorMap[month],
                           child: InkWell(
                             onTap: () async {
-                              print(monthIndex.toString());
-                              print(month);
                               if (snapshot.hasData) {
                                 List<List<Holiday>> listOfHolidayLists =
                                     monthToHolidayListMap.values.toList();

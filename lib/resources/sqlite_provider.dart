@@ -42,10 +42,8 @@ class SQLiteProvider {
 }
 
 addNewHoliday (HolidayReminder holidayReminder) async {
-  print("start addNewHoliday");
   final db = await database;
   var res =await db.insert("HolidayReminder", holidayReminder.toMap());
-  print("end addNewHoliday");
   return res;
 }
 
@@ -89,19 +87,12 @@ addNewHoliday (HolidayReminder holidayReminder) async {
 
     List<HolidayReminder> holidayReminderList =  await getAllHolidays();
 
-    print("hl " + holidayReminderList.length.toString());
-
-
-
-
     isHolidayInReminderList =  holidayReminderList.any(
       (test) {
         return test.id ==id;
       }
       
     );
-
-    // print("provider "+  isHolidayInReminderList.toString());
 
     return isHolidayInReminderList;
   }
