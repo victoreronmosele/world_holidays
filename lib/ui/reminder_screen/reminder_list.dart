@@ -266,7 +266,6 @@ class ReminderListState extends State<ReminderList>
             ),
             child: Center(
               child: JumpingDotsProgressIndicator(
-                //TODO fix color not changing immediately after switching theme
                 color: Theme.of(context).primaryIconTheme.color,
                 fontSize: 54.0,
               ),

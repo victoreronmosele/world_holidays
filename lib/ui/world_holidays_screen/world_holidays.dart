@@ -22,20 +22,15 @@ class WorldHolidays extends StatefulWidget {
 }
 
 class _WorldHolidaysState extends State<WorldHolidays> {
-  String _selectedCountry;
-  String _countryCode;
-  String _flagUri;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
-//TODO Rearrange code
-//TODO Track with shared preferences which holiday has been added to reminder list
+  String initialCountryCode;
+  String initialCountryName;
+//TODO Rearrange cod
 //TODO Style app
 //TODO Show active bottom app bar
   @override
   void initState() {
     super.initState();
-    _selectedCountry = "Nigeria";
-    _flagUri = 'ng.png';
 
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('app_icon');
@@ -49,6 +44,11 @@ class _WorldHolidaysState extends State<WorldHolidays> {
 
     notificationBloc
         .setFlutterLocalNotificationsPlugin(flutterLocalNotificationsPlugin);
+
+    holidayBloc.setCurrentSelectedCountryCode("US");
+    holidayBloc.setCurrentSelectedCountryName('United States');
+
+    // print(initialCountryCode +initialCountryName);
   }
 
   Future onSelectNotification(String payload) async {
@@ -178,7 +178,7 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                   key: ValueKey(1),
                   // color: Colors.white,
                   child: Column(children: <Widget>[
-                    CountryTitle(selectedCountry: _selectedCountry),
+                    CountryTitle(selectedCountry: holidayBloc.currentSelectedCountryNameValue.value),
                     Expanded(
                       flex: 4,
                       child: Container(
@@ -186,15 +186,14 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               CountryCodePicker(
+                                initialSelection: holidayBloc.currentSelectedCountryCodeValue.value,
                                 onChanged: (countryCode) async {
                                   setState(() {
-                                    _selectedCountry =
-                                        countryCode.toCountryString();
-                                    _countryCode = countryCode.toCountryCode();
-
-                                    _flagUri = countryCode.toFlagUri();
+                                    holidayBloc.setCurrentSelectedCountryCode(countryCode.toCountryCode());
+                                    holidayBloc.setCurrentSelectedCountryName(countryCode.toCountryString());
                                   });
                                 },
+
                               ),
                               Text(
                                 'Select Country',
@@ -208,8 +207,8 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                       flex: 1,
                     ),
                     MonthCards(
-                      countryCode: _countryCode,
-                      countryName: _selectedCountry,
+                      countryCode: holidayBloc.currentSelectedCountryCodeValue.value,
+                      countryName: holidayBloc.currentSelectedCountryNameValue.value,
                     ),
                     Expanded(
                       child: Container(),

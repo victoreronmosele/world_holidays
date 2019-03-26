@@ -53,7 +53,7 @@ class Holiday {
   Date date;
   List<String> type;
   String locations;
-  String states;
+  // List states;
   bool isExpanded;
 
   Holiday({
@@ -62,7 +62,7 @@ class Holiday {
     this.date,
     this.type,
     this.locations,
-    this.states,
+    // this.states,
     this.isExpanded = false,
   });
 
@@ -72,7 +72,7 @@ class Holiday {
         date: Date.fromJson(json["date"]),
         type: new List<String>.from(json["type"].map((x) => x)),
         locations: json["locations"],
-        states: json["states"],
+        // states: json["states"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -81,7 +81,7 @@ class Holiday {
         "date": date.toJson(),
         "type": new List<dynamic>.from(type.map((x) => x)),
         "locations": locations,
-        "states": states,
+        // "states": states,
       };
 }
 

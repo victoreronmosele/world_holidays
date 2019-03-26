@@ -13,7 +13,7 @@ class HolidayReminderBloc {
     getHolidayReminderList();
   }
 
-  void dispose() async {
+  void dispose() {
     holidayReminderList.close();
     monthIndexToHolidayReminderListMapSubject.close();
   }
