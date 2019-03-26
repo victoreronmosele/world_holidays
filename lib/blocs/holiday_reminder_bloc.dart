@@ -6,7 +6,8 @@ import 'package:rxdart/rxdart.dart';
 class HolidayReminderBloc {
   final _repository = Repository();
   final holidayReminderList = BehaviorSubject<List<HolidayReminder>>();
-  final monthIndexToHolidayReminderListMapSubject =BehaviorSubject<Map<String, List<HolidayReminder>>>();
+  final monthIndexToHolidayReminderListMapSubject =
+      BehaviorSubject<Map<String, List<HolidayReminder>>>();
 
   HolidayReminderBloc() {
     getHolidayReminderList();
@@ -17,20 +18,20 @@ class HolidayReminderBloc {
     monthIndexToHolidayReminderListMapSubject.close();
   }
 
- get holidayReminderListValue {
+  get monthIndexToHolidayReminderListMap {
     getHolidayReminderList();
 
     Map<String, List<HolidayReminder>> monthIndexToHolidayReminderListMap =
         Map();
 
     if (holidayReminderList.value == null) {
-      monthIndexToHolidayReminderListMapSubject.sink.add(monthIndexToHolidayReminderListMap);  
+      monthIndexToHolidayReminderListMapSubject.sink
+          .add(monthIndexToHolidayReminderListMap);
       return monthIndexToHolidayReminderListMapSubject;
     }
 
     monthToColorMap.keys.forEach((String month) {
       List<HolidayReminder> holidayReminderListInMonth = [];
-
 
       holidayReminderList.value.forEach((HolidayReminder holidayReminder) {
         if (holidayReminder.monthString == month) {
@@ -44,12 +45,11 @@ class HolidayReminderBloc {
       }
     });
 
-    monthIndexToHolidayReminderListMapSubject.sink.add(monthIndexToHolidayReminderListMap);
+    monthIndexToHolidayReminderListMapSubject.sink
+        .add(monthIndexToHolidayReminderListMap);
 
     return monthIndexToHolidayReminderListMapSubject;
   }
-
-  
 
   getHolidayReminderList() async {
     holidayReminderList.sink.add(await _repository.getAllHolidayReminders());

@@ -67,10 +67,10 @@ class ReminderListState extends State<ReminderList>
         screenHeightWithoutAppBarAndBottomNavBar * 2 / 15;
 
     return StreamBuilder<Map<String, List<HolidayReminder>>>(
-      stream: holidayReminderBloc.holidayReminderListValue,
+      stream: holidayReminderBloc.monthIndexToHolidayReminderListMap,
       builder: (BuildContext context,
           AsyncSnapshot<Map<String, List<HolidayReminder>>> snapshot) {
-        if (!snapshot.hasData) {
+        if (snapshot.hasData) {
           Map<String, List<HolidayReminder>>
               monthIndexToHolidayReminderListMap = snapshot.data;
 
