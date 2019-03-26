@@ -20,7 +20,6 @@ class HolidayReminderBloc {
   }
 
   getHolidayReminderList() async {
-    print("start get reminder list");
     holidayReminderList.sink.add(await _repository.getAllHolidayReminders());
   }
 

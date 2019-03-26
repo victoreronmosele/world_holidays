@@ -25,16 +25,18 @@ class SQLiteProvider {
     String path = join(documentsDirectory.path, "ReminderDatabase.db");
     return await openDatabase(path, version: 1, onOpen: (db) {
     }, onCreate: (Database db, int version) async {
-      await db.execute("CREATE TABLE HolidayReminder ("
+      await db.execute('CREATE TABLE HolidayReminder ('
           //Primary Key is TEXT becuase the api returns no id
           //And so holiday name + country is used as text
-          "id TEXT PRIMARY KEY,"
+          'id TEXT PRIMARY KEY,'
           'name TEXT,'
           'description TEXT,'
-          //holidayDate will be in ISO8601 string format
-          'holidayDate TEXT,'
-          'country TEXT'
-          ")");
+          'country TEXT,'
+          'monthIndex INTEGER,'
+          'monthString TEXT,'
+          'date TEXT,'
+          'dayOfTheWeek TEXT'
+          ')');
     });
 
 }

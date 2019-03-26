@@ -141,6 +141,10 @@ class _WorldHolidaysState extends State<WorldHolidays> {
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SettingsScreen()));
+
+              setState(() {
+                
+              });
             },
           ),
           title: Padding(

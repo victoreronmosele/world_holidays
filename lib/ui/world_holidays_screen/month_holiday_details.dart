@@ -448,8 +448,14 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                 name: holiday.name,
                                 description: holiday.description ??
                                     "No description available",
-                                holidayDate: holiday.date.iso,
                                 country: widget.countryName,
+                                monthIndex: currentMonthIndex,
+                                monthString: monthToColorMap.keys
+                                    .toList()[currentMonthIndex],
+                                date: holiday.date.datetime.day.toString(),
+                                dayOfTheWeek: DateFormat.EEEE()
+                                    .format(DateTime.parse(holiday.date.iso))
+                                    .toString(),
                               );
 
                               setState(() {
