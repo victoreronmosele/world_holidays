@@ -18,14 +18,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     switchBrightness() {
-      DynamicTheme.of(context).setBrightness(
-          Theme.of(context).brightness == Brightness.dark
-              ? Brightness.light
-              : Brightness.dark);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  // systemNavigationBarColor: Colors.blue, // navigation bar color
-  statusBarColor: Theme.of(context).brightness ==Brightness.dark? Colors.white: Colors.black, // status bar color
-));
+
+      if (Theme.of(context).brightness == Brightness.dark) {
+        DynamicTheme.of(context).setBrightness(Brightness.light);
+      } else {
+        DynamicTheme.of(context).setBrightness(Brightness.dark);
+      }
+      
     }
 
     _index = Theme.of(context).brightness == Brightness.light ? 0 : 1;
@@ -83,7 +82,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           // CSHeader(""),
           // CSControl('Loading...', CupertinoActivityIndicator()),
           // CSButton(CSButtonType.DEFAULT, "Licenses", () {
-            // print("It works!");
+          // print("It works!");
           // }),
           // CSHeader(""),
           // CSButton(CSButtonType.DESTRUCTIVE, "Delete all data", () {}),

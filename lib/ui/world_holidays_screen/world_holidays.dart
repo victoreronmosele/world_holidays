@@ -7,6 +7,7 @@ import 'package:world_holidays/blocs/notification_bloc.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:world_holidays/models/holiday_data.dart';
 import 'package:world_holidays/ui/reminder_screen/reminder_list.dart';
+import '../../blocs/brightness_bloc.dart';
 import '../../resources/months_color.dart';
 import '../settings_screen/settings_screen.dart';
 import 'country_title.dart';
@@ -22,17 +23,33 @@ class WorldHolidays extends StatefulWidget {
   _WorldHolidaysState createState() => _WorldHolidaysState();
 }
 
-class _WorldHolidaysState extends State<WorldHolidays> {
+class _WorldHolidaysState extends State<WorldHolidays> with WidgetsBindingObserver{
+
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   String initialCountryCode;
   String initialCountryName;
 //TODO Rearrange cod
 //TODO Style app
 //TODO Show active bottom app bar
+
+  @override
+  void dispose(){
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+ @override
+   void didChangeAppLifecycleState(AppLifecycleState state) {
+     if (state == AppLifecycleState.resumed){
+       print("yay");
+     }
+    // setState(() { _notification = state; });
+   }
+
   @override
   void initState() {
     super.initState();
-
+    WidgetsBinding.instance.addObserver(this);
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('app_icon');
     var initializationSettingsIOS = new IOSInitializationSettings();
@@ -110,7 +127,6 @@ class _WorldHolidaysState extends State<WorldHolidays> {
   int _currentIndex = 0;
 
   switchTab(int index) {
-  
     if (_currentIndex != index) {
       setState(() {
         _currentIndex = index;
@@ -120,11 +136,12 @@ class _WorldHolidaysState extends State<WorldHolidays> {
 
   @override
   Widget build(BuildContext context) {
-
-     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  // systemNavigationBarColor: Colors.blue, // navigation bar color
-  statusBarColor: Theme.of(context).brightness ==Brightness.dark? Colors.black: Colors.white, // status bar color
-));
+    print("build");
+    setState(() {});
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   // statusBarColor: Colors.grey[500], // status bar color
+    //   statusBarColor: statusBarColorBloc.brightnessValue, // status bar color
+    // ));
 
     var animatedSwitcher = AnimatedSwitcher(
       duration: Duration(
@@ -138,12 +155,11 @@ class _WorldHolidaysState extends State<WorldHolidays> {
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
-          // brightness: 
           // Theme.of(context).brightness,
           // == Brightness.dark
-              // ? 
-              // Brightness.light,
-              // : Brightness.dark,
+          // ?
+          // Brightness.light,
+          // : Brightness.dark,
           elevation: 0.0,
           leading: IconButton(
             icon: Icon(
@@ -153,9 +169,7 @@ class _WorldHolidaysState extends State<WorldHolidays> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SettingsScreen()));
 
-              setState(() {
-                
-              });
+              setState(() {});
             },
           ),
           title: Padding(
@@ -191,7 +205,9 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                   key: ValueKey(1),
                   // color: Colors.white,
                   child: Column(children: <Widget>[
-                    CountryTitle(selectedCountry: holidayBloc.currentSelectedCountryNameValue.value),
+                    CountryTitle(
+                        selectedCountry:
+                            holidayBloc.currentSelectedCountryNameValue.value),
                     Expanded(
                       flex: 4,
                       child: Container(
@@ -199,14 +215,14 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               CountryCodePicker(
-                                initialSelection: holidayBloc.currentSelectedCountryCodeValue.value,
+                                initialSelection: holidayBloc
+                                    .currentSelectedCountryCodeValue.value,
                                 onChanged: (countryCode) async {
-                                  setState(() {
-                                    holidayBloc.setCurrentSelectedCountryCode(countryCode.toCountryCode());
-                                    holidayBloc.setCurrentSelectedCountryName(countryCode.toCountryString());
-                                  });
+                                  // setState(() {
+                                  //   holidayBloc.setCurrentSelectedCountryCode(countryCode.toCountryCode());
+                                  //   holidayBloc.setCurrentSelectedCountryName(countryCode.toCountryString());
+                                  // });
                                 },
-
                               ),
                               Text(
                                 'Select Country',
@@ -220,8 +236,10 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                       flex: 1,
                     ),
                     MonthCards(
-                      countryCode: holidayBloc.currentSelectedCountryCodeValue.value,
-                      countryName: holidayBloc.currentSelectedCountryNameValue.value,
+                      countryCode:
+                          holidayBloc.currentSelectedCountryCodeValue.value,
+                      countryName:
+                          holidayBloc.currentSelectedCountryNameValue.value,
                     ),
                     Expanded(
                       child: Container(),
@@ -316,16 +334,12 @@ class _WorldHolidaysState extends State<WorldHolidays> {
     );
   }
 
-  
-
   Future _cancelAllNotifications() async {
-    await flutterLocalNotificationsPlugin.cancelAll().then((onValue){
+    await flutterLocalNotificationsPlugin.cancelAll().then((onValue) {
       setState(() {
-        holidayReminderBloc.deleteAllHolidayReminders();  
+        holidayReminderBloc.deleteAllHolidayReminders();
       });
-      
     });
-
   }
 
   IconButton buildClearRemindersButton() {

@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:world_holidays/ui/reminder_screen/reminder_list.dart';
-import 'ui/world_holidays_screen/month_holiday_details.dart';
-import 'ui/settings_screen/settings_screen.dart';
+import 'package:flutter/services.dart';
+import 'blocs/brightness_bloc.dart';
 import 'ui/world_holidays_screen/world_holidays.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
   @override
+  MyAppState createState() {
+    return new MyAppState();
+  }
+}
+
+class MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
+    print("hi");
+    // buildSetSystemUIOverlayStyle(context);
     final ThemeData theme = Theme.of(context);
 
     ThemeData lightThemeData = ThemeData(
@@ -60,31 +68,52 @@ class MyApp extends StatelessWidget {
       iconTheme: theme.iconTheme.copyWith(color: Colors.white30),
     );
 
-    return 
-    DynamicTheme(
-      defaultBrightness: Brightness.dark,
-      data: (brightness) =>
-          brightness == Brightness.dark ? darkThemeData :
-           lightThemeData,
-      themedWidgetBuilder: (context, theme) => 
-      MaterialApp(
+    return DynamicTheme(
+        defaultBrightness: Brightness.dark,
+        data: (brightness) {
+          statusBarColorBloc.setBrightness(Colors.blue);
+          ThemeData currentThemeData;
+
+          if (brightness == Brightness.dark) {
+            statusBarColorBloc.setBrightness(darkThemeData.primaryColor);
+
+            currentThemeData = darkThemeData;
+          } else {
+            statusBarColorBloc.setBrightness(lightThemeData.primaryColor);
+
+            currentThemeData = lightThemeData;
+          }
+
+          SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+            statusBarColor:
+                statusBarColorBloc.brightnessValue, // status bar color
+          ));
+
+          return currentThemeData;
+        },
+        themedWidgetBuilder: (context, theme) {
+          return MaterialApp(
             title: 'World Holidays',
             debugShowCheckedModeBanner: false,
             //TODO Get font
 
-            // checkerboardRasterCacheImages: true,
-            // checkerboardOffscreenLayers: true,
-            // debugShowMaterialGrid: true,
-            // showSemanticsDebugger: true,
-            // showPerformanceOverlay: true,
-
-            // theme: darkThemeData,
             theme: theme,
             home: WorldHolidays(),
-            // home: MonthHolidayDetails(),
-            // home: ReminderList(),
-            // SettingsScreen(),
-          ),
-    );
+          );
+        });
+  }
+
+  void buildSetSystemUIOverlayStyle(context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarIconBrightness:
+          // Theme.of(context).brightness == Brightness.light
+          //     ? Brightness.light
+          //     :
+          Brightness.light,
+      // systemNavigationBarColor: Colors.blue, // navigation bar color
+      statusBarColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.white
+          : Colors.black, // status bar color
+    ));
   }
 }
