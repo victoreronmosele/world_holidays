@@ -1,6 +1,7 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -12,8 +13,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  double _slider = 0.5;
-  bool _switch = false;
   int _index;
 
   @override
@@ -23,6 +22,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Theme.of(context).brightness == Brightness.dark
               ? Brightness.light
               : Brightness.dark);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  // systemNavigationBarColor: Colors.blue, // navigation bar color
+  statusBarColor: Theme.of(context).brightness ==Brightness.dark? Colors.white: Colors.black, // status bar color
+));
     }
 
     _index = Theme.of(context).brightness == Brightness.light ? 0 : 1;

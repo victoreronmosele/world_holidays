@@ -60,11 +60,14 @@ class MyApp extends StatelessWidget {
       iconTheme: theme.iconTheme.copyWith(color: Colors.white30),
     );
 
-    return DynamicTheme(
-      defaultBrightness: Theme.of(context).brightness,
+    return 
+    DynamicTheme(
+      defaultBrightness: Brightness.dark,
       data: (brightness) =>
-          brightness == Brightness.dark ? darkThemeData : lightThemeData,
-      themedWidgetBuilder: (context, theme) => MaterialApp(
+          brightness == Brightness.dark ? darkThemeData :
+           lightThemeData,
+      themedWidgetBuilder: (context, theme) => 
+      MaterialApp(
             title: 'World Holidays',
             debugShowCheckedModeBanner: false,
             //TODO Get font
@@ -75,7 +78,7 @@ class MyApp extends StatelessWidget {
             // showSemanticsDebugger: true,
             // showPerformanceOverlay: true,
 
-            // theme: lightThemeData,
+            // theme: darkThemeData,
             theme: theme,
             home: WorldHolidays(),
             // home: MonthHolidayDetails(),

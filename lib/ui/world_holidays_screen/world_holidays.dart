@@ -1,5 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:world_holidays/blocs/holiday_bloc.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
@@ -119,6 +120,12 @@ class _WorldHolidaysState extends State<WorldHolidays> {
 
   @override
   Widget build(BuildContext context) {
+
+     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  // systemNavigationBarColor: Colors.blue, // navigation bar color
+  statusBarColor: Theme.of(context).brightness ==Brightness.dark? Colors.black: Colors.white, // status bar color
+));
+
     var animatedSwitcher = AnimatedSwitcher(
       duration: Duration(
         milliseconds: 300,
@@ -131,6 +138,12 @@ class _WorldHolidaysState extends State<WorldHolidays> {
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
+          // brightness: 
+          // Theme.of(context).brightness,
+          // == Brightness.dark
+              // ? 
+              // Brightness.light,
+              // : Brightness.dark,
           elevation: 0.0,
           leading: IconButton(
             icon: Icon(
