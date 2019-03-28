@@ -25,6 +25,7 @@ class MyAppState extends State<MyApp> {
       brightness: Brightness.light,
       primarySwatch: Colors.grey,
       primaryColor: Colors.grey[50],
+      
       textTheme: theme.textTheme.copyWith(
         headline: theme.textTheme.headline.copyWith(
           color: Colors.black,
@@ -47,6 +48,7 @@ class MyAppState extends State<MyApp> {
     ThemeData darkThemeData = ThemeData(
       brightness: Brightness.dark,
       primaryColor: Colors.grey[850],
+
       // primarySwatch: Colors.grey[850],
       textTheme: theme.textTheme.copyWith(
         headline: theme.textTheme.headline.copyWith(
@@ -69,27 +71,45 @@ class MyAppState extends State<MyApp> {
     );
 
     return DynamicTheme(
-        defaultBrightness: Brightness.dark,
         data: (brightness) {
-          statusBarColorBloc.setBrightness(Colors.blue);
           ThemeData currentThemeData;
 
+          statusBarColorBloc.statusBarColor.isEmpty.then((val){
+            if (val == true){
+              print("true");
+            } else {
+              print("untrue");
+
+            }
+          });
+          //   print("null");
+          //   
+          // }
+
           if (brightness == Brightness.dark) {
+            print("dark");
             statusBarColorBloc.setBrightness(darkThemeData.primaryColor);
 
-            currentThemeData = darkThemeData;
+             SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+            statusBarColor:
+                statusBarColorBloc.brightnessValue, // status bar color
+             ),);
+          return darkThemeData;
           } else {
+            print("light");
+            // DynamicTheme.of(context).setBrightness(Brightness.light);
             statusBarColorBloc.setBrightness(lightThemeData.primaryColor);
 
-            currentThemeData = lightThemeData;
-          }
-
-          SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+             SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+               statusBarBrightness: Brightness.dark,
             statusBarColor:
                 statusBarColorBloc.brightnessValue, // status bar color
           ));
 
-          return currentThemeData;
+          return lightThemeData;
+          }
+
+         
         },
         themedWidgetBuilder: (context, theme) {
           return MaterialApp(

@@ -43,6 +43,7 @@ class _WorldHolidaysState extends State<WorldHolidays> with WidgetsBindingObserv
      if (state == AppLifecycleState.resumed){
        print("yay");
      }
+
     // setState(() { _notification = state; });
    }
 
@@ -50,6 +51,8 @@ class _WorldHolidaysState extends State<WorldHolidays> with WidgetsBindingObserv
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+
+    
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('app_icon');
     var initializationSettingsIOS = new IOSInitializationSettings();
@@ -137,11 +140,15 @@ class _WorldHolidaysState extends State<WorldHolidays> with WidgetsBindingObserv
   @override
   Widget build(BuildContext context) {
     print("build");
+    print(Theme.of(context).brightness.toString());
     setState(() {});
-    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //   // statusBarColor: Colors.grey[500], // status bar color
-    //   statusBarColor: statusBarColorBloc.brightnessValue, // status bar color
-    // ));
+    SystemChrome.setSystemUIOverlayStyle(
+
+      SystemUiOverlayStyle(
+        statusBarIconBrightness: Theme.of(context).brightness == Brightness.light ? Brightness.dark :Brightness.light,
+      // statusBarColor: Colors.grey[500], // status bar color
+      statusBarColor: statusBarColorBloc.brightnessValue, // status bar color
+    ));
 
     var animatedSwitcher = AnimatedSwitcher(
       duration: Duration(
