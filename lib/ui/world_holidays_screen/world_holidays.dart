@@ -23,36 +23,35 @@ class WorldHolidays extends StatefulWidget {
   _WorldHolidaysState createState() => _WorldHolidaysState();
 }
 
-class _WorldHolidaysState extends State<WorldHolidays> with WidgetsBindingObserver{
-
+class _WorldHolidaysState extends State<WorldHolidays>
+    with WidgetsBindingObserver {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   String initialCountryCode;
   String initialCountryName;
-//TODO Rearrange cod
+//TODO Rearrange code
 //TODO Style app
 //TODO Show active bottom app bar
 
   @override
-  void dispose(){
+  void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
- @override
-   void didChangeAppLifecycleState(AppLifecycleState state) {
-     if (state == AppLifecycleState.resumed){
-       print("yay");
-     }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      print("yay");
+    }
 
     // setState(() { _notification = state; });
-   }
+  }
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('app_icon');
     var initializationSettingsIOS = new IOSInitializationSettings();
@@ -142,10 +141,10 @@ class _WorldHolidaysState extends State<WorldHolidays> with WidgetsBindingObserv
     print("build");
     print(Theme.of(context).brightness.toString());
     setState(() {});
-    SystemChrome.setSystemUIOverlayStyle(
-
-      SystemUiOverlayStyle(
-        statusBarIconBrightness: Theme.of(context).brightness == Brightness.light ? Brightness.dark :Brightness.light,
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarIconBrightness: Theme.of(context).brightness == Brightness.light
+          ? Brightness.dark
+          : Brightness.light,
       // statusBarColor: Colors.grey[500], // status bar color
       statusBarColor: statusBarColorBloc.brightnessValue, // status bar color
     ));
@@ -269,11 +268,28 @@ class _WorldHolidaysState extends State<WorldHolidays> with WidgetsBindingObserv
                     },
                     child: SizedBox(
                       height: 60.0,
-                      child: Icon(
-                        Icons.home,
-                        size: 24.0,
-                        color: Theme.of(context).primaryIconTheme.color,
-                      ),
+                      child: Stack(children: <Widget>[
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: SizedBox(
+                            height: 5.0,
+                            child: AnimatedContainer(
+                              margin: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
+                              duration: Duration(milliseconds: 500),
+                              color: _currentIndex == 0
+                                  ? Theme.of(context).primaryIconTheme.color
+                                  : null,
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Icon(
+                            Icons.home,
+                            size: 24.0,
+                            color: Theme.of(context).primaryIconTheme.color,
+                          ),
+                        ),
+                      ]),
                     ),
                   ),
                 ),
@@ -288,11 +304,28 @@ class _WorldHolidaysState extends State<WorldHolidays> with WidgetsBindingObserv
                     },
                     child: SizedBox(
                       height: 60.0,
-                      child: Icon(
-                        Icons.alarm,
-                        size: 24.0,
-                        color: Theme.of(context).primaryIconTheme.color,
-                      ),
+                      child: Stack(children: <Widget>[
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: SizedBox(
+                            height: 5.0,
+                            child: AnimatedContainer(
+                              margin: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
+                              duration: Duration(milliseconds: 500),
+                              color: _currentIndex == 1
+                                  ? Theme.of(context).primaryIconTheme.color
+                                  : null,
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Icon(
+                            Icons.alarm,
+                            size: 24.0,
+                            color: Theme.of(context).primaryIconTheme.color,
+                          ),
+                        ),
+                      ]),
                     ),
                   ),
                 ),
