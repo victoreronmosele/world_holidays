@@ -110,8 +110,7 @@ class _WorldHolidaysState extends State<WorldHolidays>
                   ),
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   textColor: Colors.white,
-                  color: 
-                  monthToColorMap.values.toList()[1],
+                  color: monthToColorMap.values.toList()[1],
                   child: Text(
                     "GOT IT",
                   ),
@@ -133,6 +132,7 @@ class _WorldHolidaysState extends State<WorldHolidays>
     if (_currentIndex != index) {
       setState(() {
         _currentIndex = index;
+        print("currentIndex is " + _currentIndex.toString());
       });
     }
   }
@@ -274,12 +274,14 @@ class _WorldHolidaysState extends State<WorldHolidays>
                           alignment: Alignment.bottomCenter,
                           child: SizedBox(
                             height: 5.0,
-                            child: AnimatedContainer(
-                              margin: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
+                            child: AnimatedOpacity(
                               duration: Duration(milliseconds: 500),
-                              color: _currentIndex == 0
-                                  ? Theme.of(context).primaryIconTheme.color
-                                  : null,
+                              opacity: _currentIndex == 0 ? 1.0 : 0.0,
+                              child: Container(
+                                  margin:
+                                      EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
+                                  color:
+                                      Theme.of(context).primaryIconTheme.color),
                             ),
                           ),
                         ),
@@ -310,12 +312,14 @@ class _WorldHolidaysState extends State<WorldHolidays>
                           alignment: Alignment.bottomCenter,
                           child: SizedBox(
                             height: 5.0,
-                            child: AnimatedContainer(
-                              margin: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
+                            child: AnimatedOpacity(
                               duration: Duration(milliseconds: 500),
-                              color: _currentIndex == 1
-                                  ? Theme.of(context).primaryIconTheme.color
-                                  : null,
+                              opacity: _currentIndex == 1 ? 1.0 : 0.0,
+                              child: Container(
+                                  margin:
+                                      EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
+                                  color:
+                                      Theme.of(context).primaryIconTheme.color),
                             ),
                           ),
                         ),
@@ -574,8 +578,7 @@ class MonthCardsState extends State<MonthCards> {
                         color: Colors.transparent,
                         margin: EdgeInsets.only(right: 10),
                         child: Material(
-                          color: 
-                          monthToColorMap[month],
+                          color: monthToColorMap[month],
                           child: InkWell(
                             onTap: () async {
                               if (snapshot.hasData) {

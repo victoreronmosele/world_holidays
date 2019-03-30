@@ -42,7 +42,7 @@ class MyAppState extends State<MyApp> {
         subhead: theme.textTheme.subhead.copyWith(color: Colors.black38),
         subtitle: theme.textTheme.subtitle.copyWith(color: Colors.black38),
       ),
-      iconTheme: theme.iconTheme.copyWith(color: Colors.indigoAccent),
+      iconTheme: theme.iconTheme.copyWith(color: Colors.black38),
     );
 
     ThemeData darkThemeData = ThemeData(
