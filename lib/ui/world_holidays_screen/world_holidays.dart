@@ -110,7 +110,8 @@ class _WorldHolidaysState extends State<WorldHolidays>
                   ),
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   textColor: Colors.white,
-                  color: monthToColorMap.values.toList()[1],
+                  color: 
+                  monthToColorMap.values.toList()[1],
                   child: Text(
                     "GOT IT",
                   ),
@@ -573,7 +574,8 @@ class MonthCardsState extends State<MonthCards> {
                         color: Colors.transparent,
                         margin: EdgeInsets.only(right: 10),
                         child: Material(
-                          color: monthToColorMap[month],
+                          color: 
+                          monthToColorMap[month],
                           child: InkWell(
                             onTap: () async {
                               if (snapshot.hasData) {

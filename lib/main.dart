@@ -83,9 +83,6 @@ class MyAppState extends State<MyApp> {
 
             }
           });
-          //   print("null");
-          //   
-          // }
 
           if (brightness == Brightness.dark) {
             print("dark");

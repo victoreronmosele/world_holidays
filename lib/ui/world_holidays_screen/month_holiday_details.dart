@@ -383,7 +383,8 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                         height: currentMonthIndex == monthIndex
                             ? kBottomNavigationBarHeight / 1.2
                             : kBottomNavigationBarHeight / 2.0,
-                        color: monthToColorMap.values.toList()[monthIndex],
+                        color: 
+                        monthToColorMap.values.toList()[monthIndex],
                         // child: Text("kk"),
                       ),
                     ),
@@ -417,8 +418,8 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                             key: ValueKey(0),
                             icon: Icon(
                               Icons.alarm_on,
-                              color: monthToColorMap.values
-                                  .toList()[currentMonthIndex],
+                              color: 
+                              monthToColorMap.values.toList()[currentMonthIndex],
                             ),
                             onPressed: () {
                               setState(() {
