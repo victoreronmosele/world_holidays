@@ -66,6 +66,7 @@ class ReminderListState extends State<ReminderList>
       stream: holidayReminderBloc.monthIndexToHolidayReminderListMap,
       builder: (BuildContext context,
           AsyncSnapshot<Map<String, List<HolidayReminder>>> snapshot) {
+            print("stream called");
         if (snapshot.hasData) {
           Map<String, List<HolidayReminder>>
               monthIndexToHolidayReminderListMap = snapshot.data;
@@ -181,6 +182,7 @@ class ReminderListState extends State<ReminderList>
                           int monthIndex =
                               monthIndexToHolidayReminderListMap[month]
                                   .indexOf(holidayReminder);
+                          String holidayId = holidayReminder.id;
                           return CustomExpansionPanel(
                             // key:
                             headerBuilder:
@@ -218,7 +220,7 @@ class ReminderListState extends State<ReminderList>
                                       .copyWith(fontWeight: FontWeight.w300),
                                 ),
                                 //TODO Add alarm icon
-                                // trailing:
+                                trailing:
                                 //     //This shows the reminder icon only for future dates
                                 //     DateTime.now().isAfter(
                                 //             DateTime.parse(
@@ -226,6 +228,16 @@ class ReminderListState extends State<ReminderList>
                                 //         ? null
                                 //         : buildReminderButton(
                                 //             holiday, currentMonthIndex),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.alarm_on,
+                                  ),
+                                  onPressed: (){
+                                    setState(() {
+                                      holidayReminderBloc.deleteHolidayReminder(holidayId, month);  
+                                    });
+                                  },
+                                )
                               );
                             },
                             body: Container(

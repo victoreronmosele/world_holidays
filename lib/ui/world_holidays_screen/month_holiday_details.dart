@@ -136,6 +136,7 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
           controller: _pageController,
           itemCount: monthToColorMap.length,
           itemBuilder: (context, position) {
+            String month = monthToColorMap.keys.toList()[position];
             return Column(children: <Widget>[
               Expanded(
                 flex: 1,
@@ -163,7 +164,7 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                     child: Material(
                       color: Colors.transparent,
                       child: Text(
-                        monthToColorMap.keys.toList()[position],
+                        month,
                         textAlign: TextAlign.left,
                         style: Theme.of(context).textTheme.headline.copyWith(
                               fontWeight: FontWeight.bold,
@@ -277,7 +278,7 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                                         holiday.date.iso))
                                                 ? null
                                                 : buildReminderButton(
-                                                    holiday, currentMonthIndex),
+                                                    holiday, currentMonthIndex, month),
                                       );
                                     },
                                     body: Container(
@@ -397,8 +398,9 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
     );
   }
 
-  Widget buildReminderButton(Holiday holiday, int currentMonthIndex) {
+  Widget buildReminderButton(Holiday holiday, int currentMonthIndex, String month) {
     String holidayId = holiday.name + widget.countryName;
+
     return
         // holidayReminderBloc.isHolidayInReminderList(holidayId)
         // ?
@@ -424,7 +426,7 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                             onPressed: () {
                               setState(() {
                                 holidayReminderBloc
-                                    .deleteHolidayReminder(holidayId);
+                                    .deleteHolidayReminder(holidayId, month);
                               });
 
                               //TODO remove the holiday from notifications

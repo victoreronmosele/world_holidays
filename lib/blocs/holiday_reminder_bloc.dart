@@ -24,8 +24,10 @@ class HolidayReminderBloc {
     Map<String, List<HolidayReminder>> monthIndexToHolidayReminderListMap =
         Map();
 
-    if (holidayReminderList.value == null || holidayReminderList.value.isEmpty) {
-      monthIndexToHolidayReminderListMapSubject.sink.add(monthIndexToHolidayReminderListMap);  
+    if (holidayReminderList.value == null ||
+        holidayReminderList.value.isEmpty) {
+      monthIndexToHolidayReminderListMapSubject.sink
+          .add(monthIndexToHolidayReminderListMap);
       return monthIndexToHolidayReminderListMapSubject;
     }
 
@@ -57,18 +59,36 @@ class HolidayReminderBloc {
   addNewHoliday(HolidayReminder holidayReminder) =>
       _repository.addNewHolidayReminder(holidayReminder);
 
-  deleteHolidayReminder(String id) => _repository.deleteHolidayReminder(id);
-   
+  deleteHolidayReminder(String id, String month) {
+    _repository.deleteHolidayReminder(id);
+    List<HolidayReminder> newHolidayReminderList = holidayReminderList.value;
 
-  
-  deleteAllHolidayReminders() { 
+    newHolidayReminderList.removeWhere((holidayReminder) {
+      return holidayReminder.id == id;
+    });
+    holidayReminderList.sink.add(newHolidayReminderList);
+
+    Map<String, List<HolidayReminder>> newMonthIndexToHolidayReminderListMap =
+        monthIndexToHolidayReminderListMapSubject.value;
+    newMonthIndexToHolidayReminderListMap[month].removeWhere((holidayReminder) {
+      return holidayReminder.id == id;
+    });
+
+    newMonthIndexToHolidayReminderListMap.update(
+        month,
+        (monthIndexToHolidayReminderListMap) =>
+            newMonthIndexToHolidayReminderListMap[month]);
+
+    monthIndexToHolidayReminderListMapSubject.sink
+        .add(newMonthIndexToHolidayReminderListMap);
+  }
+
+  deleteAllHolidayReminders() {
     _repository.deleteAllHolidayReminders();
     holidayReminderList.sink.add([]);
     monthIndexToHolidayReminderListMapSubject.sink.add({});
     print(monthIndexToHolidayReminderListMapSubject.value.length);
-    
-    
-    }
+  }
 
   Future<bool> isHolidayInReminderList(String id) =>
       _repository.isHolidayInReminderList(id);
