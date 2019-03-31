@@ -25,7 +25,6 @@ class MyAppState extends State<MyApp> {
       brightness: Brightness.light,
       primarySwatch: Colors.grey,
       primaryColor: Colors.grey[50],
-      
       textTheme: theme.textTheme.copyWith(
         headline: theme.textTheme.headline.copyWith(
           color: Colors.black,
@@ -48,7 +47,6 @@ class MyAppState extends State<MyApp> {
     ThemeData darkThemeData = ThemeData(
       brightness: Brightness.dark,
       primaryColor: Colors.grey[850],
-      
 
       // primarySwatch: Colors.grey[850],
       textTheme: theme.textTheme.copyWith(
@@ -71,54 +69,51 @@ class MyAppState extends State<MyApp> {
       iconTheme: theme.iconTheme.copyWith(color: Colors.white30),
     );
 
-    return DynamicTheme(
-        data: (brightness) {
-          ThemeData currentThemeData;
+    return DynamicTheme(data: (brightness) {
+      ThemeData currentThemeData;
 
-          statusBarColorBloc.statusBarColor.isEmpty.then((val){
-            if (val == true){
-              print("true");
-            } else {
-              print("untrue");
+      statusBarColorBloc.statusBarColor.isEmpty.then((val) {
+        if (val == true) {
+          print("true");
+        } else {
+          print("untrue");
+        }
+      });
 
-            }
-          });
+      if (brightness == Brightness.dark) {
+        print("dark");
+        statusBarColorBloc.setBrightness(darkThemeData.primaryColor);
 
-          if (brightness == Brightness.dark) {
-            print("dark");
-            statusBarColorBloc.setBrightness(darkThemeData.primaryColor);
-
-             SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        SystemChrome.setSystemUIOverlayStyle(
+          SystemUiOverlayStyle(
             statusBarColor:
                 statusBarColorBloc.brightnessValue, // status bar color
-             ),);
-          return darkThemeData;
-          } else {
-            print("light");
-            // DynamicTheme.of(context).setBrightness(Brightness.light);
-            statusBarColorBloc.setBrightness(lightThemeData.primaryColor);
+          ),
+        );
+        return darkThemeData;
+      } else {
+        print("light");
+        // DynamicTheme.of(context).setBrightness(Brightness.light);
+        statusBarColorBloc.setBrightness(lightThemeData.primaryColor);
 
-             SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-               statusBarBrightness: Brightness.dark,
-            statusBarColor:
-                statusBarColorBloc.brightnessValue, // status bar color
-          ));
+        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.dark,
+          statusBarColor:
+              statusBarColorBloc.brightnessValue, // status bar color
+        ));
 
-          return lightThemeData;
-          }
+        return lightThemeData;
+      }
+    }, themedWidgetBuilder: (context, theme) {
+      return MaterialApp(
+        title: 'World Holidays',
+        debugShowCheckedModeBanner: false,
+        //TODO Get font
 
-         
-        },
-        themedWidgetBuilder: (context, theme) {
-          return MaterialApp(
-            title: 'World Holidays',
-            debugShowCheckedModeBanner: false,
-            //TODO Get font
-
-            theme: theme,
-            home: WorldHolidays(),
-          );
-        });
+        theme: theme,
+        home: WorldHolidays(),
+      );
+    });
   }
 
   void buildSetSystemUIOverlayStyle(context) {

@@ -18,7 +18,8 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="World Holidays"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        >
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

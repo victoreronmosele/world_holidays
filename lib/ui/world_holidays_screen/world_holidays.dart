@@ -160,11 +160,6 @@ class _WorldHolidaysState extends State<WorldHolidays>
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
-          // Theme.of(context).brightness,
-          // == Brightness.dark
-          // ?
-          // Brightness.light,
-          // : Brightness.dark,
           elevation: 0.0,
           leading: IconButton(
             icon: Icon(
@@ -223,10 +218,10 @@ class _WorldHolidaysState extends State<WorldHolidays>
                                 initialSelection: holidayBloc
                                     .currentSelectedCountryCodeValue.value,
                                 onChanged: (countryCode) async {
-                                  // setState(() {
-                                  //   holidayBloc.setCurrentSelectedCountryCode(countryCode.toCountryCode());
-                                  //   holidayBloc.setCurrentSelectedCountryName(countryCode.toCountryString());
-                                  // });
+                                  holidayBloc.setCurrentSelectedCountryCode(
+                                      countryCode.toCountryCode());
+                                  holidayBloc.setCurrentSelectedCountryName(
+                                      countryCode.toCountryString());
                                 },
                               ),
                               Text(
@@ -538,7 +533,7 @@ class MonthCardsState extends State<MonthCards> {
       flex: 10,
       child: Container(
         child: FutureBuilder(
-            future: holidayBloc.getHolidays(widget.countryCode),
+            future: holidayBloc.getHolidays(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               Map<String, List<Holiday>> monthToHolidayListMap =
                   holidayBloc.getMapOfMonthToHolidayList(snapshot);

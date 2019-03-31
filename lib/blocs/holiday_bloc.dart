@@ -9,8 +9,8 @@ class HolidayBloc {
   final currentSelectedCountryCode = BehaviorSubject<String>();
   final currentSelectedCountryName = BehaviorSubject<String>();
 
-  Future<HolidayData> getHolidays(String countryCode) {
-    return _repository.getHolidays(countryCode);
+  Future<HolidayData> getHolidays() {
+    return _repository.getHolidays(currentSelectedCountryCodeValue.value);
   }
 
   void dispose() {
