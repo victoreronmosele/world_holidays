@@ -229,8 +229,9 @@ class ReminderListState extends State<ReminderList>
                                 //         : buildReminderButton(
                                 //             holiday, currentMonthIndex),
                                 IconButton(
+                                  color: monthToColorMap[month],
                                   icon: Icon(
-                                    Icons.alarm_on,
+                                    Icons.delete,
                                   ),
                                   onPressed: (){
                                     setState(() {
