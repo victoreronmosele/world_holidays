@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:world_holidays/blocs/holiday_reminder_bloc.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
 import 'package:world_holidays/models/holiday_data.dart';

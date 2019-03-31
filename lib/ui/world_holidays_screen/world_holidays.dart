@@ -65,8 +65,7 @@ class _WorldHolidaysState extends State<WorldHolidays>
 
     holidayBloc.setCurrentSelectedCountryCode("US");
     holidayBloc.setCurrentSelectedCountryName('United States');
-
-    // print(initialCountryCode +initialCountryName);
+    
   }
 
   Future onSelectNotification(String payload) async {
@@ -127,6 +126,7 @@ class _WorldHolidaysState extends State<WorldHolidays>
   int _currentIndex = 0;
 
   switchTab(int index) {
+    print("tab" + (holidayBloc.holidays == null).toString());
     if (_currentIndex != index) {
       setState(() {
         _currentIndex = index;
@@ -137,9 +137,6 @@ class _WorldHolidaysState extends State<WorldHolidays>
 
   @override
   Widget build(BuildContext context) {
-    print("build");
-    print(Theme.of(context).brightness.toString());
-    setState(() {});
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarIconBrightness: Theme.of(context).brightness == Brightness.light
           ? Brightness.dark
@@ -222,6 +219,7 @@ class _WorldHolidaysState extends State<WorldHolidays>
                                       countryCode.toCountryCode());
                                   holidayBloc.setCurrentSelectedCountryName(
                                       countryCode.toCountryString());
+                                  holidayBloc.refreshHolidays();
                                 },
                               ),
                               Text(
@@ -399,8 +397,10 @@ class _WorldHolidaysState extends State<WorldHolidays>
         Icons.refresh,
       ),
       onPressed: () {
-        //This empty setState is used to refire the FutureBuilder
-        setState(() {});
+        // setState(() {
+       holidayBloc.refreshHolidays();   
+        // });
+       
       },
     );
   }
@@ -529,11 +529,13 @@ class MonthCardsState extends State<MonthCards> {
 
   @override
   Widget build(BuildContext context) {
+    print("build val" + (holidayBloc.holidaysValue == null).toString());
     return Expanded(
       flex: 10,
       child: Container(
-        child: FutureBuilder(
-            future: holidayBloc.getHolidays(),
+        child: StreamBuilder(
+
+            stream: holidayBloc.holidaysValue,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               Map<String, List<Holiday>> monthToHolidayListMap =
                   holidayBloc.getMapOfMonthToHolidayList(snapshot);

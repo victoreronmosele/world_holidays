@@ -8,18 +8,44 @@ class HolidayBloc {
   final _repository = Repository();
   final currentSelectedCountryCode = BehaviorSubject<String>();
   final currentSelectedCountryName = BehaviorSubject<String>();
+  final holidays = BehaviorSubject<HolidayData>();
 
-  Future<HolidayData> getHolidays() {
-    return _repository.getHolidays(currentSelectedCountryCodeValue.value);
+  get holidaysValue {
+    print("holidaysValue start");
+
+    if (holidays.value != null) {
+      print("holidaysValue not null");
+      return holidays;
+    } else {
+      print(holidays.value.toString());
+      print("holidaysValue null");
+      getHolidays();
+      return holidays;
+    }
+  }
+
+  getHolidays() async {
+    print("getting holiday");
+    holidays.sink.add(
+        await _repository.getHolidays(currentSelectedCountryCodeValue.value));
+    print("done getting holiday");
+  }
+
+  refreshHolidays() {
+    print("refreshing");
+    holidays.sink.add(null);
+    print(holidays.value == null);
+    getHolidays();
   }
 
   void dispose() {
+    print("dispose");
     currentSelectedCountryCode.close();
     currentSelectedCountryName.close();
+    holidays.close();
   }
 
   BehaviorSubject<String> get currentSelectedCountryCodeValue {
-    
     if (currentSelectedCountryCode == null) {
       currentSelectedCountryCode.sink.add("US");
 
@@ -30,7 +56,6 @@ class HolidayBloc {
   }
 
   setCurrentSelectedCountryCode(String countryCode) {
-   
     currentSelectedCountryCode.sink.add(countryCode);
   }
 
@@ -47,40 +72,30 @@ class HolidayBloc {
     currentSelectedCountryName.sink.add(countryName);
   }
 
-
-
   Map<String, List<Holiday>> getMapOfMonthToHolidayList(
       AsyncSnapshot snapshot) {
-
     Map<String, List<Holiday>> monthToHolidayListMap =
         Map<String, List<Holiday>>();
 
     HolidayData holidayData = snapshot.data;
 
-
-    if (holidayData == null ){
+    if (holidayData == null) {
       return monthToHolidayListMap;
     }
     Response response = holidayData.response;
 
     List<Holiday> holidays = response.holidays;
 
-    monthToColorMap.forEach((month, color){
-      
+    monthToColorMap.forEach((month, color) {
       int monthPosition = monthToColorMap.keys.toList().indexOf(month) + 1;
-      
 
-        List<Holiday> monthHolidaysList = List();
-          holidays.forEach((holiday) {
-
-            
+      List<Holiday> monthHolidaysList = List();
+      holidays.forEach((holiday) {
         if (holiday.date.datetime.month == monthPosition) {
-          
           monthHolidaysList.add(holiday);
         }
         monthToHolidayListMap[month] = monthHolidaysList;
       });
-
     });
 
     return monthToHolidayListMap;
