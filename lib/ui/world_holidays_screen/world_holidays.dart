@@ -29,8 +29,6 @@ class _WorldHolidaysState extends State<WorldHolidays>
   String initialCountryCode;
   String initialCountryName;
 //TODO Rearrange code
-//TODO Style app
-//TODO Show active bottom app bar
 
   @override
   void dispose() {
