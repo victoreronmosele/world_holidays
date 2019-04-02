@@ -15,21 +15,14 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   int _index;
 
-  
-
   @override
   Widget build(BuildContext context) {
-
-    print(Theme.of(context).brightness.toString());
-    
     switchBrightness() {
-
       if (Theme.of(context).brightness == Brightness.dark) {
         DynamicTheme.of(context).setBrightness(Brightness.light);
       } else {
         DynamicTheme.of(context).setBrightness(Brightness.dark);
       }
-      
     }
 
     _index = Theme.of(context).brightness == Brightness.light ? 0 : 1;

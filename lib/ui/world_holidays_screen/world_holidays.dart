@@ -38,9 +38,7 @@ class _WorldHolidaysState extends State<WorldHolidays>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      print("yay");
-    }
+    if (state == AppLifecycleState.resumed) {}
 
     // setState(() { _notification = state; });
   }
@@ -65,7 +63,6 @@ class _WorldHolidaysState extends State<WorldHolidays>
 
     holidayBloc.setCurrentSelectedCountryCode("US");
     holidayBloc.setCurrentSelectedCountryName('United States');
-    
   }
 
   Future onSelectNotification(String payload) async {
@@ -126,11 +123,9 @@ class _WorldHolidaysState extends State<WorldHolidays>
   int _currentIndex = 0;
 
   switchTab(int index) {
-    print("tab" + (holidayBloc.holidays == null).toString());
     if (_currentIndex != index) {
       setState(() {
         _currentIndex = index;
-        print("currentIndex is " + _currentIndex.toString());
       });
     }
   }
@@ -398,9 +393,8 @@ class _WorldHolidaysState extends State<WorldHolidays>
       ),
       onPressed: () {
         // setState(() {
-       holidayBloc.refreshHolidays();   
+        holidayBloc.refreshHolidays();
         // });
-       
       },
     );
   }
@@ -529,12 +523,10 @@ class MonthCardsState extends State<MonthCards> {
 
   @override
   Widget build(BuildContext context) {
-    print("build val" + (holidayBloc.holidaysValue == null).toString());
     return Expanded(
       flex: 10,
       child: Container(
         child: StreamBuilder(
-
             stream: holidayBloc.holidaysValue,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               Map<String, List<Holiday>> monthToHolidayListMap =

@@ -6,6 +6,7 @@ import 'package:world_holidays/blocs/notification_bloc.dart';
 import 'package:world_holidays/models/holiday_data.dart';
 import 'package:world_holidays/models/holiday_reminder.dart';
 import 'package:world_holidays/resources/custom_expansion_panel.dart';
+import 'package:fixnum/fixnum.dart';
 
 import '../../resources/months_color.dart';
 import '../settings_screen/settings_screen.dart';
@@ -129,7 +130,6 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
               currentMonthIndex = pageId;
               currentMonthHolidayList = listOfHolidayLists[currentMonthIndex];
             });
-
           },
           physics: BouncingScrollPhysics(),
           controller: _pageController,
@@ -276,8 +276,8 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                                     DateTime.parse(
                                                         holiday.date.iso))
                                                 ? null
-                                                : buildReminderButton(
-                                                    holiday, currentMonthIndex, month),
+                                                : buildReminderButton(holiday,
+                                                    currentMonthIndex, month),
                                       );
                                     },
                                     body: Container(
@@ -383,8 +383,7 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                         height: currentMonthIndex == monthIndex
                             ? kBottomNavigationBarHeight / 1.2
                             : kBottomNavigationBarHeight / 2.0,
-                        color: 
-                        monthToColorMap.values.toList()[monthIndex],
+                        color: monthToColorMap.values.toList()[monthIndex],
                         // child: Text("kk"),
                       ),
                     ),
@@ -397,7 +396,8 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
     );
   }
 
-  Widget buildReminderButton(Holiday holiday, int currentMonthIndex, String month) {
+  Widget buildReminderButton(
+      Holiday holiday, int currentMonthIndex, String month) {
     String holidayId = holiday.name + widget.countryName;
 
     return
@@ -419,20 +419,16 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                             key: ValueKey(0),
                             icon: Icon(
                               Icons.alarm_on,
-                              color: 
-                              monthToColorMap.values.toList()[currentMonthIndex],
+                              color: monthToColorMap.values
+                                  .toList()[currentMonthIndex],
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               setState(() {
-                                holidayReminderBloc
-                                    .deleteHolidayReminder(holidayId, month);
+                                holidayReminderBloc.deleteHolidayReminder(
+                                    holidayId, month);
                               });
 
-                              //TODO remove the holiday from notifications
-                              // _scheduleNotification(
-                              //     DateTime.parse(
-                              //         holiday.date.iso),
-                              //     holiday.name);
+                              await flutterLocalNotificationsPlugin.cancel(0);
                             },
                           )
                         : IconButton(
@@ -441,6 +437,12 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                               Icons.alarm_off,
                             ),
                             onPressed: () {
+                              print(holidayId.hashCode.toString());
+                              //Parsed to Int32 and back to int because Flutter notifications plugin would read the default Dart's Int64 as a long
+                              //So it is converted to Int32 to remain only the lower 32 bits of the number, and then to int again
+                              int notificationsChannelId =
+                                  Int32((holidayId.hashCode)).toInt();
+
                               HolidayReminder holidayReminder = HolidayReminder(
                                 id: holidayId,
                                 name: holiday.name,
@@ -454,6 +456,7 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                 dayOfTheWeek: DateFormat.EEEE()
                                     .format(DateTime.parse(holiday.date.iso))
                                     .toString(),
+                                notificationsChannelId: notificationsChannelId,
                               );
 
                               setState(() {
@@ -461,10 +464,10 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                     .addNewHoliday(holidayReminder);
                               });
 
-                              // _scheduleNotification(
-                              //     DateTime.parse(
-                              //         holiday.date.iso),
-                              //     holiday.name);
+                              //   _scheduleNotification(
+                              //       DateTime.parse(
+                              //           holiday.date.iso),
+                              //       holiday.name);
                             }));
               } else {
                 return IconButton(

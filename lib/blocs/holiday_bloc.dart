@@ -11,35 +11,26 @@ class HolidayBloc {
   final holidays = BehaviorSubject<HolidayData>();
 
   get holidaysValue {
-    print("holidaysValue start");
-
     if (holidays.value != null) {
-      print("holidaysValue not null");
       return holidays;
     } else {
-      print(holidays.value.toString());
-      print("holidaysValue null");
       getHolidays();
       return holidays;
     }
   }
 
   getHolidays() async {
-    print("getting holiday");
     holidays.sink.add(
         await _repository.getHolidays(currentSelectedCountryCodeValue.value));
-    print("done getting holiday");
   }
 
   refreshHolidays() {
-    print("refreshing");
     holidays.sink.add(null);
-    print(holidays.value == null);
+
     getHolidays();
   }
 
   void dispose() {
-    print("dispose");
     currentSelectedCountryCode.close();
     currentSelectedCountryName.close();
     holidays.close();

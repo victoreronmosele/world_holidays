@@ -17,8 +17,6 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    print("hi");
-    // buildSetSystemUIOverlayStyle(context);
     final ThemeData theme = Theme.of(context);
 
     ThemeData lightThemeData = ThemeData(
@@ -72,16 +70,7 @@ class MyAppState extends State<MyApp> {
     return DynamicTheme(data: (brightness) {
       ThemeData currentThemeData;
 
-      statusBarColorBloc.statusBarColor.isEmpty.then((val) {
-        if (val == true) {
-          print("true");
-        } else {
-          print("untrue");
-        }
-      });
-
       if (brightness == Brightness.dark) {
-        print("dark");
         statusBarColorBloc.setBrightness(darkThemeData.primaryColor);
 
         SystemChrome.setSystemUIOverlayStyle(
@@ -92,7 +81,6 @@ class MyAppState extends State<MyApp> {
         );
         return darkThemeData;
       } else {
-        print("light");
         // DynamicTheme.of(context).setBrightness(Brightness.light);
         statusBarColorBloc.setBrightness(lightThemeData.primaryColor);
 
@@ -108,8 +96,6 @@ class MyAppState extends State<MyApp> {
       return MaterialApp(
         title: 'World Holidays',
         debugShowCheckedModeBanner: false,
-        //TODO Get font
-
         theme: theme,
         home: WorldHolidays(),
       );

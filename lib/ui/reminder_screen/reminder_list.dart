@@ -66,7 +66,6 @@ class ReminderListState extends State<ReminderList>
       stream: holidayReminderBloc.monthIndexToHolidayReminderListMap,
       builder: (BuildContext context,
           AsyncSnapshot<Map<String, List<HolidayReminder>>> snapshot) {
-            print("stream called");
         if (snapshot.hasData) {
           Map<String, List<HolidayReminder>>
               monthIndexToHolidayReminderListMap = snapshot.data;
@@ -188,58 +187,58 @@ class ReminderListState extends State<ReminderList>
                             headerBuilder:
                                 (BuildContext context, bool isExpanded) {
                               return ListTile(
-                                // dense: true,
-                                title: Text(
-                                  holidayReminder.name,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline
-                                      .copyWith(
-                                        fontSize: 16,
-                                      ),
-                                ),
-
-                                subtitle: Text(
-                                  holidayReminder.dayOfTheWeek,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      // .subhead
-                                      .subtitle
-                                      .copyWith(
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                ),
-                                leading: Text(
-                                  holidayReminderBloc
-                                      .monthIndexToHolidayReminderListMapSubject
-                                      .value[month][monthIndex]
-                                      .date,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .display1
-                                      .copyWith(fontWeight: FontWeight.w300),
-                                ),
-                                //TODO Add alarm icon
-                                trailing:
-                                //     //This shows the reminder icon only for future dates
-                                //     DateTime.now().isAfter(
-                                //             DateTime.parse(
-                                //                 holiday.date.iso))
-                                //         ? null
-                                //         : buildReminderButton(
-                                //             holiday, currentMonthIndex),
-                                IconButton(
-                                  color: monthToColorMap[month],
-                                  icon: Icon(
-                                    Icons.delete,
+                                  // dense: true,
+                                  title: Text(
+                                    holidayReminder.name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline
+                                        .copyWith(
+                                          fontSize: 16,
+                                        ),
                                   ),
-                                  onPressed: (){
-                                    setState(() {
-                                      holidayReminderBloc.deleteHolidayReminder(holidayId, month);  
-                                    });
-                                  },
-                                )
-                              );
+                                  subtitle: Text(
+                                    holidayReminder.dayOfTheWeek,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        // .subhead
+                                        .subtitle
+                                        .copyWith(
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                  ),
+                                  leading: Text(
+                                    holidayReminderBloc
+                                        .monthIndexToHolidayReminderListMapSubject
+                                        .value[month][monthIndex]
+                                        .date,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .display1
+                                        .copyWith(fontWeight: FontWeight.w300),
+                                  ),
+                                  //TODO Add alarm icon
+                                  trailing:
+                                      //     //This shows the reminder icon only for future dates
+                                      //     DateTime.now().isAfter(
+                                      //             DateTime.parse(
+                                      //                 holiday.date.iso))
+                                      //         ? null
+                                      //         : buildReminderButton(
+                                      //             holiday, currentMonthIndex),
+                                      IconButton(
+                                    color: monthToColorMap[month],
+                                    icon: Icon(
+                                      Icons.delete,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        holidayReminderBloc
+                                            .deleteHolidayReminder(
+                                                holidayId, month);
+                                      });
+                                    },
+                                  ));
                             },
                             body: Container(
                               child: Align(

@@ -35,7 +35,8 @@ class SQLiteProvider {
           'monthIndex INTEGER,'
           'monthString TEXT,'
           'date TEXT,'
-          'dayOfTheWeek TEXT'
+          'dayOfTheWeek TEXT,'
+          'notificationsChannelId INTEGER'
           ')');
     });
 

@@ -22,6 +22,8 @@ class HolidayReminder {
   String date;
   String dayOfTheWeek;
   bool isExpanded;
+  int notificationsChannelId;
+  
 
   HolidayReminder({
     @required this.id,
@@ -33,6 +35,7 @@ class HolidayReminder {
     @required this.date,
     @required this.dayOfTheWeek,
     this.isExpanded = false,
+    @required this.notificationsChannelId,
   });
 
   factory HolidayReminder.fromMap(Map<String, dynamic> json) =>
@@ -45,6 +48,7 @@ class HolidayReminder {
         monthString: json['monthString'],
         date: json['date'],
         dayOfTheWeek: json['dayOfTheWeek'],
+        notificationsChannelId: json['notificationsChannelId'],
       );
 
   Map<String, dynamic> toMap() => {
@@ -56,5 +60,6 @@ class HolidayReminder {
         'monthString': monthString,
         'date': date,
         'dayOfTheWeek': dayOfTheWeek,
+        'notificationsChannelId': notificationsChannelId,
       };
 }
