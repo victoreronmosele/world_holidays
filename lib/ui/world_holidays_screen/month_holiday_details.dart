@@ -445,7 +445,7 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                             onPressed: () {
                             
 
-                              print(notificationsChannelId.toString());
+                              
 
                               HolidayReminder holidayReminder = HolidayReminder(
                                 id: holidayId,
@@ -469,8 +469,12 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                               });
 
                                 _scheduleNotification(
+                                  
+                                //  DateTime.parse("2019-04-01T00:00:00.000"),
                                     DateTime.parse(
-                                        holiday.date.iso),
+
+                                        holiday.date.iso
+                                        ),
                                     holiday.name,
                                     notificationsChannelId);
                             }));

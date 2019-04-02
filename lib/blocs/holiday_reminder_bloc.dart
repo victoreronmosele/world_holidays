@@ -71,7 +71,7 @@ class HolidayReminderBloc {
 
     Map<String, List<HolidayReminder>> newMonthIndexToHolidayReminderListMap =
         monthIndexToHolidayReminderListMapSubject.value;
-    if (newMonthIndexToHolidayReminderListMap.isNotEmpty) {
+    if (newMonthIndexToHolidayReminderListMap != null && newMonthIndexToHolidayReminderListMap.isNotEmpty) {
       newMonthIndexToHolidayReminderListMap[month].removeWhere((holidayReminder) {
       return holidayReminder.id == id;
     });
