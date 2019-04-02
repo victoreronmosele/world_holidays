@@ -77,8 +77,8 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
     super.dispose();
   }
 
-  Future _scheduleNotification(
-      DateTime scheduledNotificationDateTime, String holidayName, int notificationsChannelId) async {
+  Future _scheduleNotification(DateTime scheduledNotificationDateTime,
+      String holidayName, int notificationsChannelId) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         'your channel id', 'your channel name', 'your channel description',
         sound: 'slow_spring_board',
@@ -410,11 +410,11 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
               if (snapshot.hasData) {
                 bool isHolidayInReminderList = snapshot.data;
                 //Parsed to Int32 and back to int because "int" for Dart is a 64-bit integer
-                              // and "int" for Java is a 32-bit integer so Java reads Dart's int as a Long which is not compatible
-                              //So it is converted to Int32 to remain only the lower 32 bits of the number, and then to int again
-                              //Check this github issue for some more light https://github.com/MaikuB/flutter_local_notifications/issues/115#issuecomment-433553398
-                              int notificationsChannelId =
-                                  Int32((holidayId.hashCode)).toInt();
+                // and "int" for Java is a 32-bit integer so Java reads Dart's int as a Long which is not compatible
+                //So it is converted to Int32 to remain only the lower 32 bits of the number, and then to int again
+                //Check this github issue for some more light https://github.com/MaikuB/flutter_local_notifications/issues/115#issuecomment-433553398
+                int notificationsChannelId =
+                    Int32((holidayId.hashCode)).toInt();
 
                 return AnimatedSwitcher(
                     duration: Duration(
@@ -434,7 +434,8 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                     holidayId, month);
                               });
 
-                              await flutterLocalNotificationsPlugin.cancel(notificationsChannelId);
+                              await flutterLocalNotificationsPlugin
+                                  .cancel(notificationsChannelId);
                             },
                           )
                         : IconButton(
@@ -443,10 +444,6 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                               Icons.alarm_off,
                             ),
                             onPressed: () {
-                            
-
-                              
-
                               HolidayReminder holidayReminder = HolidayReminder(
                                 id: holidayId,
                                 name: holiday.name,
@@ -468,15 +465,10 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                                     .addNewHoliday(holidayReminder);
                               });
 
-                                _scheduleNotification(
-                                  
-                                //  DateTime.parse("2019-04-01T00:00:00.000"),
-                                    DateTime.parse(
-
-                                        holiday.date.iso
-                                        ),
-                                    holiday.name,
-                                    notificationsChannelId);
+                              _scheduleNotification(
+                                  DateTime.parse(holiday.date.iso),
+                                  holiday.name,
+                                  notificationsChannelId);
                             }));
               } else {
                 return IconButton(

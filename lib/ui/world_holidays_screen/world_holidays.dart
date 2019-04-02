@@ -198,8 +198,7 @@ class _WorldHolidaysState extends State<WorldHolidays>
                   // color: Colors.white,
                   child: Column(children: <Widget>[
                     CountryTitle(
-                        selectedCountry:
-                            holidayBloc.currentSelectedCountryNameValue.value),
+                        ),
                     Expanded(
                       flex: 4,
                       child: Container(

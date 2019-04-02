@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:progress_indicators/progress_indicators.dart';
+import 'package:world_holidays/blocs/holiday_bloc.dart';
 
 class CountryTitle extends StatelessWidget {
   const CountryTitle({
     Key key,
-    @required String selectedCountry,
-  })  : _selectedCountry = selectedCountry,
-        super(key: key);
-
-  final String _selectedCountry;
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,21 +29,41 @@ class CountryTitle extends StatelessWidget {
               ),
               Expanded(
                 flex: 3,
-                child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                        text: "Holidays in \n",
-                        style: Theme.of(context).textTheme.display1.copyWith(
-                              fontWeight: FontWeight.w300
-                            ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: _selectedCountry,
-                            style: Theme.of(context).textTheme.headline.copyWith(
-                              fontWeight: FontWeight.bold
-                            ),
-                          )
-                        ])),
+                child: StreamBuilder<String>(
+                    stream: holidayBloc.currentSelectedCountryNameValue,
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      
+
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: JumpingDotsProgressIndicator(
+                            color: Theme.of(context).textTheme.body1.color,
+                            fontSize: 50.0,
+                          ),
+                        );
+                      }
+
+                      String selectedCountry = snapshot.data;
+
+                      return RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                              text: "Holidays in \n",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .display1
+                                  .copyWith(fontWeight: FontWeight.w300),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: selectedCountry,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline
+                                      .copyWith(fontWeight: FontWeight.bold),
+                                )
+                              ]));
+                    }),
               ),
               Expanded(
                 flex: 1,
