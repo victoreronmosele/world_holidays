@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:progress_indicators/progress_indicators.dart';
+import 'package:world_holidays/blocs/notification_bloc.dart';
 import 'package:world_holidays/models/holiday_reminder.dart';
 import 'package:world_holidays/resources/months_color.dart';
 import 'package:world_holidays/resources/custom_expansion_panel.dart';
@@ -26,6 +28,7 @@ class ReminderListState extends State<ReminderList>
   AnimationController animationController;
   //App Bar height is toolbar height since there is no bottom widget set in the app bar
   double appBarHeight = kToolbarHeight;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
   @override
   void initState() {
@@ -43,6 +46,8 @@ class ReminderListState extends State<ReminderList>
           });
 
     animationController.forward();
+    flutterLocalNotificationsPlugin =
+        notificationBloc.getFlutterLocalNotificationsPlugin();
   }
 
   @override
@@ -231,12 +236,14 @@ class ReminderListState extends State<ReminderList>
                                     icon: Icon(
                                       Icons.delete,
                                     ),
-                                    onPressed: () {
+                                    onPressed: () async {
                                       setState(() {
                                         holidayReminderBloc
                                             .deleteHolidayReminder(
                                                 holidayId, month);
                                       });
+
+                                      await flutterLocalNotificationsPlugin.cancel(holidayReminder.notificationsChannelId);
                                     },
                                   ));
                             },
