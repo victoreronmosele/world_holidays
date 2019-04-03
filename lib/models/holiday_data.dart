@@ -30,6 +30,7 @@ class HolidayData {
       };
 }
 
+
 class Response {
   List<Holiday> holidays;
 

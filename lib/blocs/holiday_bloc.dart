@@ -11,6 +11,7 @@ class HolidayBloc {
   final holidays = BehaviorSubject<HolidayData>();
 
   get holidaysValue {
+    print("test get");
     if (holidays.value != null) {
       return holidays;
     } else {
@@ -20,6 +21,7 @@ class HolidayBloc {
   }
 
   getHolidays() async {
+    print("currentCode " + (currentSelectedCountryCodeValue.value == null).toString());
     holidays.sink.add(
         await _repository.getHolidays(currentSelectedCountryCodeValue.value));
   }
@@ -37,30 +39,49 @@ class HolidayBloc {
   }
 
   BehaviorSubject<String> get currentSelectedCountryCodeValue {
-    if (currentSelectedCountryCode == null) {
-      currentSelectedCountryCode.sink.add("US");
-
-      return currentSelectedCountryCode;
+    print("get currentSelectedCountryValue");
+    if (currentSelectedCountryCode.value == null) {
+      print("get currentSelectedCountryValue == null");
+      
+      _repository.getCountryCode().then((countryCode) {
+        print("country code is null and from prefs is " + countryCode );
+        currentSelectedCountryCode.sink.add(countryCode);
+        return currentSelectedCountryCode;
+      });
     }
+    print("not null "+currentSelectedCountryCode.value.toString());
 
     return currentSelectedCountryCode;
   }
 
-  setCurrentSelectedCountryCode(String countryCode) {
-    currentSelectedCountryCode.sink.add(countryCode);
+  setCurrentSelectedCountryCode(String countryCode) async {
+    if (await _repository.setCountryCode(countryCode)) {
+      currentSelectedCountryCode.sink.add(countryCode);
+      refreshHolidays();
+    }
+    return;
   }
 
   BehaviorSubject<String> get currentSelectedCountryNameValue {
-    if (currentSelectedCountryName == null) {
-      currentSelectedCountryName.sink.add("United States");
-      return currentSelectedCountryName;
+    // print("get currentSelectedCountryValue");
+    if (currentSelectedCountryName.value == null) {
+      print("get currentSelectedCountryValue == null");
+      _repository.getCountryName().then((countryName) {
+        print("country name is null and from prefs is " + countryName );
+        currentSelectedCountryName.sink.add(countryName);
+        return currentSelectedCountryName;
+      });
     }
+
+    print("not null" + currentSelectedCountryName.value.toString());
 
     return currentSelectedCountryName;
   }
 
-  setCurrentSelectedCountryName(String countryName) {
-    currentSelectedCountryName.sink.add(countryName);
+  setCurrentSelectedCountryName(String countryName) async {
+    if (await _repository.setCountryName(countryName)) {
+      currentSelectedCountryName.sink.add(countryName);
+    }
   }
 
   Map<String, List<Holiday>> getMapOfMonthToHolidayList(

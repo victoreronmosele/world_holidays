@@ -26,8 +26,7 @@ class WorldHolidays extends StatefulWidget {
 class _WorldHolidaysState extends State<WorldHolidays>
     with WidgetsBindingObserver {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-  String initialCountryCode;
-  String initialCountryName;
+  
 //TODO Rearrange code
 
   @override
@@ -61,8 +60,6 @@ class _WorldHolidaysState extends State<WorldHolidays>
     notificationBloc
         .setFlutterLocalNotificationsPlugin(flutterLocalNotificationsPlugin);
 
-    holidayBloc.setCurrentSelectedCountryCode("US");
-    holidayBloc.setCurrentSelectedCountryName('United States');
   }
 
   Future onSelectNotification(String payload) async {

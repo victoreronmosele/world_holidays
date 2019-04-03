@@ -202,15 +202,38 @@ class ReminderListState extends State<ReminderList>
                                           fontSize: 16,
                                         ),
                                   ),
-                                  subtitle: Text(
-                                    holidayReminder.dayOfTheWeek,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        // .subhead
-                                        .subtitle
-                                        .copyWith(
-                                          fontWeight: FontWeight.w300,
+                                  subtitle: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Text(
+                                          holidayReminder.dayOfTheWeek,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              // .subhead
+                                              .subtitle
+                                              .copyWith(
+                                                fontWeight: FontWeight.w300,
+                                              ),
                                         ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          holidayReminder.country,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              // .subhead
+                                              .subtitle
+                                              .copyWith(
+                                                fontStyle: FontStyle.italic,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   leading: Text(
                                     holidayReminderBloc
@@ -243,7 +266,9 @@ class ReminderListState extends State<ReminderList>
                                                 holidayId, month);
                                       });
 
-                                      await flutterLocalNotificationsPlugin.cancel(holidayReminder.notificationsChannelId);
+                                      await flutterLocalNotificationsPlugin
+                                          .cancel(holidayReminder
+                                              .notificationsChannelId);
                                     },
                                   ));
                             },
