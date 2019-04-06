@@ -23,29 +23,13 @@ class WorldHolidays extends StatefulWidget {
   _WorldHolidaysState createState() => _WorldHolidaysState();
 }
 
-class _WorldHolidaysState extends State<WorldHolidays>
-    with WidgetsBindingObserver {
+class _WorldHolidaysState extends State<WorldHolidays> {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-  
-//TODO Rearrange code
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {}
-
-    // setState(() { _notification = state; });
-  }
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    // WidgetsBinding.instance.addObserver(this);
 
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('app_icon');
@@ -59,7 +43,6 @@ class _WorldHolidaysState extends State<WorldHolidays>
 
     notificationBloc
         .setFlutterLocalNotificationsPlugin(flutterLocalNotificationsPlugin);
-
   }
 
   Future onSelectNotification(String payload) async {
@@ -69,7 +52,7 @@ class _WorldHolidaysState extends State<WorldHolidays>
         return new AlertDialog(
           title: Icon(
             Icons.alarm_on,
-            color: Colors.black54,
+            color: Theme.of(context).textTheme.button.color.withOpacity(0.7),
             size: 72.0,
           ),
           content: Column(
@@ -80,7 +63,7 @@ class _WorldHolidaysState extends State<WorldHolidays>
                   child: Text(
                 payload,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.title,
+                style: Theme.of(context).textTheme.headline,
               )),
               SizedBox(
                 height: 20.0,
@@ -89,19 +72,20 @@ class _WorldHolidaysState extends State<WorldHolidays>
                   child: Text(
                 "This is a reminder that today is $payload",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Theme.of(context).textTheme.headline.color,
+                    fontWeight: FontWeight.w300),
               )),
               SizedBox(
-                height: 20.0,
+                height: 32.0,
               ),
               Container(
-                width: double.infinity,
-                child: FlatButton(
+                child: OutlineButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.0),
                   ),
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   textColor: Colors.white,
-                  color: monthToColorMap.values.toList()[1],
                   child: Text(
                     "GOT IT",
                   ),
@@ -194,8 +178,7 @@ class _WorldHolidaysState extends State<WorldHolidays>
                   key: ValueKey(1),
                   // color: Colors.white,
                   child: Column(children: <Widget>[
-                    CountryTitle(
-                        ),
+                    CountryTitle(),
                     Expanded(
                       flex: 4,
                       child: Container(

@@ -204,7 +204,8 @@ class ReminderListState extends State<ReminderList>
                                   ),
                                   subtitle: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
                                         holidayReminder.dayOfTheWeek,
@@ -216,12 +217,16 @@ class ReminderListState extends State<ReminderList>
                                               fontWeight: FontWeight.w300,
                                             ),
                                       ),
-                                      SizedBox(height: 6.0,),
+                                      SizedBox(
+                                        height: 6.0,
+                                      ),
                                       Container(
-                                        decoration:BoxDecoration(
-    border:  Border.all(color: monthToColorMap[month],)
-  ),
-                                    
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                          top: BorderSide(
+                                            color: monthToColorMap[month].withOpacity(0.5),
+                                          ),
+                                        )),
                                         child: Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: Text(
@@ -231,14 +236,15 @@ class ReminderListState extends State<ReminderList>
                                                 // .subhead
                                                 .overline
                                                 .copyWith(
-                                                  fontStyle: FontStyle.italic,
-                                                  fontWeight: FontWeight.w300,
-                                                  color:Colors.white70
-                                                ),
+                                                    fontStyle: FontStyle.italic,
+                                                    fontWeight: FontWeight.w300,
+                                                    color: Colors.white70),
                                           ),
                                         ),
                                       ),
-                                      SizedBox(height: 24.0,),
+                                      SizedBox(
+                                        height: 24.0,
+                                      ),
                                     ],
                                   ),
                                   leading: Text(
@@ -251,7 +257,6 @@ class ReminderListState extends State<ReminderList>
                                         .display1
                                         .copyWith(fontWeight: FontWeight.w300),
                                   ),
-                                  
                                   trailing:
                                       //     //This shows the reminder icon only for future dates
                                       //     DateTime.now().isAfter(
@@ -261,7 +266,7 @@ class ReminderListState extends State<ReminderList>
                                       //         : buildReminderButton(
                                       //             holiday, currentMonthIndex),
                                       IconButton(
-                                    color: monthToColorMap[month],
+                                    color: monthToColorMap[month].withOpacity(0.7),
                                     icon: Icon(
                                       Icons.delete,
                                     ),
