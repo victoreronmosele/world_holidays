@@ -21,15 +21,18 @@ class HolidayData {
     this.response,
   });
 
-  factory HolidayData.fromJson(Map<String, dynamic> json) => new HolidayData(
-        response: Response.fromJson(json["response"]),
-      );
+  factory HolidayData.fromJson(Map<String, dynamic> json) {
+    return new HolidayData(
+      response:
+          // Response.fromJson
+          Response.fromJson(json["response"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "response": response.toJson(),
       };
 }
-
 
 class Response {
   List<Holiday> holidays;

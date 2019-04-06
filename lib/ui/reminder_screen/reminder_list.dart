@@ -202,37 +202,43 @@ class ReminderListState extends State<ReminderList>
                                           fontSize: 16,
                                         ),
                                   ),
-                                  subtitle: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                  subtitle: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Expanded(
-                                        child: Text(
-                                          holidayReminder.dayOfTheWeek,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              // .subhead
-                                              .subtitle
-                                              .copyWith(
-                                                fontWeight: FontWeight.w300,
-                                              ),
+                                      Text(
+                                        holidayReminder.dayOfTheWeek,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            // .subhead
+                                            .subtitle
+                                            .copyWith(
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                      ),
+                                      SizedBox(height: 6.0,),
+                                      Container(
+                                        decoration:BoxDecoration(
+    border:  Border.all(color: monthToColorMap[month],)
+  ),
+                                    
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Text(
+                                            holidayReminder.country,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                // .subhead
+                                                .overline
+                                                .copyWith(
+                                                  fontStyle: FontStyle.italic,
+                                                  fontWeight: FontWeight.w300,
+                                                  color:Colors.white70
+                                                ),
+                                          ),
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Text(
-                                          holidayReminder.country,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              // .subhead
-                                              .subtitle
-                                              .copyWith(
-                                                fontStyle: FontStyle.italic,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                        ),
-                                      ),
+                                      SizedBox(height: 24.0,),
                                     ],
                                   ),
                                   leading: Text(
@@ -245,7 +251,7 @@ class ReminderListState extends State<ReminderList>
                                         .display1
                                         .copyWith(fontWeight: FontWeight.w300),
                                   ),
-                                  //TODO Add alarm icon
+                                  
                                   trailing:
                                       //     //This shows the reminder icon only for future dates
                                       //     DateTime.now().isAfter(
