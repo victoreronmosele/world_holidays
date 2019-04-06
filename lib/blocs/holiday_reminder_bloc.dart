@@ -41,6 +41,10 @@ class HolidayReminderBloc {
       });
 
       if (holidayReminderListInMonth.isNotEmpty) {
+        holidayReminderListInMonth.sort(
+          (a, b) =>
+          int.parse(a.date).compareTo(int.parse(b.date))
+        );
         monthIndexToHolidayReminderListMap
             .addAll({month: holidayReminderListInMonth});
       }
