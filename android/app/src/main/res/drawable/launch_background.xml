@@ -7,6 +7,6 @@
         <bitmap
             
             android:gravity="center"
-            android:src="@mipmap/sun_umbrella" />
+            android:src="@mipmap/leaves" />
     </item>
 </layer-list>
