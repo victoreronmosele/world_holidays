@@ -228,7 +228,7 @@ class ReminderListState extends State<ReminderList>
                                           ),
                                         )),
                                         child: Padding(
-                                          padding: const EdgeInsets.all(4.0),
+                                          padding: const EdgeInsets.symmetric(vertical: 4.0),
                                           child: Text(
                                             holidayReminder.country,
                                             style: Theme.of(context)
