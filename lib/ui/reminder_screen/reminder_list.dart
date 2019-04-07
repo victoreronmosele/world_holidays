@@ -237,13 +237,13 @@ class ReminderListState extends State<ReminderList>
                                                 .overline
                                                 .copyWith(
                                                     fontStyle: FontStyle.italic,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: Colors.white70),
+                                                    // fontWeight: FontWeight.w300,
+                                                    color: Theme.of(context).textTheme.display3.color,),
                                           ),
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 24.0,
+                                        height: 6.0,
                                       ),
                                     ],
                                   ),

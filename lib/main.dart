@@ -35,6 +35,9 @@ class MyAppState extends State<MyApp> {
         display2: theme.textTheme.title.copyWith(
           color: Colors.black54,
         ),
+        display3:  theme.textTheme.title.copyWith(
+          color: Colors.black87,
+        ),
         caption: theme.textTheme.caption.copyWith(color: Colors.black38),
         button: theme.textTheme.button.copyWith(color: Colors.black),
         subhead: theme.textTheme.subhead.copyWith(color: Colors.black38),
@@ -60,6 +63,9 @@ class MyAppState extends State<MyApp> {
           color: Colors.white54,
         ),
 
+        display3:  theme.textTheme.title.copyWith(
+          color: Colors.white70,
+        ),
         caption: theme.textTheme.caption.copyWith(color: Colors.white30),
         button: theme.textTheme.button.copyWith(color: Colors.white),
         subhead: theme.textTheme.subhead.copyWith(color: Colors.white30),
