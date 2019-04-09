@@ -1,4 +1,3 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -8,6 +7,7 @@ import 'package:progress_indicators/progress_indicators.dart';
 import 'package:world_holidays/models/holiday_data.dart';
 import 'package:world_holidays/ui/reminder_screen/reminder_list.dart';
 import '../../blocs/brightness_bloc.dart';
+import '../../resources/custom_country_code_picker/custom_country_code_picker.dart';
 import '../../resources/months_color.dart';
 import '../settings_screen/settings_screen.dart';
 import 'country_title.dart';
