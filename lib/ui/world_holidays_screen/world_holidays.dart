@@ -25,6 +25,7 @@ class WorldHolidays extends StatefulWidget {
 
 class _WorldHolidaysState extends State<WorldHolidays> {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  String currentYear = DateTime.now().year.toString();
 
   @override
   void initState() {
@@ -156,7 +157,7 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                       ? Text("Reminder",
                           // style: Theme.of(context).textTheme.headline,
                           key: ValueKey(2))
-                      : Text("2019",
+                      : Text(currentYear,
                           // style: Theme.of(context).textTheme.title,
                           key: ValueKey(3))
                   // TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
