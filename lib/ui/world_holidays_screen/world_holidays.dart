@@ -190,11 +190,13 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                                 initialSelection: holidayBloc
                                     .currentSelectedCountryCodeValue.value,
                                 onChanged: (countryCode) async {
+                                  if (countryCode != null){
                                   holidayBloc.setCurrentSelectedCountryCode(
                                       countryCode.toCountryCode());
                                   holidayBloc.setCurrentSelectedCountryName(
                                       countryCode.toCountryString());
                                   holidayBloc.refreshHolidays();
+                                  }
                                 },
                               ),
                               Text(
