@@ -575,17 +575,13 @@ class MonthCardsState extends State<MonthCards> {
                                         child: Padding(
                                           padding:
                                               const EdgeInsets.only(left: 16.0),
-                                          child: Hero(
-                                            tag: "month-text" +
-                                                monthIndex.toString(),
-                                            child: Material(
-                                              color: Colors.transparent,
-                                              child: Text(month,
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ),
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Text(month,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
                                           ),
                                         ))),
                                 Divider(

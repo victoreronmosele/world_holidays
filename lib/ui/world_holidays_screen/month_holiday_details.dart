@@ -158,17 +158,14 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                     //         flex: 4,
                     child: ListTile(
                   leading: Text(""),
-                  title: Hero(
-                    tag: "month-text" + position.toString(),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: Text(
-                        month,
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.headline.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
+                  title: Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      month,
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context).textTheme.headline.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                   ),
                   subtitle: Column(
