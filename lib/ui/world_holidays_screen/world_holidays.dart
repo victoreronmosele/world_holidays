@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:world_holidays/blocs/holiday_bloc.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:world_holidays/models/holiday_data.dart';
 import 'package:world_holidays/ui/reminder_screen/reminder_list.dart';
 import '../../blocs/brightness_bloc.dart';
@@ -190,12 +190,12 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                                 initialSelection: holidayBloc
                                     .currentSelectedCountryCodeValue.value,
                                 onChanged: (countryCode) async {
-                                  if (countryCode != null){
-                                  holidayBloc.setCurrentSelectedCountryCode(
-                                      countryCode.toCountryCode());
-                                  holidayBloc.setCurrentSelectedCountryName(
-                                      countryCode.toCountryString());
-                                  holidayBloc.refreshHolidays();
+                                  if (countryCode != null) {
+                                    holidayBloc.setCurrentSelectedCountryCode(
+                                        countryCode.toCountryCode());
+                                    holidayBloc.setCurrentSelectedCountryName(
+                                        countryCode.toCountryString());
+                                    holidayBloc.refreshHolidays();
                                   }
                                 },
                               ),
@@ -496,9 +496,9 @@ class MonthCardsState extends State<MonthCards> {
 // By default, show a loading spinner
     return Align(
       alignment: Alignment(0.0, 0.0),
-      child: JumpingDotsProgressIndicator(
-        color: Colors.white70,
-        fontSize: 20.0,
+      child: SpinKitThreeBounce(
+        color: Colors.white,
+        size: 20.0,
       ),
     );
   }

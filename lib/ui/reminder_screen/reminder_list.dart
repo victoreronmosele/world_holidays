@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:progress_indicators/progress_indicators.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+// import 'package:progress_indicators/progress_indicators.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
 import 'package:world_holidays/models/holiday_reminder.dart';
 import 'package:world_holidays/resources/months_color.dart';
@@ -320,9 +321,9 @@ class ReminderListState extends State<ReminderList>
               bottom: kBottomNavigationBarHeight,
             ),
             child: Center(
-              child: JumpingDotsProgressIndicator(
-                color: Theme.of(context).primaryIconTheme.color,
-                fontSize: 54.0,
+              child: SpinKitThreeBounce(
+                color: Theme.of(context).brightness == Brightness.light? Colors.black: Colors.white,
+                size: 50.0,
               ),
             ),
           );

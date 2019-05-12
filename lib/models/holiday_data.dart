@@ -58,7 +58,7 @@ class Response {
     });
 
     factory Response.fromJson(Map<String, dynamic> json) => new Response(
-        holidays: new List<Holiday>.from(json["response"]["holidays"].map((x) => Holiday.fromJson(x))), //ignore: _TypeError
+        holidays: new List<Holiday>.from((json["response"]["holidays"]).map((x) => Holiday.fromJson(x))), //ignore: _TypeError
     );
 
     Map<String, dynamic> toJson() => {

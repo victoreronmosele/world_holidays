@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:progress_indicators/progress_indicators.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:world_holidays/blocs/holiday_bloc.dart';
 
 class CountryTitle extends StatelessWidget {
@@ -33,19 +33,19 @@ class CountryTitle extends StatelessWidget {
                     stream: holidayBloc.currentSelectedCountryNameValue,
                     builder:
                         (BuildContext context, AsyncSnapshot<String> snapshot) {
-                      
-
                       if (!snapshot.hasData) {
                         return Center(
-                          child: JumpingDotsProgressIndicator(
-                            color: Theme.of(context).textTheme.body1.color,
-                            fontSize: 50.0,
+                          child: SpinKitThreeBounce(
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black
+                                    : Colors.white,
+                            size: 20.0,
                           ),
                         );
                       }
 
                       String selectedCountry = snapshot.data;
-
                       return RichText(
                           textAlign: TextAlign.center,
                           text: TextSpan(
