@@ -5,7 +5,12 @@ import 'blocs/brightness_bloc.dart';
 import 'ui/world_holidays_screen/world_holidays.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(new MyApp());
+  });
+}
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
