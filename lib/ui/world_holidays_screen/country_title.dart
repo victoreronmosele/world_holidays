@@ -53,7 +53,12 @@ class CountryTitle extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .display1
-                                  .copyWith(fontWeight: FontWeight.w300),
+                                  .copyWith(
+                                      fontWeight: FontWeight.w300,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .display2
+                                          .color),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: selectedCountry,
