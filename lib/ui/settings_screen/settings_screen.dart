@@ -41,29 +41,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: CupertinoSettings(
         items: <Widget>[
-          // CSHeader('Brightness'),
-          // CSWidget(
-          //     new CupertinoSlider(
-          //       value: _slider,
-          //       onChanged: (double value) {
-          //         setState(() {
-          //           _slider = value;
-          //         });
-          //       },
-          //     ),
-          //     style: CSWidgetStyle(icon: Icon(FontAwesomeIcons.sun))),
-          // CSControl(
-          //   'Auto brightness',
-          //   CupertinoSwitch(
-          //     value: _switch,
-          //     onChanged: (bool value) {
-          //       setState(() {
-          //         _switch = value;
-          //       });
-          //     },
-          //   ),
-          //   style: CSWidgetStyle(icon: Icon(FontAwesomeIcons.sun)),
-          // ),
+          
           CustomCSHeader(
             'Theme',
           ),
@@ -77,13 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
             currentSelection: _index,
           ),
-          // CSHeader(""),
-          // CSControl('Loading...', CupertinoActivityIndicator()),
-          // CSButton(CSButtonType.DEFAULT, "Licenses", () {
-          // print("It works!");
-          // }),
-          // CSHeader(""),
-          // CSButton(CSButtonType.DESTRUCTIVE, "Delete all data", () {}),
+         
         ],
       ),
     );
