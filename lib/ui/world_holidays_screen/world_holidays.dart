@@ -201,9 +201,14 @@ class _WorldHolidaysState extends State<WorldHolidays> {
                               ),
                               Text(
                                 'Select Country',
-                                style: Theme.of(context).textTheme.caption.copyWith(
-                                  color: Theme.of(context).textTheme.display2.color
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    .copyWith(
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .display2
+                                            .color),
                               ),
                             ]),
                       ),

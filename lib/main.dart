@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:world_holidays/blocs/holiday_bloc.dart';
+import 'package:world_holidays/blocs/holiday_reminder_bloc.dart';
+import 'package:world_holidays/blocs/notification_bloc.dart';
 import 'package:world_holidays/resources/months_color.dart';
 import 'blocs/brightness_bloc.dart';
 import 'ui/world_holidays_screen/world_holidays.dart';
@@ -21,6 +24,16 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+    @override
+  void dispose() {
+    notificationBloc.dispose();
+    holidayReminderBloc.dispose();
+    holidayBloc.dispose();
+    statusBarColorBloc.dispose();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
