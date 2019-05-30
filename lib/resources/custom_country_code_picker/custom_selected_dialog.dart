@@ -43,17 +43,6 @@ class _SelectionDialogState extends State<SelectionDialog> {
                               child: Flex(
                                 direction: Axis.horizontal,
                                 children: <Widget>[
-                                  // Flexible(
-                                  //   child: Padding(
-                                  //     padding:
-                                  //         const EdgeInsets.only(right: 16.0),
-                                  //     child: Image.asset(
-                                  //       f.flagUri,
-                                  //       package: 'country_code_picker',
-                                  //       width: 32.0,
-                                  //     ),
-                                  //   ),
-                                  // ),
                                   Flexible(
                                     fit: FlexFit.tight,
                                     child: new Text(
@@ -85,16 +74,7 @@ class _SelectionDialogState extends State<SelectionDialog> {
                   child: Flex(
                     direction: Axis.horizontal,
                     children: <Widget>[
-                      // Flexible(
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.only(right: 16.0),
-                      //     child: Image.asset(
-                      //       e.flagUri,
-                      //       package: 'country_code_picker',
-                      //       width: 32.0,
-                      //     ),
-                      //   ),
-                      // ),
+                    
                       Flexible(
                         fit: FlexFit.tight,
                         child: Text(
