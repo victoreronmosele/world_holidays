@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 /// selection dialog used for selection of the country code
 class SelectionDialog extends StatefulWidget {
   final List<CountryCode> elements;
-  final bool showCountryOnly; 
-
+  final bool showCountryOnly;
 
   /// elements passed as favorite
   final List<CountryCode> favoriteElements;
@@ -22,11 +21,22 @@ class _SelectionDialogState extends State<SelectionDialog> {
 
   @override
   Widget build(BuildContext context) => new SimpleDialog(
-    
       title: new Column(
         children: <Widget>[
           new TextField(
-            decoration: new InputDecoration(prefixIcon: new Icon(Icons.search)),
+            decoration: new InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.black,
+                )),
+                prefixIcon: new Icon(
+                  Icons.search,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.black,
+                )),
             onChanged: _filterElements,
           ),
         ],
@@ -46,17 +56,15 @@ class _SelectionDialogState extends State<SelectionDialog> {
                                   Flexible(
                                     fit: FlexFit.tight,
                                     child: new Text(
-                                    
-                                      widget.showCountryOnly?
-                                      f.toCountryString()
-                                      :
-                                      f.toLongString(),
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.fade,
-                                      style: Theme.of(context).textTheme.headline.copyWith(
-                            fontSize: 14.0
-                          )
-                                    ),
+                                        widget.showCountryOnly
+                                            ? f.toCountryString()
+                                            : f.toLongString(),
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.fade,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline
+                                            .copyWith(fontSize: 14.0)),
                                   ),
                                 ],
                               ),
@@ -74,20 +82,18 @@ class _SelectionDialogState extends State<SelectionDialog> {
                   child: Flex(
                     direction: Axis.horizontal,
                     children: <Widget>[
-                    
                       Flexible(
                         fit: FlexFit.tight,
                         child: Text(
-                          widget.showCountryOnly?
-                                      e.toCountryString()
-                                      :
-                                      e.toLongString(),
-                                      textAlign: TextAlign.center,
-                          overflow: TextOverflow.fade,
-                          style: Theme.of(context).textTheme.headline.copyWith(
-                            fontSize: 14.0
-                          )
-                        ),
+                            widget.showCountryOnly
+                                ? e.toCountryString()
+                                : e.toLongString(),
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.fade,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline
+                                .copyWith(fontSize: 14.0)),
                       ),
                     ],
                   ),
