@@ -303,16 +303,22 @@ class _HomeState extends State<Home> {
           if (snapshot.hasData) {
             bool isReminderListEmpty = snapshot.data.isEmpty;
 
-            return Offstage(
-              offstage: isReminderListEmpty,
-              child: IconButton(
-                key: ValueKey(4),
-                icon: Icon(
-                  Icons.clear_all,
+            // This shows the clear reminders button only if the reminder list is not empty
+            //The IgnorePointer and Opacity widgets are used to let the clear icon take up space
+            //while remaining invisible  
+            return IgnorePointer(
+              ignoring: isReminderListEmpty,
+              child: Opacity(
+                opacity: isReminderListEmpty == true ? 0 : 1,
+                child: IconButton(
+                  key: ValueKey(4),
+                  icon: Icon(
+                    Icons.clear_all,
+                  ),
+                  onPressed: () {
+                    showClearRemindersConfirmation();
+                  },
                 ),
-                onPressed: () {
-                  showClearRemindersConfirmation();
-                },
               ),
             );
           }
