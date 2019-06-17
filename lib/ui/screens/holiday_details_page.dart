@@ -13,7 +13,6 @@ import '../../resources/months_color.dart';
 
 class HolidayDetailsPage extends StatefulWidget {
   final int monthIndex;
-  // final String month;
   final List<List<Holiday>> listOfHolidayList;
   final String countryName;
 
@@ -21,7 +20,6 @@ class HolidayDetailsPage extends StatefulWidget {
       {Key key,
       @required this.countryName,
       @required this.monthIndex,
-      // @required this.month,
       @required this.listOfHolidayList})
       : super(key: key);
 
@@ -88,7 +86,6 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
         new IOSNotificationDetails(sound: "slow_spring_board.aiff");
     var platformChannelSpecifics = new NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    // await flutterLocalNotificationsPlugin.schedule(
     return await flutterLocalNotificationsPlugin.schedule(
       notificationsChannelId,
       'Reminder: $holidayName',
@@ -122,9 +119,7 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
             ),
           ],
         ),
-        body:
-            // Container(child:
-            PageView.builder(
+        body: PageView.builder(
           onPageChanged: (pageId) {
             setState(() {
               currentMonthIndex = pageId;
@@ -146,68 +141,57 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
               Expanded(
                 flex: 2,
                 child: Container(
-                    // color: Colors.blue,
-                    //   child: Row(
-                    //     children: <Widget>[
-                    //       Flexible(
-                    //         child: Container(
-                    //             // color: Colors.green,
-                    //             ),
-                    //       ),
-                    //       Expanded(
-                    //         flex: 4,
-                    child: ListTile(
-                  leading: Text(""),
-                  title: Material(
-                    color: Colors.transparent,
-                    child: Text(
-                      month,
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.headline.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                  child: ListTile(
+                    leading: Text(""),
+                    title: Material(
+                      color: Colors.transparent,
+                      child: Text(
+                        month,
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.headline.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                    ),
+                    subtitle: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Spacer(),
+                        Text(
+                          "${currentMonthHolidayList.length == 0 ? "No" : currentMonthHolidayList.length} ${currentMonthHolidayList.length == 1 ? "holiday" : "holidays"}",
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context).textTheme.subhead,
+                        ),
+                        Spacer(
+                          flex: 2,
+                        ),
+                        Divider(
+                          indent: dividerIndentAnimation.value,
+                          height: 2,
+                          color: Theme.of(context).dividerColor,
+                        ),
+                        Spacer(
+                          flex: 2,
+                        )
+                      ],
                     ),
                   ),
-                  subtitle: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Spacer(),
-                      Text(
-                        "${currentMonthHolidayList.length == 0 ? "No" : currentMonthHolidayList.length} ${currentMonthHolidayList.length == 1 ? "holiday" : "holidays"}",
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.subhead,
-                      ),
-                      Spacer(
-                        flex: 2,
-                      ),
-                      Divider(
-                        indent: dividerIndentAnimation.value,
-                        height: 2,
-                        color: Theme.of(context).dividerColor,
-                      ),
-                      Spacer(
-                        flex: 2,
-                      )
-                    ],
-                  ),
-
-                  // ),
-                )),
+                ),
               ),
               Spacer(),
               Expanded(
                 flex: 11,
-
                 child: currentMonthHolidayList.isEmpty
                     ? Center(
                         child: Text(
-                        "No holidays this month",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline
-                            .copyWith(fontSize: 16),
-                      ))
+                          "No holidays this month",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline
+                              .copyWith(fontSize: 16),
+                        ),
+                      )
                     : SingleChildScrollView(
                         child: Container(
                           child: SafeArea(
@@ -221,12 +205,8 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
                                             .isExpanded;
                                   });
                                 },
-
                                 children: currentMonthHolidayList
                                     .map((Holiday holiday) {
-                                  int holidayIndex =
-                                      currentMonthHolidayList.indexOf(holiday);
-
                                   return CustomExpansionPanel(
                                     headerBuilder: (BuildContext context,
                                         bool isExpanded) {
@@ -300,48 +280,11 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
                                     isExpanded: holiday.isExpanded,
                                   );
                                 }).toList(),
-
-                                //     //         return ListTile(
-                                //     //           leading: IconButton(
-                                //     //             onPressed: () {},
-                                //     //             icon: Icon(Icons.alarm),
-                                //     //           ),
-                                //     //           title: Text("Broom day"),
-                                //     //         );
-                                //     //       },
-                                //     //       body: Container(
-                                //     //         color: Colors.white,
-                                //     //         child: Align(
-                                //     //           alignment: Alignment(0.5, 0.5),
-                                //     //           child: ListTile(
-                                //     //               title: Text(
-                                //     //                 "Buhari's birthday",
-                                //     //                 style: TextStyle(color: Colors.black54),
-                                //     //               ),
-                                //     //               trailing: IconButton(
-                                //     //                 icon: Icon(Icons.alarm),
-                                //     //               )),
-                                //     //         ),
-                                //     //       ),
-                                //     //       // headerBuilder: (BuildContext context, bool isExpanded) {
-                                //     //       //   return buildShopItemHeader(coinAsset, shopItems, i);
-                                //     //       // },
-                                //     //       isExpanded: false,
-                                //     //       // isExpanded: true,
-                                //     //     ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                // Expanded(
-                //   flex: 1,
-                //   child: Container(
-                //     height: 2.0,
-                //     color: monthToColorMap.values.toList()[position],
-                //   ),
-                // ),
-                // Expanded(flex: 9, child: Container())
               ),
             ]);
           },
@@ -397,87 +340,81 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
       Holiday holiday, int currentMonthIndex, String month) {
     String holidayId = holiday.name + widget.countryName;
 
-    return
-        // holidayReminderBloc.isHolidayInReminderList(holidayId)
-        // ?
+    return FutureBuilder<bool>(
+      future: holidayReminderBloc.isHolidayInReminderList(holidayId),
+      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+        if (snapshot.hasData) {
+          bool isHolidayInReminderList = snapshot.data;
+          //Parsed to Int32 and back to int because "int" for Dart is a 64-bit integer
+          // and "int" for Java is a 32-bit integer so Java reads Dart's int as a Long which is not compatible
+          //So it is converted to Int32 to remain only the lower 32 bits of the number, and then to int again
+          //Check this github issue for some more light https://github.com/MaikuB/flutter_local_notifications/issues/115#issuecomment-433553398
+          int notificationsChannelId = Int32((holidayId.hashCode)).toInt();
 
-        FutureBuilder<bool>(
-            future: holidayReminderBloc.isHolidayInReminderList(holidayId),
-            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-              if (snapshot.hasData) {
-                bool isHolidayInReminderList = snapshot.data;
-                //Parsed to Int32 and back to int because "int" for Dart is a 64-bit integer
-                // and "int" for Java is a 32-bit integer so Java reads Dart's int as a Long which is not compatible
-                //So it is converted to Int32 to remain only the lower 32 bits of the number, and then to int again
-                //Check this github issue for some more light https://github.com/MaikuB/flutter_local_notifications/issues/115#issuecomment-433553398
-                int notificationsChannelId =
-                    Int32((holidayId.hashCode)).toInt();
-
-                return AnimatedSwitcher(
-                    duration: Duration(
-                      milliseconds: 500,
+          return AnimatedSwitcher(
+            duration: Duration(
+              milliseconds: 500,
+            ),
+            child: isHolidayInReminderList
+                ? IconButton(
+                    key: ValueKey(0),
+                    icon: Icon(
+                      Icons.alarm_on,
+                      color: monthToColorMap.values.toList()[currentMonthIndex],
                     ),
-                    child: isHolidayInReminderList
-                        ? IconButton(
-                            key: ValueKey(0),
-                            icon: Icon(
-                              Icons.alarm_on,
-                              color: monthToColorMap.values
-                                  .toList()[currentMonthIndex],
-                            ),
-                            onPressed: () async {
-                              setState(() {
-                                holidayReminderBloc.deleteHolidayReminder(
-                                    holidayId, month);
-                              });
+                    onPressed: () async {
+                      setState(
+                        () {
+                          holidayReminderBloc.deleteHolidayReminder(
+                              holidayId, month);
+                        },
+                      );
 
-                              await flutterLocalNotificationsPlugin
-                                  .cancel(notificationsChannelId);
-                            },
-                          )
-                        : IconButton(
-                            key: ValueKey(1),
-                            icon: Icon(
-                              Icons.alarm_off,
-                            ),
-                            onPressed: () {
-                              HolidayReminder holidayReminder = HolidayReminder(
-                                id: holidayId,
-                                name: holiday.name,
-                                description: holiday.description ??
-                                    "No description available",
-                                country: widget.countryName,
-                                monthIndex: currentMonthIndex,
-                                monthString: monthToColorMap.keys
-                                    .toList()[currentMonthIndex],
-                                date: holiday.date.datetime.day.toString(),
-                                dayOfTheWeek: DateFormat.EEEE()
-                                    .format(DateTime.parse(holiday.date.iso))
-                                    .toString(),
-                                notificationsChannelId: notificationsChannelId,
-                              );
-
-                              setState(() {
-                                holidayReminderBloc
-                                    .addNewHoliday(holidayReminder);
-                              });
-
-                              _scheduleNotification(
-                                  DateTime.parse(holiday.date.iso),
-                                  holiday.name,
-                                  notificationsChannelId);
-                            }));
-              } else {
-                return IconButton(
+                      await flutterLocalNotificationsPlugin
+                          .cancel(notificationsChannelId);
+                    },
+                  )
+                : IconButton(
+                    key: ValueKey(1),
                     icon: Icon(
                       Icons.alarm_off,
                     ),
-                    onPressed: null);
-                // JumpingDotsProgressIndicator(
-                //   color: monthToColorMap.values.toList()[currentMonthIndex],
-                //   fontSize: 2.0,
-                // );
-              }
-            });
+                    onPressed: () {
+                      HolidayReminder holidayReminder = HolidayReminder(
+                        id: holidayId,
+                        name: holiday.name,
+                        description:
+                            holiday.description ?? "No description available",
+                        country: widget.countryName,
+                        monthIndex: currentMonthIndex,
+                        monthString:
+                            monthToColorMap.keys.toList()[currentMonthIndex],
+                        date: holiday.date.datetime.day.toString(),
+                        dayOfTheWeek: DateFormat.EEEE()
+                            .format(DateTime.parse(holiday.date.iso))
+                            .toString(),
+                        notificationsChannelId: notificationsChannelId,
+                      );
+
+                      setState(
+                        () {
+                          holidayReminderBloc.addNewHoliday(holidayReminder);
+                        },
+                      );
+
+                      _scheduleNotification(DateTime.parse(holiday.date.iso),
+                          holiday.name, notificationsChannelId);
+                    },
+                  ),
+          );
+        } else {
+          return IconButton(
+              icon: Icon(
+                Icons.alarm_off,
+              ),
+              onPressed: null);
+        }
+      },
+    );
   }
 }

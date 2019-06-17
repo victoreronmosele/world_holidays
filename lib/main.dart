@@ -65,8 +65,6 @@ class MyAppState extends State<MyApp> {
     ThemeData darkThemeData = ThemeData(
       brightness: Brightness.dark,
       primaryColor: Colors.grey[850],
-
-      // primarySwatch: Colors.grey[850],
       textTheme: theme.textTheme.copyWith(
         headline: theme.textTheme.headline.copyWith(
           color: Colors.white,
@@ -92,7 +90,6 @@ class MyAppState extends State<MyApp> {
 
     return DynamicTheme(
       data: (brightness) {
-        ThemeData currentThemeData;
 
         if (brightness == Brightness.dark) {
           statusBarColorBloc.setBrightness(darkThemeData.primaryColor);
@@ -105,7 +102,6 @@ class MyAppState extends State<MyApp> {
           );
           return darkThemeData;
         } else {
-          // DynamicTheme.of(context).setBrightness(Brightness.light);
           statusBarColorBloc.setBrightness(lightThemeData.primaryColor);
 
           SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -131,11 +127,7 @@ class MyAppState extends State<MyApp> {
   void buildSetSystemUIOverlayStyle(context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarIconBrightness:
-          // Theme.of(context).brightness == Brightness.light
-          //     ? Brightness.light
-          //     :
           Brightness.light,
-      // systemNavigationBarColor: Colors.blue, // navigation bar color
       statusBarColor: Theme.of(context).brightness == Brightness.dark
           ? Colors.white
           : Colors.black, // status bar color

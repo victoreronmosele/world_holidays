@@ -113,7 +113,6 @@ class _HomeState extends State<Home> {
       statusBarIconBrightness: Theme.of(context).brightness == Brightness.light
           ? Brightness.dark
           : Brightness.light,
-      // statusBarColor: Colors.grey[500], // status bar color
       statusBarColor: statusBarColorBloc.brightnessValue, // status bar color
     ));
 
@@ -150,12 +149,9 @@ class _HomeState extends State<Home> {
                   ),
                   child: _currentIndex == 1
                       ? Text("Reminder",
-                          // style: Theme.of(context).textTheme.headline,
                           key: ValueKey(2))
                       : Text(currentYear,
-                          // style: Theme.of(context).textTheme.title,
                           key: ValueKey(3))
-                  // TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                   ),
             ),
           ),
@@ -218,7 +214,6 @@ class _HomeState extends State<Home> {
                 child: Material(
                   type: MaterialType.transparency,
                   child: InkWell(
-                    // onTap: switchTab(1),
                     onTap: () {
                       switchTab(1);
                     },
@@ -323,9 +318,7 @@ class _HomeState extends State<Home> {
         Icons.refresh,
       ),
       onPressed: () {
-        // setState(() {
         holidayBloc.refreshHolidays();
-        // });
       },
     );
   }

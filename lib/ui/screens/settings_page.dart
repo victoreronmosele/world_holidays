@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../resources/custom_cs_header.dart';
 
@@ -31,7 +30,6 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         elevation: 0.0,
         title: const Text('Settings'),
-        // automaticallyImplyLeading: true,
         leading: IconButton(
             icon: Icon(
               CupertinoIcons.back,

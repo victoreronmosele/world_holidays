@@ -139,19 +139,21 @@ class MonthCardsState extends State<MonthCards> {
             Align(
               alignment: Alignment.centerRight,
               child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                      text: holidayList.length.toString(),
-                      style: TextStyle(
-                          color: Colors.white70, fontWeight: FontWeight.bold),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text:
-                                '${holidayList.length == 1 ? ' holiday' : " holidays"}',
-                            style: TextStyle(
-                                color: Colors.white70,
-                                fontWeight: FontWeight.normal))
-                      ])),
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text: holidayList.length.toString(),
+                  style: TextStyle(
+                      color: Colors.white70, fontWeight: FontWeight.bold),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text:
+                            '${holidayList.length == 1 ? ' holiday' : " holidays"}',
+                        style: TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.normal))
+                  ],
+                ),
+              ),
             ),
           ],
         ),
@@ -201,20 +203,6 @@ class MonthCardsState extends State<MonthCards> {
 
                   return Hero(
                     tag: 'hero-tag' + month,
-                    // flightShuttleBuilder: (
-                    //   BuildContext flightContext,
-                    //   Animation<double> animation,
-                    //   HeroFlightDirection flightDirection,
-                    //   BuildContext fromHeroContext,
-                    //   BuildContext toHeroContext,
-                    // ) {
-                    //   return Flex(
-                    //   crossAxisAlignment: CrossAxisAlignment.end,
-                    //   children: <Widget>[
-                    //     Expanded(child: fromHeroContext.widget),
-                    //   ], direction: Axis.horizontal,
-                    // );
-                    // },
                     child: Material(
                       color: Colors.transparent,
                       child: Card(
@@ -228,35 +216,36 @@ class MonthCardsState extends State<MonthCards> {
                                 List<List<Holiday>> listOfHolidayLists =
                                     monthToHolidayListMap.values.toList();
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            HolidayDetailsPage(
-                                              monthIndex: monthIndex,
-                                              listOfHolidayList:
-                                                  listOfHolidayLists,
-                                              countryName: widget.countryName,
-                                            )));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HolidayDetailsPage(
+                                          monthIndex: monthIndex,
+                                          listOfHolidayList: listOfHolidayLists,
+                                          countryName: widget.countryName,
+                                        ),
+                                  ),
+                                );
                               }
                             },
                             child: Column(
                               children: <Widget>[
                                 Expanded(
-                                    flex: 2,
-                                    child: Align(
-                                        alignment: Alignment(-1.0, 0.5),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 16.0),
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Text(month,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                          ),
-                                        ))),
+                                  flex: 2,
+                                  child: Align(
+                                    alignment: Alignment(-1.0, 0.5),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 16.0),
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: Text(month,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 Divider(
                                   indent: 16,
                                   color: Colors.white54,

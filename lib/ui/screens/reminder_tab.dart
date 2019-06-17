@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-// import 'package:progress_indicators/progress_indicators.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
 import 'package:world_holidays/models/holiday_reminder.dart';
-import 'package:world_holidays/resources/months_color.dart';
 import 'package:world_holidays/resources/custom_expansion_panel.dart';
+import 'package:world_holidays/resources/months_color.dart';
 
 import '../../blocs/holiday_reminder_bloc.dart';
 
@@ -97,7 +96,6 @@ class ReminderTabState extends State<ReminderTab>
                     ),
                     RaisedButton(
                       color: Color(0xff3fa7d6),
-                      // padding: EdgeInsets.all(16.0),
                       child: Text(
                         "Back to Holidays".toUpperCase(),
                         style: TextStyle(color: Colors.white),
@@ -118,9 +116,6 @@ class ReminderTabState extends State<ReminderTab>
                 children: monthIndexToHolidayReminderListMap.keys
                     .toList()
                     .map((String month) {
-                  var monthIndexTemp = monthIndexToHolidayReminderListMap.keys
-                      .toList()
-                      .indexOf(month);
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
@@ -142,7 +137,6 @@ class ReminderTabState extends State<ReminderTab>
                           subtitle: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            // mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Spacer(),
                               Text(
@@ -193,7 +187,6 @@ class ReminderTabState extends State<ReminderTab>
                             headerBuilder:
                                 (BuildContext context, bool isExpanded) {
                               return ListTile(
-                                  // dense: true,
                                   title: Text(
                                     holidayReminder.name,
                                     style: Theme.of(context)
@@ -234,11 +227,9 @@ class ReminderTabState extends State<ReminderTab>
                                             holidayReminder.country,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                // .subhead
                                                 .overline
                                                 .copyWith(
                                                     fontStyle: FontStyle.italic,
-                                                    // fontWeight: FontWeight.w300,
                                                     color: Theme.of(context).textTheme.display3.color,),
                                           ),
                                         ),
@@ -259,13 +250,6 @@ class ReminderTabState extends State<ReminderTab>
                                         .copyWith(fontWeight: FontWeight.w300),
                                   ),
                                   trailing:
-                                      //     //This shows the reminder icon only for future dates
-                                      //     DateTime.now().isAfter(
-                                      //             DateTime.parse(
-                                      //                 holiday.date.iso))
-                                      //         ? null
-                                      //         : buildReminderButton(
-                                      //             holiday, currentMonthIndex),
                                       IconButton(
                                     color: monthToColorMap[month].withOpacity(0.7),
                                     icon: Icon(
@@ -288,7 +272,6 @@ class ReminderTabState extends State<ReminderTab>
                               child: Align(
                                 alignment: Alignment.topCenter,
                                 child: ListTile(
-                                  // dense: true,
                                   leading: Text(""),
                                   title: Text(
                                     holidayReminder.description,
