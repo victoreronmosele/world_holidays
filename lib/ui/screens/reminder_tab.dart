@@ -9,21 +9,21 @@ import 'package:world_holidays/resources/custom_expansion_panel.dart';
 
 import '../../blocs/holiday_reminder_bloc.dart';
 
-class ReminderList extends StatefulWidget {
+class ReminderTab extends StatefulWidget {
   final Function switchTab;
 
-  const ReminderList({
+  const ReminderTab({
     Key key,
     this.switchTab,
   }) : super(key: key);
 
   @override
-  ReminderListState createState() {
-    return new ReminderListState();
+  ReminderTabState createState() {
+    return new ReminderTabState();
   }
 }
 
-class ReminderListState extends State<ReminderList>
+class ReminderTabState extends State<ReminderTab>
     with SingleTickerProviderStateMixin {
   Animation<double> dividerIndentAnimation;
   AnimationController animationController;
@@ -99,7 +99,7 @@ class ReminderListState extends State<ReminderList>
                       color: Color(0xff3fa7d6),
                       // padding: EdgeInsets.all(16.0),
                       child: Text(
-                        "BACK TO HOLIDAYS",
+                        "Back to Holidays".toUpperCase(),
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {

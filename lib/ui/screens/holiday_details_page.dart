@@ -7,17 +7,17 @@ import 'package:world_holidays/models/holiday_data.dart';
 import 'package:world_holidays/models/holiday_reminder.dart';
 import 'package:world_holidays/resources/custom_expansion_panel.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:world_holidays/ui/screens/settings_page.dart';
 
 import '../../resources/months_color.dart';
-import '../settings_screen/settings_screen.dart';
 
-class MonthHolidayDetails extends StatefulWidget {
+class HolidayDetailsPage extends StatefulWidget {
   final int monthIndex;
   // final String month;
   final List<List<Holiday>> listOfHolidayList;
   final String countryName;
 
-  MonthHolidayDetails(
+  HolidayDetailsPage(
       {Key key,
       @required this.countryName,
       @required this.monthIndex,
@@ -26,12 +26,12 @@ class MonthHolidayDetails extends StatefulWidget {
       : super(key: key);
 
   @override
-  MonthHolidayDetailsState createState() {
-    return new MonthHolidayDetailsState();
+  HolidayDetailsPageState createState() {
+    return new HolidayDetailsPageState();
   }
 }
 
-class MonthHolidayDetailsState extends State<MonthHolidayDetails>
+class HolidayDetailsPageState extends State<HolidayDetailsPage>
     with SingleTickerProviderStateMixin {
   PageController _pageController;
   int initialMonthIndex;
@@ -89,7 +89,7 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
     var platformChannelSpecifics = new NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     // await flutterLocalNotificationsPlugin.schedule(
-    await flutterLocalNotificationsPlugin.schedule(
+    return await flutterLocalNotificationsPlugin.schedule(
       notificationsChannelId,
       'Reminder: $holidayName',
       'Today is $holidayName.',
@@ -110,7 +110,7 @@ class MonthHolidayDetailsState extends State<MonthHolidayDetails>
                 Icons.settings,
               ),
               onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SettingsScreen()))),
+                  MaterialPageRoute(builder: (context) => SettingsPage()))),
           actions: <Widget>[
             IconButton(
               icon: Icon(

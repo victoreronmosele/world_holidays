@@ -3,9 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:world_holidays/blocs/holiday_bloc.dart';
 import 'package:world_holidays/blocs/holiday_reminder_bloc.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
-import 'package:world_holidays/resources/months_color.dart';
+import 'package:world_holidays/ui/home.dart';
 import 'blocs/brightness_bloc.dart';
-import 'ui/world_holidays_screen/world_holidays.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 
 void main() {
@@ -24,7 +23,7 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-    @override
+  @override
   void dispose() {
     notificationBloc.dispose();
     holidayReminderBloc.dispose();
@@ -32,7 +31,6 @@ class MyAppState extends State<MyApp> {
     statusBarColorBloc.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -92,39 +90,42 @@ class MyAppState extends State<MyApp> {
       iconTheme: theme.iconTheme.copyWith(color: Colors.white30),
     );
 
-    return DynamicTheme(data: (brightness) {
-      ThemeData currentThemeData;
+    return DynamicTheme(
+      data: (brightness) {
+        ThemeData currentThemeData;
 
-      if (brightness == Brightness.dark) {
-        statusBarColorBloc.setBrightness(darkThemeData.primaryColor);
+        if (brightness == Brightness.dark) {
+          statusBarColorBloc.setBrightness(darkThemeData.primaryColor);
 
-        SystemChrome.setSystemUIOverlayStyle(
-          SystemUiOverlayStyle(
+          SystemChrome.setSystemUIOverlayStyle(
+            SystemUiOverlayStyle(
+              statusBarColor:
+                  statusBarColorBloc.brightnessValue, // status bar color
+            ),
+          );
+          return darkThemeData;
+        } else {
+          // DynamicTheme.of(context).setBrightness(Brightness.light);
+          statusBarColorBloc.setBrightness(lightThemeData.primaryColor);
+
+          SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+            statusBarBrightness: Brightness.dark,
             statusBarColor:
                 statusBarColorBloc.brightnessValue, // status bar color
-          ),
+          ));
+
+          return lightThemeData;
+        }
+      },
+      themedWidgetBuilder: (context, theme) {
+        return MaterialApp(
+          title: 'World Holidays',
+          debugShowCheckedModeBanner: false,
+          theme: theme,
+          home: Home(),
         );
-        return darkThemeData;
-      } else {
-        // DynamicTheme.of(context).setBrightness(Brightness.light);
-        statusBarColorBloc.setBrightness(lightThemeData.primaryColor);
-
-        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.dark,
-          statusBarColor:
-              statusBarColorBloc.brightnessValue, // status bar color
-        ));
-
-        return lightThemeData;
-      }
-    }, themedWidgetBuilder: (context, theme) {
-      return MaterialApp(
-        title: 'World Holidays',
-        debugShowCheckedModeBanner: false,
-        theme: theme,
-        home: WorldHolidays(),
-      );
-    });
+      },
+    );
   }
 
   void buildSetSystemUIOverlayStyle(context) {
