@@ -7,12 +7,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../resources/custom_cs_header.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsPage extends StatefulWidget {
   @override
-  _SettingsScreenState createState() => _SettingsScreenState();
+  _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsPageState extends State<SettingsPage> {
   int _index;
 
   @override
