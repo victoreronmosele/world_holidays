@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:world_holidays/blocs/holiday_bloc.dart';
 import 'package:world_holidays/blocs/holiday_reminder_bloc.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
+import 'package:world_holidays/ui/demo/alert_dialog_notification.dart';
 import 'package:world_holidays/ui/home.dart';
 import 'blocs/brightness_bloc.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
@@ -90,7 +91,6 @@ class MyAppState extends State<MyApp> {
 
     return DynamicTheme(
       data: (brightness) {
-
         if (brightness == Brightness.dark) {
           statusBarColorBloc.setBrightness(darkThemeData.primaryColor);
 
@@ -126,8 +126,7 @@ class MyAppState extends State<MyApp> {
 
   void buildSetSystemUIOverlayStyle(context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarIconBrightness:
-          Brightness.light,
+      statusBarIconBrightness: Brightness.light,
       statusBarColor: Theme.of(context).brightness == Brightness.dark
           ? Colors.white
           : Colors.black, // status bar color

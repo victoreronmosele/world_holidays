@@ -42,60 +42,57 @@ class _HomeState extends State<Home> {
   }
 
   Future onSelectNotification(String payload) async {
-    showDialog(
-      context: context,
-      builder: (_) {
-        return new AlertDialog(
-          title: Icon(
-            Icons.alarm_on,
-            color: Theme.of(context).textTheme.button.color.withOpacity(0.7),
-            size: 72.0,
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Center(
-                  child: Text(
-                payload,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline,
-              )),
-              SizedBox(
-                height: 20.0,
-              ),
-              Center(
-                  child: Text(
-                "This is a reminder that today is $payload",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Theme.of(context).textTheme.headline.color,
-                    fontWeight: FontWeight.w300),
-              )),
-              SizedBox(
-                height: 32.0,
-              ),
-              Container(
-                child: OutlineButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
-                  textColor: Colors.white,
-                  child: Text(
-                    "GOT IT",
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+      showDialog(
+        context: context,
+        builder: (_) {
+          return new AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Center(
+                    child: Text(
+                  payload,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline,
+                )),
+                SizedBox(
+                  height: 20.0,
                 ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
+                Center(
+                    child: Text(
+                  "This is a reminder that today is $payload",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Theme.of(context).textTheme.headline.color,
+                      fontWeight: FontWeight.w300),
+                )),
+                SizedBox(
+                  height: 32.0,
+                ),
+                Container(
+                  child: OutlineButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(
+                      "GOT IT",
+                      style: Theme.of(context).textTheme.subhead.copyWith(
+                            color: Theme.of(context).textTheme.title.color,
+                          ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    }
 
   int _currentIndex = 0;
 
