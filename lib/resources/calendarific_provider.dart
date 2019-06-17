@@ -15,8 +15,6 @@ class CalendarificProvider {
 
     if (response.statusCode == 200) {
       final jsonData = await json.decode(response.body);
-      print((jsonData));
-      // print("Get holidays successful" + jsonData.toString());
       return HolidayData.fromJson(jsonData);
     } else {
       throw Exception("Failed to get holidays");

@@ -148,11 +148,8 @@ class _HomeState extends State<Home> {
                     milliseconds: 300,
                   ),
                   child: _currentIndex == 1
-                      ? Text("Reminder",
-                          key: ValueKey(2))
-                      : Text(currentYear,
-                          key: ValueKey(3))
-                  ),
+                      ? Text("Reminder", key: ValueKey(2))
+                      : Text(currentYear, key: ValueKey(3))),
             ),
           ),
           centerTitle: true,
@@ -299,19 +296,31 @@ class _HomeState extends State<Home> {
     });
   }
 
-  IconButton buildClearRemindersButton() {
-    return IconButton(
-      key: ValueKey(4),
-      icon: Icon(
-        Icons.clear_all,
-      ),
-      onPressed: () {
-        showClearRemindersConfirmation();
-      },
-    );
+  Widget buildClearRemindersButton() {
+    return StreamBuilder(
+        stream: holidayReminderBloc.monthIndexToHolidayReminderListMap,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            bool isReminderListEmpty = snapshot.data.isEmpty;
+
+            return Offstage(
+              offstage: isReminderListEmpty,
+              child: IconButton(
+                key: ValueKey(4),
+                icon: Icon(
+                  Icons.clear_all,
+                ),
+                onPressed: () {
+                  showClearRemindersConfirmation();
+                },
+              ),
+            );
+          }
+          return Container();
+        });
   }
 
-  IconButton buildRefreshButton() {
+  Widget buildRefreshButton() {
     return IconButton(
       key: ValueKey(5),
       icon: Icon(

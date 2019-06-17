@@ -6,7 +6,6 @@ class SharedPreferencesHelper {
 
   // Method that returns the last selected country code
   Future<String> getCountryCode() async {
-    print("getCountryCode");
     final SharedPreferences countryCodePrefs = await SharedPreferences.getInstance();
 
     return countryCodePrefs.getString(_kCountryCodePrefs) ?? "US";
@@ -14,7 +13,6 @@ class SharedPreferencesHelper {
 
   // Method that saves the last selected country code
   Future<bool> setCountryCode(String countryCode) async {
-    print("setSetCountryCode" + countryCode);
     final SharedPreferences countryCodePrefs = await SharedPreferences.getInstance();
 
     return countryCodePrefs.setString(_kCountryCodePrefs, countryCode);
@@ -22,7 +20,6 @@ class SharedPreferencesHelper {
 
   // Method that returns the last selected country name
   Future<String> getCountryName() async {
-    print("getCountryName");
     final SharedPreferences countryNamePrefs = await SharedPreferences.getInstance();
 
     return countryNamePrefs.getString(_kCountryNamePrefs) ?? 'United States';
@@ -30,7 +27,6 @@ class SharedPreferencesHelper {
 
   // Method that saves the last selected country name
   Future<bool> setCountryName(String countryName) async {
-    print("setCountryName" + countryName);
     final SharedPreferences countryNamePrefs = await SharedPreferences.getInstance();
 
     return countryNamePrefs.setString(_kCountryNamePrefs, countryName);
