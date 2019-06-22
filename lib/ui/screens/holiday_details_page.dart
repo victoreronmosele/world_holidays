@@ -70,8 +70,7 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
     animationController.forward();
     Future.delayed(Duration.zero, () {
       notificationBloc = BlocProvider.of<AppBloc>(context).notificationBloc;
-      holidayReminderBloc =
-          BlocProvider.of<AppBloc>(context).holidayReminderBloc;
+
       flutterLocalNotificationsPlugin =
           notificationBloc.getFlutterLocalNotificationsPlugin();
     });
@@ -106,6 +105,7 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
 
   @override
   Widget build(BuildContext context) {
+    holidayReminderBloc = BlocProvider.of<AppBloc>(context).holidayReminderBloc;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
