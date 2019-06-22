@@ -39,7 +39,6 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: CupertinoSettings(
         items: <Widget>[
-          
           CustomCSHeader(
             'Theme',
           ),
@@ -53,7 +52,6 @@ class _SettingsPageState extends State<SettingsPage> {
             },
             currentSelection: _index,
           ),
-         
         ],
       ),
     );

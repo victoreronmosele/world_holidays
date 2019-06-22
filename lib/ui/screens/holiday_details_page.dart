@@ -1,12 +1,14 @@
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
+import 'package:world_holidays/blocs/app_bloc.dart';
 import 'package:world_holidays/blocs/holiday_reminder_bloc.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
+import 'package:world_holidays/helpers/bloc_provider.dart';
 import 'package:world_holidays/models/holiday_data.dart';
 import 'package:world_holidays/models/holiday_reminder.dart';
 import 'package:world_holidays/resources/custom_expansion_panel.dart';
-import 'package:fixnum/fixnum.dart';
 import 'package:world_holidays/ui/screens/settings_page.dart';
 
 import '../../resources/months_color.dart';
@@ -40,6 +42,8 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
   Animation<double> dividerIndentAnimation;
   AnimationController animationController;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  NotificationBloc notificationBloc;
+  HolidayReminderBloc holidayReminderBloc;
 
   @override
   void initState() {
@@ -64,9 +68,13 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
           });
 
     animationController.forward();
-
-    flutterLocalNotificationsPlugin =
-        notificationBloc.getFlutterLocalNotificationsPlugin();
+    Future.delayed(Duration.zero, () {
+      notificationBloc = BlocProvider.of<AppBloc>(context).notificationBloc;
+      holidayReminderBloc =
+          BlocProvider.of<AppBloc>(context).holidayReminderBloc;
+      flutterLocalNotificationsPlugin =
+          notificationBloc.getFlutterLocalNotificationsPlugin();
+    });
   }
 
   @override
@@ -235,9 +243,6 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
                                               .copyWith(
                                                 fontWeight: FontWeight.w300,
                                               ),
-                                          // style: TextStyle(
-
-                                          // ),
                                         ),
                                         leading: Text(
                                           holiday.date.datetime.day.toString(),

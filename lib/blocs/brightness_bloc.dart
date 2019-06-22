@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:world_holidays/helpers/bloc_provider.dart';
 
-class StatusBarColorBloc {
+class StatusBarColorBloc extends BlocBase {
   final statusBarColor = BehaviorSubject<Color>();
 
   void dispose() {
@@ -17,4 +18,3 @@ class StatusBarColorBloc {
   }
 }
 
-final statusBarColorBloc = StatusBarColorBloc();

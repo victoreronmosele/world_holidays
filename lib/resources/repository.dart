@@ -1,9 +1,8 @@
+import 'package:world_holidays/helpers/sqlite_provider.dart';
 import 'package:world_holidays/models/holiday_data.dart';
 import 'package:world_holidays/models/holiday_reminder.dart';
 import '../helpers/shared_preferences_helper.dart';
 import 'calendarific_provider.dart';
-
-import 'sqlite_provider.dart';
 
 class Repository {
   final _calendarificProvider = CalendarificProvider();

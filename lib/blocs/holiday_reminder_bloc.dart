@@ -1,9 +1,10 @@
+import 'package:world_holidays/helpers/bloc_provider.dart';
 import 'package:world_holidays/models/holiday_reminder.dart';
 import 'package:world_holidays/resources/months_color.dart';
 import '../resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class HolidayReminderBloc {
+class HolidayReminderBloc extends BlocBase {
   final _repository = Repository();
   final holidayReminderList = BehaviorSubject<List<HolidayReminder>>();
   final monthIndexToHolidayReminderListMapSubject =
@@ -41,10 +42,8 @@ class HolidayReminderBloc {
       });
 
       if (holidayReminderListInMonth.isNotEmpty) {
-        holidayReminderListInMonth.sort(
-          (a, b) =>
-          int.parse(a.date).compareTo(int.parse(b.date))
-        );
+        holidayReminderListInMonth
+            .sort((a, b) => int.parse(a.date).compareTo(int.parse(b.date)));
         monthIndexToHolidayReminderListMap
             .addAll({month: holidayReminderListInMonth});
       }
@@ -61,7 +60,7 @@ class HolidayReminderBloc {
   }
 
   addNewHoliday(HolidayReminder holidayReminder) {
-      _repository.addNewHolidayReminder(holidayReminder);
+    _repository.addNewHolidayReminder(holidayReminder);
   }
 
   deleteHolidayReminder(String id, String month) {
@@ -75,20 +74,21 @@ class HolidayReminderBloc {
 
     Map<String, List<HolidayReminder>> newMonthIndexToHolidayReminderListMap =
         monthIndexToHolidayReminderListMapSubject.value;
-    if (newMonthIndexToHolidayReminderListMap != null && newMonthIndexToHolidayReminderListMap.isNotEmpty) {
-      newMonthIndexToHolidayReminderListMap[month].removeWhere((holidayReminder) {
-      return holidayReminder.id == id;
-    });
+    if (newMonthIndexToHolidayReminderListMap != null &&
+        newMonthIndexToHolidayReminderListMap.isNotEmpty) {
+      newMonthIndexToHolidayReminderListMap[month]
+          .removeWhere((holidayReminder) {
+        return holidayReminder.id == id;
+      });
 
-    newMonthIndexToHolidayReminderListMap.update(
-        month,
-        (monthIndexToHolidayReminderListMap) =>
-            newMonthIndexToHolidayReminderListMap[month]);
+      newMonthIndexToHolidayReminderListMap.update(
+          month,
+          (monthIndexToHolidayReminderListMap) =>
+              newMonthIndexToHolidayReminderListMap[month]);
 
-    monthIndexToHolidayReminderListMapSubject.sink
-        .add(newMonthIndexToHolidayReminderListMap);
+      monthIndexToHolidayReminderListMapSubject.sink
+          .add(newMonthIndexToHolidayReminderListMap);
     }
-    
   }
 
   deleteAllHolidayReminders() {
@@ -101,4 +101,3 @@ class HolidayReminderBloc {
       _repository.isHolidayInReminderList(id);
 }
 
-final holidayReminderBloc = HolidayReminderBloc();

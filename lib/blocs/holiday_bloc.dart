@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:world_holidays/helpers/bloc_provider.dart';
 import 'package:world_holidays/models/holiday_data.dart';
 import '../resources/repository.dart';
 import 'package:world_holidays/resources/months_color.dart';
 import 'package:rxdart/rxdart.dart';
 
-class HolidayBloc {
+class HolidayBloc extends BlocBase{
   final _repository = Repository();
   final currentSelectedCountryCode = BehaviorSubject<String>();
   final currentSelectedCountryName = BehaviorSubject<String>();
@@ -98,5 +99,3 @@ class HolidayBloc {
     return monthToHolidayListMap;
   }
 }
-
-final holidayBloc = HolidayBloc();

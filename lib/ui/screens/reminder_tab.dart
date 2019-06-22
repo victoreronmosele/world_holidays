@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:world_holidays/blocs/app_bloc.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
+import 'package:world_holidays/helpers/bloc_provider.dart';
 import 'package:world_holidays/models/holiday_reminder.dart';
 import 'package:world_holidays/resources/custom_expansion_panel.dart';
 import 'package:world_holidays/resources/months_color.dart';
@@ -29,6 +31,8 @@ class ReminderTabState extends State<ReminderTab>
   //App Bar height is toolbar height since there is no bottom widget set in the app bar
   double appBarHeight = kToolbarHeight;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  NotificationBloc notificationBloc;
+  HolidayReminderBloc holidayReminderBloc;
 
   @override
   void initState() {
@@ -46,8 +50,12 @@ class ReminderTabState extends State<ReminderTab>
           });
 
     animationController.forward();
-    flutterLocalNotificationsPlugin =
-        notificationBloc.getFlutterLocalNotificationsPlugin();
+    Future.delayed(Duration.zero, () {
+      notificationBloc = BlocProvider.of<AppBloc>(context).notificationBloc;
+      
+      flutterLocalNotificationsPlugin =
+          notificationBloc.getFlutterLocalNotificationsPlugin();
+    });
   }
 
   @override
@@ -58,6 +66,8 @@ class ReminderTabState extends State<ReminderTab>
 
   @override
   Widget build(BuildContext context) {
+    holidayReminderBloc =
+          BlocProvider.of<AppBloc>(context).holidayReminderBloc;
     double screenHeightWithoutAppBarAndBottomNavBar =
         (MediaQuery.of(context).size.height -
             kBottomNavigationBarHeight -
@@ -218,19 +228,25 @@ class ReminderTabState extends State<ReminderTab>
                                         decoration: BoxDecoration(
                                             border: Border(
                                           top: BorderSide(
-                                            color: monthToColorMap[month].withOpacity(0.5),
+                                            color: monthToColorMap[month]
+                                                .withOpacity(0.5),
                                           ),
                                         )),
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 4.0),
                                           child: Text(
                                             holidayReminder.country,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .overline
                                                 .copyWith(
-                                                    fontStyle: FontStyle.italic,
-                                                    color: Theme.of(context).textTheme.display3.color,),
+                                                  fontStyle: FontStyle.italic,
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .display3
+                                                      .color,
+                                                ),
                                           ),
                                         ),
                                       ),
@@ -249,9 +265,9 @@ class ReminderTabState extends State<ReminderTab>
                                         .display1
                                         .copyWith(fontWeight: FontWeight.w300),
                                   ),
-                                  trailing:
-                                      IconButton(
-                                    color: monthToColorMap[month].withOpacity(0.7),
+                                  trailing: IconButton(
+                                    color:
+                                        monthToColorMap[month].withOpacity(0.7),
                                     icon: Icon(
                                       Icons.delete,
                                     ),
@@ -305,7 +321,9 @@ class ReminderTabState extends State<ReminderTab>
             ),
             child: Center(
               child: SpinKitThreeBounce(
-                color: Theme.of(context).brightness == Brightness.light? Colors.black: Colors.white,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.black
+                    : Colors.white,
                 size: 50.0,
               ),
             ),
