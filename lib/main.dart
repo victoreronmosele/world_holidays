@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:world_holidays/blocs/app_bloc.dart';
 import 'package:world_holidays/helpers/bloc_provider.dart';
 import 'package:world_holidays/ui/home.dart';
+import 'package:world_holidays/ui/screens/holiday_reminder_page.dart';
 
 import 'blocs/brightness_bloc.dart';
 
@@ -126,7 +127,8 @@ class MyAppState extends State<MyApp> {
             title: 'World Holidays',
             debugShowCheckedModeBanner: false,
             theme: theme,
-            home: Home(),
+            home: HolidayReminderPage(payload: 'Testing Holiday'),
+            // home: Home(),
             darkTheme: darkThemeData,
           );
         },

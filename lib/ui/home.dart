@@ -7,6 +7,7 @@ import 'package:world_holidays/blocs/holiday_bloc.dart';
 import 'package:world_holidays/blocs/holiday_reminder_bloc.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
 import 'package:world_holidays/helpers/bloc_provider.dart';
+import 'package:world_holidays/ui/screens/holiday_reminder_page.dart';
 import 'package:world_holidays/ui/screens/home_tab.dart';
 import 'package:world_holidays/ui/screens/reminder_tab.dart';
 import 'package:world_holidays/ui/screens/settings_page.dart';
@@ -30,8 +31,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addObserver(this);
-
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('app_icon');
     var initializationSettingsIOS = new IOSInitializationSettings();
@@ -44,62 +43,16 @@ class _HomeState extends State<Home> {
 
     Future.delayed(Duration.zero, () {
       notificationBloc = BlocProvider.of<AppBloc>(context).notificationBloc;
-          notificationBloc
+      notificationBloc
           .setFlutterLocalNotificationsPlugin(flutterLocalNotificationsPlugin);
     });
   }
 
   Future onSelectNotification(String payload) async {
-    showDialog(
-      context: context,
-      builder: (_) {
-        return new AlertDialog(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Center(
-                  child: Text(
-                payload,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline,
-              )),
-              SizedBox(
-                height: 20.0,
-              ),
-              Center(
-                  child: Text(
-                "This is a reminder that today is $payload",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Theme.of(context).textTheme.headline.color,
-                    fontWeight: FontWeight.w300),
-              )),
-              SizedBox(
-                height: 32.0,
-              ),
-              Container(
-                child: OutlineButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
-                  child: Text(
-                    "GOT IT",
-                    style: Theme.of(context).textTheme.subhead.copyWith(
-                          color: Theme.of(context).textTheme.title.color,
-                        ),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HolidayReminderPage(payload: payload)));
   }
 
   int _currentIndex = 0;
@@ -114,10 +67,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-      HolidayBloc holidayBloc = BlocProvider.of<AppBloc>(context).holidayBloc;
-      holidayReminderBloc =
-          BlocProvider.of<AppBloc>(context).holidayReminderBloc;
-      statusBarColorBloc = BlocProvider.of<AppBloc>(context).statusBarColorBloc;
+    HolidayBloc holidayBloc = BlocProvider.of<AppBloc>(context).holidayBloc;
+    holidayReminderBloc = BlocProvider.of<AppBloc>(context).holidayReminderBloc;
+    statusBarColorBloc = BlocProvider.of<AppBloc>(context).statusBarColorBloc;
 
     Widget buildRefreshButton() {
       return IconButton(

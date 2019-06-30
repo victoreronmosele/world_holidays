@@ -52,7 +52,7 @@ class ReminderTabState extends State<ReminderTab>
     animationController.forward();
     Future.delayed(Duration.zero, () {
       notificationBloc = BlocProvider.of<AppBloc>(context).notificationBloc;
-      
+
       flutterLocalNotificationsPlugin =
           notificationBloc.getFlutterLocalNotificationsPlugin();
     });
@@ -66,8 +66,7 @@ class ReminderTabState extends State<ReminderTab>
 
   @override
   Widget build(BuildContext context) {
-    holidayReminderBloc =
-          BlocProvider.of<AppBloc>(context).holidayReminderBloc;
+    holidayReminderBloc = BlocProvider.of<AppBloc>(context).holidayReminderBloc;
     double screenHeightWithoutAppBarAndBottomNavBar =
         (MediaQuery.of(context).size.height -
             kBottomNavigationBarHeight -
