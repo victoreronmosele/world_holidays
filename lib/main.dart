@@ -127,6 +127,7 @@ class MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             theme: theme,
             home: Home(),
+            darkTheme: darkThemeData,
           );
         },
       ),
