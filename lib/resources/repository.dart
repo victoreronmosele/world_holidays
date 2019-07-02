@@ -9,8 +9,10 @@ class Repository {
   final _sqliteProvider =SQLiteProvider.db;
   final _sharedPreferencesHelper = SharedPreferencesHelper();
 
-  Future<HolidayData> getHolidays(String countryCode) =>
-      _calendarificProvider.getHolidays(countryCode);
+  Future<HolidayData> getHolidays(String countryCode) {
+      return _calendarificProvider.getHolidays(countryCode);
+   
+  }
 
   Future<List<HolidayReminder>> getAllHolidayReminders() => 
     _sqliteProvider.getAllHolidays();

@@ -4,20 +4,26 @@ import 'dart:convert';
 import 'package:world_holidays/internal/keys.dart';
 
 class CalendarificProvider {
-  String apiKey = calendarificApiKey; //Please get your API key from calendarific.com :)
+  String apiKey =
+      calendarificApiKey; //Please get your API key from calendarific.com :)
   String currentYear = DateTime.now().year.toString();
-  
 
   Future<HolidayData> getHolidays(String countryCode) async {
-    
     final response = await http.get(
-        'https://calendarific.com/api/v2/holidays?country=$countryCode&year=$currentYear&api_key=$apiKey');
+        'https://calendarific.com/api/v2/holidays?&api_key=$apiKey&country=$countryCode&year=$currentYear');
 
     if (response.statusCode == 200) {
-      final jsonData = await json.decode(response.body);
+      final jsonData = json.decode(response.body);
+
+      //response.body['response'] returns a Map if there is available holidays and 
+      //an empty list if no holidays are available
+      if (((jsonData as Map)['response'] is Map) == false) {
+        throw Exception('No holidays available');
+      }
+
       return HolidayData.fromJson(jsonData);
     } else {
-      throw Exception("Failed to get holidays");
+      throw Exception('Failed to get holidays');
     }
   }
 }

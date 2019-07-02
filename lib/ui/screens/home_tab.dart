@@ -273,6 +273,7 @@ class MonthCardsState extends State<MonthCards> {
     Map<String, List<Holiday>> monthToHolidayListMap,
     String month,
   ) {
+
     int monthIndex = monthToColorMap.keys.toList().indexOf(month);
 
     if (snapshot.hasData) {

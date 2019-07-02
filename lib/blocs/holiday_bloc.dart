@@ -5,7 +5,7 @@ import '../resources/repository.dart';
 import 'package:world_holidays/resources/months_color.dart';
 import 'package:rxdart/rxdart.dart';
 
-class HolidayBloc extends BlocBase{
+class HolidayBloc extends BlocBase {
   final _repository = Repository();
   final currentSelectedCountryCode = BehaviorSubject<String>();
   final currentSelectedCountryName = BehaviorSubject<String>();
@@ -14,15 +14,21 @@ class HolidayBloc extends BlocBase{
   get holidaysValue {
     if (holidays.value != null) {
       return holidays;
-    } else {
+    } else if (currentSelectedCountryCodeValue.value != null) {
       getHolidays();
       return holidays;
     }
   }
 
   getHolidays() async {
-    holidays.sink.add(
-        await _repository.getHolidays(currentSelectedCountryCodeValue.value));
+    try {
+      holidays.sink.add(
+          await _repository.getHolidays(currentSelectedCountryCodeValue.value));
+    } catch (e) {
+      print('Exception caught');
+      print(e);
+      holidays.sink.addError(e);
+    }
   }
 
   refreshHolidays() {
@@ -38,7 +44,6 @@ class HolidayBloc extends BlocBase{
 
   BehaviorSubject<String> get currentSelectedCountryCodeValue {
     if (currentSelectedCountryCode.value == null) {
-
       _repository.getCountryCode().then((countryCode) {
         currentSelectedCountryCode.sink.add(countryCode);
         return currentSelectedCountryCode;
