@@ -22,10 +22,13 @@ class HolidayReminderPage extends StatelessWidget {
                 Center(
                   child: Transform.rotate(
                     angle: 0.25 * pi,
-                    child: Icon(
-                      Icons.notifications,
-                      size: 500.0,
-                      color: Colors.grey.shade100,
+                    child: Opacity(
+                      opacity: 0.3,
+                                          child: Icon(
+                        Icons.notifications,
+                        size: 500.0,
+                        
+                      ),
                     ),
                   ),
                 ),
@@ -36,7 +39,7 @@ class HolidayReminderPage extends StatelessWidget {
                         IconButton(
                           icon: Icon(
                             Icons.close,
-                            color: Colors.black,
+                            color: Theme.of(context).iconTheme.color
                           ),
                           onPressed: () {
                             Navigator.of(context).pushAndRemoveUntil(
@@ -57,7 +60,6 @@ class HolidayReminderPage extends StatelessWidget {
                                   .textTheme
                                   .headline
                                   .copyWith(
-                                      color: Colors.black,
                                       fontWeight: FontWeight.w400,
                                       fontStyle: FontStyle.italic),
                               textAlign: TextAlign.center,
@@ -73,12 +75,12 @@ class HolidayReminderPage extends StatelessWidget {
                                     .textTheme
                                     .headline
                                     .copyWith(
-                                        fontFamily: 'Josefin',
-                                        color: Colors.black38),
+                                      fontFamily: 'Josefin',
+                                    ),
                                 children: <TextSpan>[
                                   TextSpan(
                                     text: payload,
-                                    style: TextStyle(color: Colors.black),
+                                    style: TextStyle(),
                                   ),
                                 ],
                               ),
