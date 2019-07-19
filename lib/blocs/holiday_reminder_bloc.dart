@@ -1,6 +1,6 @@
 import 'package:world_holidays/helpers/bloc_provider.dart';
 import 'package:world_holidays/models/holiday_reminder.dart';
-import 'package:world_holidays/resources/months_color.dart';
+import 'package:world_holidays/resources/app_constants.dart';
 import '../resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
 

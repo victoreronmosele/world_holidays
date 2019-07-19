@@ -6,7 +6,7 @@ import 'package:world_holidays/blocs/notification_bloc.dart';
 import 'package:world_holidays/helpers/bloc_provider.dart';
 import 'package:world_holidays/models/holiday_reminder.dart';
 import 'package:world_holidays/resources/custom_expansion_panel.dart';
-import 'package:world_holidays/resources/months_color.dart';
+import 'package:world_holidays/resources/app_constants.dart';
 
 import '../../blocs/holiday_reminder_bloc.dart';
 

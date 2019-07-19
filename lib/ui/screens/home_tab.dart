@@ -5,7 +5,7 @@ import 'package:world_holidays/blocs/holiday_bloc.dart';
 import 'package:world_holidays/helpers/bloc_provider.dart';
 import 'package:world_holidays/models/holiday_data.dart';
 import 'package:world_holidays/resources/custom_country_code_picker/custom_country_code_picker.dart';
-import 'package:world_holidays/resources/months_color.dart';
+import 'package:world_holidays/resources/app_constants.dart';
 import 'package:world_holidays/ui/screens/holiday_details_page.dart';
 
 class CountryTitle extends StatelessWidget {

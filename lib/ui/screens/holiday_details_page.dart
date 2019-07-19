@@ -11,7 +11,7 @@ import 'package:world_holidays/models/holiday_reminder.dart';
 import 'package:world_holidays/resources/custom_expansion_panel.dart';
 import 'package:world_holidays/ui/screens/settings_page.dart';
 
-import '../../resources/months_color.dart';
+import '../../resources/app_constants.dart';
 
 class HolidayDetailsPage extends StatefulWidget {
   final int monthIndex;
