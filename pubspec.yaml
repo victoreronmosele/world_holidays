@@ -15,7 +15,7 @@ environment:
 dependencies:
   country_code_picker: ^1.1.2
   flutter_spinkit: "^3.1.0"
-
+  # flutter_svg: ^0.13.1
   intl: ^0.15.7
   flutter_local_notifications: 
   dynamic_theme: ^1.0.1
@@ -27,6 +27,7 @@ dependencies:
   fixnum: ^0.10.9
   http: any
   shared_preferences: any
+  
   flutter:
     sdk: flutter
 

@@ -196,77 +196,92 @@ class ReminderTabState extends State<ReminderTab>
                             headerBuilder:
                                 (BuildContext context, bool isExpanded) {
                               return ListTile(
+                                title: Text(
+                                  holidayReminder.name,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline
+                                      .copyWith(
+                                        fontSize: 16,
+                                      ),
+                                ),
+                                subtitle: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      holidayReminder.dayOfTheWeek,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          // .subhead
+                                          .subtitle
+                                          .copyWith(
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                    ),
+                                    SizedBox(
+                                      height: 6.0,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                        top: BorderSide(
+                                          color: monthToColorMap[month]
+                                              .withOpacity(0.5),
+                                        ),
+                                      )),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 4.0),
+                                        child: Text(
+                                          holidayReminder.country,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .overline
+                                              .copyWith(
+                                                fontStyle: FontStyle.italic,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .display3
+                                                    .color,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 6.0,
+                                    ),
+                                  ],
+                                ),
+                                leading: Text(
+                                  holidayReminderBloc
+                                      .monthIndexToHolidayReminderListMapSubject
+                                      .value[month][monthIndex]
+                                      .date,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .display1
+                                      .copyWith(fontWeight: FontWeight.w300),
+                                ),
+                              );
+                            },
+                            body: Container(
+                              child: Align(
+                                alignment: Alignment.topCenter,
+                                child: ListTile(
+                                  // leading: Text(""),
                                   title: Text(
-                                    holidayReminder.name,
+                                    holidayReminder.description,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline
                                         .copyWith(
-                                          fontSize: 16,
-                                        ),
-                                  ),
-                                  subtitle: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        holidayReminder.dayOfTheWeek,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            // .subhead
-                                            .subtitle
-                                            .copyWith(
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                      ),
-                                      SizedBox(
-                                        height: 6.0,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                          top: BorderSide(
-                                            color: monthToColorMap[month]
-                                                .withOpacity(0.5),
-                                          ),
-                                        )),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 4.0),
-                                          child: Text(
-                                            holidayReminder.country,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .overline
-                                                .copyWith(
-                                                  fontStyle: FontStyle.italic,
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .display3
-                                                      .color,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 6.0,
-                                      ),
-                                    ],
-                                  ),
-                                  leading: Text(
-                                    holidayReminderBloc
-                                        .monthIndexToHolidayReminderListMapSubject
-                                        .value[month][monthIndex]
-                                        .date,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .display1
-                                        .copyWith(fontWeight: FontWeight.w300),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w300),
                                   ),
                                   trailing: IconButton(
-                                    color:
-                                        monthToColorMap[month].withOpacity(0.7),
+                                    color: Colors.black45,
+                                        // monthToColorMap[month].withOpacity(0.3),
                                     icon: Icon(
                                       Icons.delete,
                                     ),
@@ -281,21 +296,6 @@ class ReminderTabState extends State<ReminderTab>
                                           .cancel(holidayReminder
                                               .notificationsChannelId);
                                     },
-                                  ));
-                            },
-                            body: Container(
-                              child: Align(
-                                alignment: Alignment.topCenter,
-                                child: ListTile(
-                                  leading: Text(""),
-                                  title: Text(
-                                    holidayReminder.description,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline
-                                        .copyWith(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w300),
                                   ),
                                 ),
                               ),

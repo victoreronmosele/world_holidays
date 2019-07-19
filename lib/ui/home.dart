@@ -9,7 +9,7 @@ import 'package:world_holidays/blocs/notification_bloc.dart';
 import 'package:world_holidays/helpers/bloc_provider.dart';
 import 'package:world_holidays/ui/screens/holiday_reminder_page.dart';
 import 'package:world_holidays/ui/screens/home_tab.dart';
-import 'package:world_holidays/ui/screens/reminder_tab.dart';
+import 'package:world_holidays/ui/screens/reminders_tab.dart';
 import 'package:world_holidays/ui/screens/settings_page.dart';
 
 class Home extends StatefulWidget {

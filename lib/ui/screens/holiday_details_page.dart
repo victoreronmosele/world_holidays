@@ -297,11 +297,16 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
         bottomNavigationBar: Container(
           height: kBottomNavigationBarHeight,
           child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: monthToColorMap.keys.map((String month) {
-                int monthIndex = monthToColorMap.keys.toList().indexOf(month);
-                return Hero(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: monthToColorMap.keys.map((String month) {
+              int monthIndex = monthToColorMap.keys.toList().indexOf(month);
+              return InkWell(
+                onTap: () {
+                  print('$month tapped');
+                  _pageController.jumpToPage(monthIndex);
+                },
+                child: Hero(
                   tag: 'hero-tag' + month,
                   flightShuttleBuilder: (
                     BuildContext flightContext,
@@ -333,8 +338,10 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
                       ),
                     ),
                   ),
-                );
-              }).toList()),
+                ),
+              );
+            }).toList(),
+          ),
         ), // ),
         resizeToAvoidBottomPadding: false,
       ),

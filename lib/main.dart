@@ -127,7 +127,10 @@ class MyAppState extends State<MyApp> {
             title: 'World Holidays',
             debugShowCheckedModeBanner: false,
             theme: theme,
-            home: Home(),
+            home: HolidayReminderPage(
+              payload: 'Christmas Day',
+            ),
+            // Home(),
             darkTheme: darkThemeData,
           );
         },

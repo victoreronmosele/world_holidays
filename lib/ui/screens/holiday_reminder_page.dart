@@ -1,6 +1,6 @@
-import 'dart:math';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:world_holidays/ui/home.dart';
 
 class HolidayReminderPage extends StatelessWidget {
@@ -13,89 +13,64 @@ class HolidayReminderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height -
-                MediaQuery.of(context).padding.top,
-            child: Stack(
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Text(payload,
+                    style: Theme.of(context).textTheme.headline.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                    textAlign: TextAlign.center),
                 Center(
-                  child: Transform.rotate(
-                    angle: 0.25 * pi,
-                    child: Opacity(
-                      opacity: 0.3,
-                                          child: Icon(
-                        Icons.notifications,
-                        size: 500.0,
-                        
+                  child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                          text: "Today is ",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline
+                              .copyWith(fontFamily: 'Josefin'),
+                          children: <TextSpan>[
+                            TextSpan(text: payload, style: TextStyle())
+                          ])),
+                ),
+                RaisedButton(
+                  onPressed: () => goToHome(context),
+                  textColor: Colors.white,
+                  padding: const EdgeInsets.all(0.0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 48.0,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: <Color>[
+                          Color(0xFF9a8478),
+                          Color(0xFF1e130c),
+                        ],
                       ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    padding: const EdgeInsets.all(10.0),
+                    child: Center(
+                      child: const Text('Go to holidays',
+                          style: TextStyle(
+                              // fontSize: 20
+                              )),
                     ),
                   ),
                 ),
-                Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(
-                            Icons.close,
-                            color: Theme.of(context).iconTheme.color
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(builder: (context) => Home()),
-                                (Route<dynamic> route) => false);
-                          },
-                        )
-                      ],
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              payload,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline
-                                  .copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      fontStyle: FontStyle.italic),
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(
-                                height:
-                                    0.3 * MediaQuery.of(context).size.height),
-                            RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                text: "This is a reminder that today is ",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline
-                                    .copyWith(
-                                      fontFamily: 'Josefin',
-                                    ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: payload,
-                                    style: TextStyle(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+              ]),
         ),
       ),
     );
+  }
+
+  void goToHome(BuildContext context) {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => Home()),
+        (Route<dynamic> route) => false);
   }
 }

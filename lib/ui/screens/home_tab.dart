@@ -200,10 +200,13 @@ class MonthCardsState extends State<MonthCards> {
                     child: Material(
                       color: Colors.transparent,
                       child: Card(
+                        elevation: 0.0,
                         color: Colors.transparent,
                         margin: EdgeInsets.only(right: 10),
                         child: Material(
                           color: monthToColorMap[month],
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.0)),
                           child: InkWell(
                             onTap: () async {
                               if (snapshot.hasData) {
@@ -273,7 +276,6 @@ class MonthCardsState extends State<MonthCards> {
     Map<String, List<Holiday>> monthToHolidayListMap,
     String month,
   ) {
-
     int monthIndex = monthToColorMap.keys.toList().indexOf(month);
 
     if (snapshot.hasData) {
