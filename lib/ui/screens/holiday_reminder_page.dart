@@ -31,14 +31,24 @@ class HolidayReminderPage extends StatelessWidget {
           builder: (context, snapshot) {
             String holidayName;
             String holidayDescription;
+            String holidayHeadline;
 
             if (snapshot.hasData) {
               HolidayReminder currentHolidayReminder = snapshot.data;
               holidayName = currentHolidayReminder.name;
               holidayDescription = currentHolidayReminder.description;
+
+              String _holidayDay = currentHolidayReminder.dayOfTheWeek;
+              String _holidayDate = currentHolidayReminder.date;
+              String _holidayMonth = currentHolidayReminder.monthString;
+              String _holidayCountry = currentHolidayReminder.country;
+
+              holidayHeadline =
+                  'Today, $_holidayDay $_holidayDate , $_holidayMonth is $holidayName in $_holidayCountry';
             } else {
               holidayName = '...';
               holidayDescription = '...';
+              holidayHeadline = '...';
             }
 
             return Scaffold(
@@ -52,6 +62,19 @@ class HolidayReminderPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: Center(
+                            child: Text(
+                          holidayHeadline,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? Colors.white60
+                                  : Colors.black54),
+                        )),
+                      ),
                       Flexible(flex: 6, child: svg),
                       Flexible(
                           flex: 4,
