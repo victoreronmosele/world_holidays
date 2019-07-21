@@ -83,7 +83,7 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
   }
 
   Future _scheduleNotification(DateTime scheduledNotificationDateTime,
-      String holidayName, int notificationsChannelId) async {
+      String holidayName, int notificationsChannelId, String holidayId) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         'your channel id', 'your channel name', 'your channel description',
         sound: 'slow_spring_board',
@@ -99,7 +99,7 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
       'Today is $holidayName.',
       scheduledNotificationDateTime,
       platformChannelSpecifics,
-      payload: holidayName,
+      payload: holidayId,
     );
   }
 
@@ -353,80 +353,76 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
     String holidayId = holiday.name + widget.countryName;
 
     return FutureBuilder<bool>(
-      future: holidayReminderBloc.isHolidayInReminderList(holidayId),
-      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-        if (snapshot.hasData) {
-          bool isHolidayInReminderList = snapshot.data;
-          //Parsed to Int32 and back to int because "int" for Dart is a 64-bit integer
-          // and "int" for Java is a 32-bit integer so Java reads Dart's int as a Long which is not compatible
-          //So it is converted to Int32 to remain only the lower 32 bits of the number, and then to int again
-          //Check this github issue for some more light https://github.com/MaikuB/flutter_local_notifications/issues/115#issuecomment-433553398
-          int notificationsChannelId = Int32((holidayId.hashCode)).toInt();
+        future: holidayReminderBloc.isHolidayInReminderList(holidayId),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          if (snapshot.hasData) {
+            bool isHolidayInReminderList = snapshot.data;
+            //Parsed to Int32 and back to int because "int" for Dart is a 64-bit integer
+            // and "int" for Java is a 32-bit integer so Java reads Dart's int as a Long which is not compatible
+            //So it is converted to Int32 to remain only the lower 32 bits of the number, and then to int again
+            //Check this github issue for some more light https://github.com/MaikuB/flutter_local_notifications/issues/115#issuecomment-433553398
+            int notificationsChannelId = Int32((holidayId.hashCode)).toInt();
 
-          return AnimatedSwitcher(
-            duration: Duration(
-              milliseconds: 500,
-            ),
-            child: isHolidayInReminderList
-                ? IconButton(
-                    key: ValueKey(0),
-                    icon: Icon(
-                      Icons.alarm_on,
-                      color: monthToColorMap.values.toList()[currentMonthIndex],
-                    ),
-                    onPressed: () async {
-                      setState(
-                        () {
+            return AnimatedSwitcher(
+              duration: Duration(
+                milliseconds: 500,
+              ),
+              child: isHolidayInReminderList == true
+                  ? IconButton(
+                      key: ValueKey(0),
+                      icon: Icon(
+                        Icons.alarm_on,
+                        color:
+                            monthToColorMap.values.toList()[currentMonthIndex],
+                      ),
+                      onPressed: () async {
+                        setState(() {
                           holidayReminderBloc.deleteHolidayReminder(
                               holidayId, month);
-                        },
-                      );
+                        });
 
-                      await flutterLocalNotificationsPlugin
-                          .cancel(notificationsChannelId);
-                    },
-                  )
-                : IconButton(
-                    key: ValueKey(1),
-                    icon: Icon(
-                      Icons.alarm_off,
-                    ),
-                    onPressed: () {
-                      HolidayReminder holidayReminder = HolidayReminder(
-                        id: holidayId,
-                        name: holiday.name,
-                        description:
-                            holiday.description ?? "No description available",
-                        country: widget.countryName,
-                        monthIndex: currentMonthIndex,
-                        monthString:
-                            monthToColorMap.keys.toList()[currentMonthIndex],
-                        date: holiday.date.datetime.day.toString(),
-                        dayOfTheWeek: DateFormat.EEEE()
-                            .format(DateTime.parse(holiday.date.iso))
-                            .toString(),
-                        notificationsChannelId: notificationsChannelId,
-                      );
+                        await flutterLocalNotificationsPlugin
+                            .cancel(notificationsChannelId);
+                      },
+                    )
+                  : IconButton(
+                      key: ValueKey(1),
+                      icon: Icon(
+                        Icons.alarm_off,
+                      ),
+                      onPressed: () {
+                        print('holidayId => $holidayId');
+                        HolidayReminder holidayReminder = HolidayReminder(
+                          id: holidayId,
+                          name: holiday.name,
+                          description:
+                              holiday.description ?? "No description available",
+                          country: widget.countryName,
+                          monthIndex: currentMonthIndex,
+                          monthString:
+                              monthToColorMap.keys.toList()[currentMonthIndex],
+                          date: holiday.date.datetime.day.toString(),
+                          dayOfTheWeek: DateFormat.EEEE()
+                              .format(DateTime.parse(holiday.date.iso))
+                              .toString(),
+                          notificationsChannelId: notificationsChannelId,
+                        );
 
-                      setState(
-                        () {
+                        setState(() {
                           holidayReminderBloc.addNewHoliday(holidayReminder);
-                        },
-                      );
+                        });
 
-                      _scheduleNotification(DateTime.parse(holiday.date.iso),
-                          holiday.name, notificationsChannelId);
-                    },
-                  ),
-          );
-        } else {
-          return IconButton(
-              icon: Icon(
-                Icons.alarm_off,
-              ),
-              onPressed: null);
-        }
-      },
-    );
+                        _scheduleNotification(DateTime.parse(holiday.date.iso),
+                            holiday.name, notificationsChannelId, holidayId);
+                      },
+                    ),
+            );
+          } else {
+            return IconButton(
+              icon: Icon(Icons.alarm_off),
+              onPressed: null,
+            );
+          }
+        });
   }
 }

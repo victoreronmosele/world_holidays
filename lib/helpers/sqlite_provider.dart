@@ -23,8 +23,8 @@ class SQLiteProvider {
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "ReminderDatabase.db");
-    return await openDatabase(path, version: 1, onOpen: (db) {
-    }, onCreate: (Database db, int version) async {
+    return await openDatabase(path, version: 1, onOpen: (db) {},
+        onCreate: (Database db, int version) async {
       await db.execute('CREATE TABLE HolidayReminder ('
           //Primary Key is TEXT becuase the api returns no id
           //And so holiday name + country is used as text
@@ -39,26 +39,27 @@ class SQLiteProvider {
           'notificationsChannelId INTEGER'
           ')');
     });
+  }
 
-}
-
-addNewHoliday (HolidayReminder holidayReminder) async {
-  final db = await database;
-  var res =await db.insert("HolidayReminder", holidayReminder.toMap());
-  return res;
-}
-
- getHoliday(String id) async {
+  addNewHoliday(HolidayReminder holidayReminder) async {
     final db = await database;
-    var res = await db.query("HolidayReminder", where: "id = ?", whereArgs: [id]);
+    var res = await db.insert("HolidayReminder", holidayReminder.toMap());
+    return res;
+  }
+
+  Future<HolidayReminder> getHoliday(String id) async {
+    final db = await database;
+    var res =
+        await db.query("HolidayReminder", where: "id = ?", whereArgs: [id]);
     return res.isNotEmpty ? HolidayReminder.fromMap(res.first) : null;
   }
 
   Future<List<HolidayReminder>> getAllHolidays() async {
     final db = await database;
     var res = await db.query("HolidayReminder");
-    List<HolidayReminder> list =
-        res.isNotEmpty ? res.map((c) => HolidayReminder.fromMap(c)).toList() : [];
+    List<HolidayReminder> list = res.isNotEmpty
+        ? res.map((c) => HolidayReminder.fromMap(c)).toList()
+        : [];
     return list;
   }
 
@@ -79,23 +80,15 @@ addNewHoliday (HolidayReminder holidayReminder) async {
     return res;
   }
 
-
-
-
   Future<bool> isHolidayInReminderList(String id) async {
-    
     bool isHolidayInReminderList;
 
-    List<HolidayReminder> holidayReminderList =  await getAllHolidays();
+    List<HolidayReminder> holidayReminderList = await getAllHolidays();
 
-    isHolidayInReminderList =  holidayReminderList.any(
-      (test) {
-        return test.id ==id;
-      }
-      
-    );
+    isHolidayInReminderList = holidayReminderList.any((test) {
+      return test.id == id;
+    });
 
     return isHolidayInReminderList;
   }
-
 }

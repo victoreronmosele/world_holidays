@@ -9,11 +9,10 @@ import 'package:world_holidays/ui/screens/holiday_reminder_page.dart';
 import 'blocs/brightness_bloc.dart';
 
 void main() {
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
-    (_) {
-      runApp(new MyApp());
-    },
-  );
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(new MyApp());
+  });
 }
 
 class MyApp extends StatefulWidget {
@@ -103,12 +102,10 @@ class MyAppState extends State<MyApp> {
           if (brightness == Brightness.dark) {
             statusBarColorBloc.setBrightness(darkThemeData.primaryColor);
 
-            SystemChrome.setSystemUIOverlayStyle(
-              SystemUiOverlayStyle(
+            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
                 statusBarColor:
-                    statusBarColorBloc.brightnessValue, // status bar color
-              ),
-            );
+                    statusBarColorBloc.brightnessValue // status bar color
+                ));
             return darkThemeData;
           } else {
             StatusBarColorBloc().setBrightness(lightThemeData.primaryColor);
@@ -127,11 +124,8 @@ class MyAppState extends State<MyApp> {
             title: 'World Holidays',
             debugShowCheckedModeBanner: false,
             theme: theme,
-            home:
-             HolidayReminderPage(
-              payload: 'Christmas Day',
-            ),
-            // Home(),
+            home: HolidayReminderPage(payload: 'International Day of CharityUnited States'),
+            // home: Home(),
             darkTheme: darkThemeData,
           );
         },

@@ -14,6 +14,8 @@ class Repository {
    
   }
 
+  Future<HolidayReminder> getHolidayReminder(String holidayId) => _sqliteProvider.getHoliday(holidayId);
+
   Future<List<HolidayReminder>> getAllHolidayReminders() => 
     _sqliteProvider.getAllHolidays();
 

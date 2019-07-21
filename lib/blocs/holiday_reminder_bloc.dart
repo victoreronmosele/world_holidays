@@ -59,6 +59,11 @@ class HolidayReminderBloc extends BlocBase {
     holidayReminderList.sink.add(await _repository.getAllHolidayReminders());
   }
 
+
+  Future<HolidayReminder> getHoliday(String holidayId) {
+    return  _repository.getHolidayReminder(holidayId);
+  }
+
   addNewHoliday(HolidayReminder holidayReminder) {
     _repository.addNewHolidayReminder(holidayReminder);
   }

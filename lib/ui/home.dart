@@ -38,8 +38,10 @@ class _HomeState extends State<Home> {
         initializationSettingsAndroid, initializationSettingsIOS);
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
 
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: onSelectNotification);
+    flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onSelectNotification: onSelectNotification,
+    );
 
     Future.delayed(Duration.zero, () {
       notificationBloc = BlocProvider.of<AppBloc>(context).notificationBloc;
