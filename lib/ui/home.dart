@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:world_holidays/blocs/app_bloc.dart';
 import 'package:world_holidays/blocs/brightness_bloc.dart';
 import 'package:world_holidays/blocs/holiday_bloc.dart';
@@ -77,7 +78,7 @@ class _HomeState extends State<Home> {
       return IconButton(
         key: ValueKey(5),
         icon: Icon(
-          Icons.refresh,
+          AntDesign.reload1,
         ),
         onPressed: () {
           holidayBloc.refreshHolidays();
@@ -92,7 +93,7 @@ class _HomeState extends State<Home> {
       statusBarColor: statusBarColorBloc.brightnessValue, // status bar color
     ));
 
-    var animatedSwitcher = AnimatedSwitcher(
+    var trailingIcon = AnimatedSwitcher(
       duration: Duration(
         milliseconds: 300,
       ),
@@ -100,6 +101,8 @@ class _HomeState extends State<Home> {
           ? buildClearRemindersButton()
           : buildRefreshButton(),
     );
+
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
@@ -107,7 +110,7 @@ class _HomeState extends State<Home> {
           elevation: 0.0,
           leading: IconButton(
             icon: Icon(
-              Icons.settings,
+              AntDesign.setting,
             ),
             onPressed: () {
               Navigator.push(context,
@@ -130,7 +133,7 @@ class _HomeState extends State<Home> {
           ),
           centerTitle: true,
           actions: <Widget>[
-            animatedSwitcher,
+            trailingIcon,
           ],
         ),
         body: AnimatedSwitcher(
@@ -173,7 +176,7 @@ class _HomeState extends State<Home> {
                         ),
                         Center(
                           child: Icon(
-                            Icons.home,
+                            AntDesign.home,
                             size: 24.0,
                             color: Theme.of(context).primaryIconTheme.color,
                           ),
@@ -210,7 +213,8 @@ class _HomeState extends State<Home> {
                         ),
                         Center(
                           child: Icon(
-                            Icons.alarm,
+                            AntDesign.notification
+,
                             size: 24.0,
                             color: Theme.of(context).primaryIconTheme.color,
                           ),

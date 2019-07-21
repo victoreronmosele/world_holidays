@@ -1,6 +1,7 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:world_holidays/blocs/app_bloc.dart';
 import 'package:world_holidays/blocs/holiday_reminder_bloc.dart';
@@ -112,14 +113,14 @@ class HolidayDetailsPageState extends State<HolidayDetailsPage>
           elevation: 0.0,
           leading: IconButton(
               icon: Icon(
-                Icons.settings,
+                AntDesign.setting,
               ),
               onPressed: () => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SettingsPage()))),
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.close,
+                AntDesign.close,
               ),
               onPressed: () {
                 Navigator.pop(context, currentMonthIndex);

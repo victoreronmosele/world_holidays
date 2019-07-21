@@ -1,3 +1,5 @@
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+
 import 'custom_country_code.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +34,7 @@ class _SelectionDialogState extends State<SelectionDialog> {
                       : Colors.black,
                 )),
                 prefixIcon: new Icon(
-                  Icons.search,
+                  AntDesign.search1,
                   color: Theme.of(context).brightness == Brightness.dark
                       ? Colors.white
                       : Colors.black,

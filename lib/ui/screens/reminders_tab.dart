@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:world_holidays/blocs/app_bloc.dart';
 import 'package:world_holidays/blocs/notification_bloc.dart';
 import 'package:world_holidays/helpers/bloc_provider.dart';
@@ -281,9 +282,13 @@ class ReminderTabState extends State<ReminderTab>
                                   ),
                                   trailing: IconButton(
                                     color: Colors.black45,
-                                        // monthToColorMap[month].withOpacity(0.3),
+                                    // monthToColorMap[month].withOpacity(0.3),
                                     icon: Icon(
-                                      Icons.delete,
+                                      AntDesign.delete,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white30
+                                          : Colors.black38,
                                     ),
                                     onPressed: () async {
                                       setState(() {
