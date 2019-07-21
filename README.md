@@ -16,7 +16,6 @@
   <a href="#how-to-use">How To Use</a> •
  <a href="#download">Download</a> •
   <a href="#credits">Credits</a> •
-  <a href="#related">Related</a> •
   <a href="#license">License</a>
 </p>
 
@@ -77,10 +76,6 @@ This app uses the following:
 - [Calendarific](https://calendarific.com) for the holiday data.
 - Logo icon made by [Freepik](https://www.freepik.com/) from [Flaticon](http://www.flaticon.com/ "Flaticon").
 - UI inspired by [Cuberto](https://dribbble.com/cuberto)'s [Task Manager Animated](https://dribbble.com/shots/4890285-Task-Manager-Animated) design.
-
-## Related
-
-- [World Holidays Twitter Bot](https://github.com/herovickers/worldholidaysbot) - World Holidays Twitter Bot is a Twitter bot built with [node.js](https://nodejs.org/en/) that tweets daily holidays taking place in various countries all over the world.
 
 <!--
 ## Support
