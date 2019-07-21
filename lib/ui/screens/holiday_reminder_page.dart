@@ -43,9 +43,7 @@ class HolidayReminderPage extends StatelessWidget {
 
             return Scaffold(
               appBar: AppBar(
-                title: Text(holidayName ?? "",
-                    style: Theme.of(context).textTheme.headline.copyWith(),
-                    textAlign: TextAlign.center),
+                title: Text(holidayName ?? "", textAlign: TextAlign.center),
                 elevation: 0.0,
               ),
               body: Padding(
@@ -61,10 +59,12 @@ class HolidayReminderPage extends StatelessWidget {
                             child: Text(
                               holidayDescription,
                               textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .title
-                                  .copyWith(fontWeight: FontWeight.normal),
+                              style: Theme.of(context).textTheme.title.copyWith(
+                                  fontWeight: FontWeight.normal,
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.white
+                                      : Colors.black),
                             ),
                           )),
                       RaisedButton(
@@ -87,9 +87,7 @@ class HolidayReminderPage extends StatelessWidget {
                           padding: const EdgeInsets.all(10.0),
                           child: Center(
                             child: const Text('Go to holidays',
-                                style: TextStyle(
-                                    // fontSize: 20
-                                    )),
+                                style: TextStyle()),
                           ),
                         ),
                       ),
