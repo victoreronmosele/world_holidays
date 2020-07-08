@@ -101,7 +101,7 @@ MIT
 
 ---
 
-> [herovickers.github.io](https://herovickers.github.io) &nbsp;&middot;&nbsp;
-> GitHub [@herovickers](https://github.com/herovickers) &nbsp;&middot;&nbsp;
-> Twitter [@herovickers](https://twitter.com/herovickers)
+> [victoreronmosele.com](https://victoreronmosele.com) &nbsp;&middot;&nbsp;
+> GitHub [@victoreronmosele](https://github.com/victoreronmosele) &nbsp;&middot;&nbsp;
+> Twitter [@vic_eronmosele](https://twitter.com/vic_eronmosele)
 
