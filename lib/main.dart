@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:world_holidays/blocs/app_bloc.dart';
 import 'package:world_holidays/helpers/bloc_provider.dart';
 import 'package:world_holidays/ui/home.dart';
-import 'package:world_holidays/ui/screens/holiday_reminder_page.dart';
 
 import 'blocs/brightness_bloc.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(new MyApp());
